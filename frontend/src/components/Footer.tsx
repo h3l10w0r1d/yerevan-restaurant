@@ -1,5 +1,6 @@
 import { useI18n } from '../i18n'
 import { RESTAURANT } from '../restaurant'
+import { Credits } from './Credits'
 import { Logo } from './Logo'
 
 export function Footer() {
@@ -11,6 +12,7 @@ export function Footer() {
         <Logo className="footer__logo" />
         <p>{RESTAURANT.address}, {RESTAURANT.city}</p>
         <p className="muted">© {new Date().getFullYear()} Yerevan · {t.footer.rights}</p>
+        <Credits />
       </div>
     </footer>
   )

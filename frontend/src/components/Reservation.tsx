@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { api, ApiError, type Slot } from '../api'
 import { fill, useI18n } from '../i18n'
 import { RESTAURANT } from '../restaurant'
+import { DatePicker } from './DatePicker'
 import { Select } from './Select'
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -105,14 +106,19 @@ export function Reservation() {
         ) : (
           <form className="form" onSubmit={submit}>
             <div className="form__row">
-              <label className="field">
-                <span>{t.reserve.date}</span>
-                <input
-                  type="date" required value={date}
-                  min={isoDate(today)} max={isoDate(maxDate)}
-                  onChange={(e) => setDate(e.target.value)}
+              <div className="field">
+                <DatePicker
+                  label={t.reserve.date}
+                  value={date}
+                  onChange={setDate}
+                  min={isoDate(today)}
+                  max={isoDate(maxDate)}
+                  isDisabled={(iso) => !RESTAURANT.hours[weekday(iso)]}
+                  locale={lang === 'nl' ? 'nl-NL' : 'en-GB'}
+                  placeholder={t.reserve.datePh}
+                  labels={t.reserve.calendar}
                 />
-              </label>
+              </div>
               <div className="field">
                 <Select
                   label={t.reserve.guests}

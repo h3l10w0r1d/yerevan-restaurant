@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { formatPrice, type Menu } from '../api'
+import { formatPrice, img, type Menu } from '../api'
 import { useI18n } from '../i18n'
+import { Logo } from './Logo'
 
 type Props = { menu: Menu; ordering: boolean; onAdd: (id: string) => void; cart: Record<string, number> }
 
@@ -39,6 +40,12 @@ export function MenuSection({ menu, ordering, onAdd, cart }: Props) {
           <ul className="dishes">
             {category.items.map((item) => (
               <li key={item.id} className="dish">
+                {item.image ? (
+                  <img className="dish__img" src={img(item.image)} alt="" width={96} height={96} loading="lazy" decoding="async" />
+                ) : (
+                  <span className="dish__img dish__img--empty" aria-hidden><Logo variant="mountain" title="" /></span>
+                )}
+                <div className="dish__body">
                 <div className="dish__row">
                   <h4 className="dish__name">
                     {item.name[lang]}
@@ -58,6 +65,7 @@ export function MenuSection({ menu, ordering, onAdd, cart }: Props) {
                     {cart[item.id] ? <span className="add__count">{cart[item.id]}</span> : null}
                   </button>
                 )}
+                </div>
               </li>
             ))}
           </ul>

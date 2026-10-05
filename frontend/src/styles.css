@@ -166,7 +166,12 @@ p { margin: 0 0 1em; }
 .menu__cat { margin-bottom: 20px; }
 .menu__cat h3 { color: var(--amber); font-size: 1.6rem; margin-bottom: 4px; }
 .dishes { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.dish { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.dish { padding: 16px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 76px 1fr; gap: 16px; align-items: start; }
+.dish__body { min-width: 0; }
+.dish__img { width: 76px; height: 76px; object-fit: cover; border-radius: var(--radius); background: var(--rose); display: block; }
+.dish__img--empty { display: grid; place-items: center; color: var(--burgundy); background: rgba(212, 176, 171, 0.35); }
+.dish__img--empty svg { width: 34px; opacity: 0.55; }
+@media (min-width: 560px) { .dish { grid-template-columns: 96px 1fr; gap: 20px; } .dish__img { width: 96px; height: 96px; } }
 .dish__row { display: flex; align-items: baseline; gap: 10px; }
 .dish__name { font-size: 1.3rem; color: var(--burgundy); display: flex; align-items: baseline; gap: 8px; }
 .dots { flex: 1; border-bottom: 1px dotted var(--rose); transform: translateY(-4px); min-width: 16px; }
@@ -185,6 +190,33 @@ p { margin: 0 0 1em; }
 .menu__note { margin-top: 28px; }
 @media (min-width: 820px) {
   .dishes { grid-template-columns: 1fr 1fr; column-gap: 56px; }
+}
+
+/* Photo band */
+.band { margin: 0; background: var(--ivory); }
+.band img { width: 100%; height: auto; aspect-ratio: 9 / 7; object-fit: cover; background: var(--navy); }
+.band figcaption { max-width: 1080px; margin: 0 auto; padding: 12px var(--gutter) 0; font-size: 0.85rem; color: var(--muted); }
+@media (min-width: 700px) { .band img { aspect-ratio: 2 / 1; max-height: 78vh; } }
+
+/* Gallery */
+.gallery { padding-top: 64px; }
+.gallery h2 { color: var(--burgundy); }
+.gallery__track {
+  list-style: none; margin: 0; padding: 0 var(--gutter) 8px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 72%; gap: 12px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter); scrollbar-width: none;
+}
+.gallery__track::-webkit-scrollbar { display: none; }
+.gallery__item { scroll-snap-align: start; }
+.gallery__item figure { margin: 0; }
+.gallery__item img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--rose); }
+.gallery__item figcaption { margin-top: 10px; font-size: 0.9rem; color: var(--muted); }
+@media (min-width: 560px) { .gallery__track { grid-auto-columns: 40%; } }
+@media (min-width: 1000px) {
+  .gallery__track {
+    grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); overflow: visible;
+    max-width: 1080px; margin: 0 auto;
+  }
 }
 
 /* Reservation — the evening colourway */
@@ -262,6 +294,58 @@ p { margin: 0 0 1em; }
 .reserve .select__trigger { border-color: rgba(248, 239, 234, 0.25); }
 .reserve .select--open .select__trigger, .reserve .select__trigger:focus-visible { border-color: var(--amber); }
 
+/* Date picker */
+.datepicker { position: relative; display: grid; gap: 6px; }
+.datepicker__trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; min-height: 48px; padding: 10px 14px; text-align: left; cursor: pointer;
+  font-size: 16px; font-weight: 300; background: transparent;
+  border: 1px solid var(--line); border-radius: var(--radius); transition: border-color 0.2s;
+}
+.datepicker__trigger--empty span { opacity: 0.55; }
+.datepicker__trigger:focus-visible { outline: none; border-color: var(--amber); }
+.datepicker--open .datepicker__trigger { border-color: var(--amber); }
+.datepicker__icon { width: 18px; height: 18px; flex: none; opacity: 0.75; }
+.reserve .datepicker__trigger { border-color: rgba(248, 239, 234, 0.25); }
+.reserve .datepicker--open .datepicker__trigger, .reserve .datepicker__trigger:focus-visible { border-color: var(--amber); }
+
+.calendar {
+  position: absolute; z-index: 30; top: 100%; left: 0; margin-top: 6px;
+  width: 100%; min-width: 296px; max-width: 360px; padding: 14px 12px 12px;
+  background: var(--ivory); color: var(--ink); border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(10, 16, 32, 0.35), 0 0 0 1px rgba(83, 28, 33, 0.08);
+  animation: select-in 0.16s ease-out;
+}
+.calendar__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.calendar__month { font-size: 1.2rem; color: var(--burgundy); text-transform: capitalize; }
+.calendar__nav {
+  width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer;
+  background: none; border: 1px solid transparent; border-radius: 99px; color: var(--burgundy);
+}
+.calendar__nav svg { width: 8px; height: 12px; }
+.calendar__nav:hover:not(:disabled) { border-color: var(--line); }
+.calendar__nav:disabled { opacity: 0.25; cursor: default; }
+.calendar__nav:focus-visible { outline: 2px solid var(--amber); outline-offset: 0; }
+.calendar__grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.calendar__grid th {
+  font-weight: 400; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); padding: 4px 0 8px;
+}
+.calendar__grid td { padding: 2px; text-align: center; }
+.calendar__day {
+  width: 100%; aspect-ratio: 1; max-width: 44px; min-height: 36px; margin: 0 auto; display: grid; place-items: center;
+  background: none; border: 1px solid transparent; border-radius: 99px; cursor: pointer;
+  font-size: 0.95rem; font-variant-numeric: tabular-nums; color: var(--ink);
+  transition: background 0.12s, color 0.12s;
+}
+.calendar__day:hover:not([aria-disabled]) { background: rgba(83, 28, 33, 0.08); }
+.calendar__day:focus-visible { outline: none; border-color: var(--amber); box-shadow: 0 0 0 1px var(--amber); }
+.calendar__day--outside { color: var(--muted); opacity: 0.55; }
+.calendar__day--today { border-color: var(--rose); }
+.calendar__day--off { color: var(--muted); opacity: 0.35; text-decoration: line-through; cursor: default; }
+.calendar__day--outside.calendar__day--off { opacity: 0.2; }
+.calendar__day--selected, .calendar__day--selected:hover { background: var(--burgundy) !important; color: var(--ivory); opacity: 1; }
+
 /* Order */
 .order h2 { color: var(--burgundy); }
 .soon { text-align: center; background: var(--rose); color: var(--burgundy); padding: 48px 24px; }
@@ -305,6 +389,15 @@ p { margin: 0 0 1em; }
 .footer__inner { padding-top: 56px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
 .footer__logo { width: 200px; margin: 0 auto 24px; }
 .footer .muted { color: rgba(248, 239, 234, 0.55); font-size: 0.82rem; }
+
+/* Photo credits */
+.credits { margin-top: 20px; font-size: 0.78rem; color: rgba(248, 239, 234, 0.55); text-align: left; max-width: 680px; margin-inline: auto; }
+.credits summary { cursor: pointer; text-align: center; list-style: none; }
+.credits summary::-webkit-details-marker { display: none; }
+.credits summary:hover { color: var(--ivory); }
+.credits p { margin: 12px 0 6px; }
+.credits ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.credits a { color: inherit; }
 
 /* Admin */
 .admin { max-width: 860px; margin: 0 auto; padding: 24px var(--gutter) 64px; }

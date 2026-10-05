@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { api, FALLBACK_MENU, type Menu, type MenuItem } from './api'
 import { Admin } from './components/Admin'
 import { Footer } from './components/Footer'
+import { Gallery } from './components/Gallery'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { Intro } from './components/Intro'
@@ -54,6 +55,7 @@ export default function App() {
         <Hero />
         <Intro />
         <MenuSection menu={menu} ordering={ordering} cart={cart} onAdd={(id) => setQty(id, (cart[id] || 0) + 1)} />
+        <Gallery />
         <Reservation />
         <Order enabled={ordering} cart={cart} items={items} setQty={setQty} clear={() => setCart({})} />
         <Visit />

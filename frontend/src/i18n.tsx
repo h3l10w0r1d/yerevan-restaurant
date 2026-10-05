@@ -12,6 +12,18 @@ const en = {
   intro: {
     title: 'An evening in Yerevan',
     body: 'Lavash from the oven, meat over open fire, tolma the way grandmothers fold it. We cook the food of Armenia for long tables and slow evenings, a short walk from Hilversum station.',
+    photo: 'Yerevan at first light, with Ararat behind the city',
+  },
+  gallery: {
+    title: 'From Yerevan',
+    lead: 'The city we cook from: pink tuff stone, bread from the tonir, tables that never quite empty.',
+    photos: {
+      'republic-square': 'Republic Square, after dark',
+      tonir: 'Lavash, fresh from the tonir',
+      'ararat-city': 'Ararat over the rooftops',
+      feast: 'An Armenian table',
+      tuff: 'Pink tuff, the stone of the city',
+    },
   },
   menu: {
     title: 'Menu',
@@ -25,6 +37,8 @@ const en = {
     title: 'Reserve a table',
     lead: 'Tables are held for fifteen minutes. For groups larger than twelve, write to us.',
     date: 'Date',
+    datePh: 'Choose a date',
+    calendar: { prev: 'Previous month', next: 'Next month', closed: 'closed' },
     guests: 'Guests',
     guestOne: '{n} guest',
     guestMany: '{n} guests',
@@ -74,7 +88,11 @@ const en = {
     closed: 'Closed',
   },
   days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-  footer: { rights: 'Armenian restaurant in Hilversum' },
+  footer: {
+    rights: 'Armenian restaurant in Hilversum',
+    credits: 'Photo credits',
+    creditsNote: 'Photos via Wikimedia Commons, cropped and resized.',
+  },
 }
 
 type Dict = typeof en
@@ -89,6 +107,18 @@ const nl: Dict = {
   intro: {
     title: 'Een avond in Jerevan',
     body: 'Lavash uit de oven, vlees boven open vuur, tolma zoals grootmoeders hem vouwen. Wij koken de keuken van Armenië voor lange tafels en rustige avonden, op loopafstand van station Hilversum.',
+    photo: 'Jerevan bij het eerste licht, met de Ararat achter de stad',
+  },
+  gallery: {
+    title: 'Uit Jerevan',
+    lead: 'De stad waar onze keuken vandaan komt: roze tufsteen, brood uit de tonir, tafels die nooit helemaal leeg raken.',
+    photos: {
+      'republic-square': 'Republiekplein, na zonsondergang',
+      tonir: 'Lavash, vers uit de tonir',
+      'ararat-city': 'De Ararat boven de daken',
+      feast: 'Een Armeense tafel',
+      tuff: 'Roze tufsteen, de steen van de stad',
+    },
   },
   menu: {
     title: 'Menu',
@@ -102,6 +132,8 @@ const nl: Dict = {
     title: 'Reserveer een tafel',
     lead: 'We houden je tafel vijftien minuten vast. Met meer dan twaalf personen? Mail ons.',
     date: 'Datum',
+    datePh: 'Kies een datum',
+    calendar: { prev: 'Vorige maand', next: 'Volgende maand', closed: 'gesloten' },
     guests: 'Personen',
     guestOne: '{n} persoon',
     guestMany: '{n} personen',
@@ -151,7 +183,11 @@ const nl: Dict = {
     closed: 'Gesloten',
   },
   days: ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'],
-  footer: { rights: 'Armeens restaurant in Hilversum' },
+  footer: {
+    rights: 'Armeens restaurant in Hilversum',
+    credits: 'Fotoverantwoording',
+    creditsNote: 'Foto’s via Wikimedia Commons, bijgesneden en verkleind.',
+  },
 }
 
 const dicts: Record<Lang, Dict> = { en, nl }

@@ -28,6 +28,8 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 | Menu (EN/NL, prices in cents) | `backend/app/data/menu.json`. The site also bundles it as an offline fallback |
 | Opening hours, slot capacity | `backend/app/config.py` and `frontend/src/restaurant.ts` |
 | All interface copy | `frontend/src/i18n.tsx` |
+| Photos (WebP) | `frontend/public/images/`; dish photos are linked via `image` in `menu.json` |
+| Photo credits (shown in the footer) | `frontend/src/credits.json`. Keep this in sync when replacing photos |
 
 ## Backend settings
 
