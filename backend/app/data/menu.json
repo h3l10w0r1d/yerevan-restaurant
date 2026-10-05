@@ -1,0 +1,66 @@
+{
+  "currency": "EUR",
+  "categories": [
+    {
+      "id": "to-begin",
+      "name": { "en": "To begin", "nl": "Om te beginnen" },
+      "note": { "en": "Shared at the table, with lavash", "nl": "Om te delen, met lavash" },
+      "items": [
+        { "id": "basturma", "name": { "en": "Basturma", "nl": "Basturma" }, "description": { "en": "Air-cured beef, cumin and fenugreek crust, pickled cucumber", "nl": "Luchtgedroogd rundvlees, korst van komijn en fenegriek, zure komkommer" }, "price": 1250, "tags": [] },
+        { "id": "sujukh", "name": { "en": "Sujukh", "nl": "Sujukh" }, "description": { "en": "Dried spiced beef sausage, thinly sliced", "nl": "Gedroogde gekruide rundworst, dun gesneden" }, "price": 1100, "tags": [] },
+        { "id": "cheese-greens", "name": { "en": "Cheese and greens", "nl": "Kaas en kruiden" }, "description": { "en": "Chanakh and lori cheese, tarragon, basil, radish, lavash", "nl": "Chanakh- en lorikaas, dragon, basilicum, radijs, lavash" }, "price": 1150, "tags": ["v"] },
+        { "id": "eggplant-rolls", "name": { "en": "Aubergine rolls", "nl": "Auberginerolletjes" }, "description": { "en": "Grilled aubergine, walnut, garlic, pomegranate", "nl": "Gegrilde aubergine, walnoot, knoflook, granaatappel" }, "price": 950, "tags": ["v"] },
+        { "id": "spas", "name": { "en": "Spas", "nl": "Spas" }, "description": { "en": "Warm yoghurt and wheat soup with herbs", "nl": "Warme yoghurt-tarwesoep met kruiden" }, "price": 750, "tags": ["v"] }
+      ]
+    },
+    {
+      "id": "from-the-pot",
+      "name": { "en": "From the pot", "nl": "Uit de pan" },
+      "note": { "en": "Slow-cooked, the way it is at home", "nl": "Langzaam gegaard, zoals thuis" },
+      "items": [
+        { "id": "tolma", "name": { "en": "Tolma", "nl": "Tolma" }, "description": { "en": "Vine leaves, lamb, rice, barberries, garlic yoghurt", "nl": "Wijnbladeren, lam, rijst, berberis, knoflookyoghurt" }, "price": 1850, "tags": [] },
+        { "id": "manti", "name": { "en": "Manti", "nl": "Manti" }, "description": { "en": "Small oven-baked dumplings, beef, tomato broth, yoghurt", "nl": "Kleine dumplings uit de oven, rundvlees, tomatenbouillon, yoghurt" }, "price": 1950, "tags": [] },
+        { "id": "harissa", "name": { "en": "Harissa", "nl": "Harissa" }, "description": { "en": "Wheat and chicken cooked overnight, browned butter", "nl": "Tarwe en kip, een nacht gegaard, bruine boter" }, "price": 1750, "tags": [] },
+        { "id": "ghapama", "name": { "en": "Ghapama", "nl": "Ghapama" }, "description": { "en": "Roast pumpkin, rice, dried apricots, walnuts. For two", "nl": "Geroosterde pompoen, rijst, gedroogde abrikoos, walnoten. Voor twee" }, "price": 3400, "tags": ["v"] }
+      ]
+    },
+    {
+      "id": "khorovats",
+      "name": { "en": "Khorovats", "nl": "Khorovats" },
+      "note": { "en": "Over open fire, with grilled vegetables and lavash", "nl": "Boven open vuur, met gegrilde groenten en lavash" },
+      "items": [
+        { "id": "khorovats-pork", "name": { "en": "Pork neck", "nl": "Varkensnek" }, "description": { "en": "Marinated in onion and pepper", "nl": "Gemarineerd in ui en peper" }, "price": 2350, "tags": [] },
+        { "id": "khorovats-lamb", "name": { "en": "Lamb chops", "nl": "Lamskoteletten" }, "description": { "en": "Thyme, sumac, burnt lemon", "nl": "Tijm, sumak, geblakerde citroen" }, "price": 2850, "tags": [] },
+        { "id": "khorovats-chicken", "name": { "en": "Chicken thigh", "nl": "Kippendij" }, "description": { "en": "Yoghurt, garlic, paprika", "nl": "Yoghurt, knoflook, paprika" }, "price": 2050, "tags": [] },
+        { "id": "lyulya", "name": { "en": "Lyulya kebab", "nl": "Lyulya kebab" }, "description": { "en": "Minced lamb and beef, onion, herbs", "nl": "Gehakt van lam en rund, ui, kruiden" }, "price": 2150, "tags": [] },
+        { "id": "khorovats-veg", "name": { "en": "Vegetable khorovats", "nl": "Groente-khorovats" }, "description": { "en": "Aubergine, pepper, tomato, onion, herbs", "nl": "Aubergine, paprika, tomaat, ui, kruiden" }, "price": 1650, "tags": ["v", "vg"] }
+      ]
+    },
+    {
+      "id": "salads",
+      "name": { "en": "Salads", "nl": "Salades" },
+      "items": [
+        { "id": "armenian-salad", "name": { "en": "Armenian salad", "nl": "Armeense salade" }, "description": { "en": "Tomato, cucumber, pepper, red onion, purple basil", "nl": "Tomaat, komkommer, paprika, rode ui, paarse basilicum" }, "price": 850, "tags": ["v", "vg"] },
+        { "id": "eetch", "name": { "en": "Eetch", "nl": "Eetch" }, "description": { "en": "Bulgur, tomato, pepper paste, parsley, lemon", "nl": "Bulgur, tomaat, paprikapasta, peterselie, citroen" }, "price": 800, "tags": ["v", "vg"] }
+      ]
+    },
+    {
+      "id": "sweet",
+      "name": { "en": "Something sweet", "nl": "Iets zoets" },
+      "items": [
+        { "id": "gata", "name": { "en": "Gata", "nl": "Gata" }, "description": { "en": "Buttered sweet bread with a soft filling", "nl": "Zoet boterbrood met zachte vulling" }, "price": 650, "tags": ["v"] },
+        { "id": "pakhlava", "name": { "en": "Pakhlava", "nl": "Pakhlava" }, "description": { "en": "Walnut, honey, cinnamon", "nl": "Walnoot, honing, kaneel" }, "price": 750, "tags": ["v"] }
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": { "en": "To drink", "nl": "Om te drinken" },
+      "items": [
+        { "id": "soorj", "name": { "en": "Armenian coffee", "nl": "Armeense koffie" }, "description": { "en": "Brewed in a jazve, with cardamom on request", "nl": "Gezet in een jazve, op verzoek met kardemom" }, "price": 400, "tags": [] },
+        { "id": "tan", "name": { "en": "Tan", "nl": "Tan" }, "description": { "en": "Salted yoghurt drink", "nl": "Gezouten yoghurtdrank" }, "price": 450, "tags": [] },
+        { "id": "areni", "name": { "en": "Areni, glass", "nl": "Areni, glas" }, "description": { "en": "Red wine from Vayots Dzor", "nl": "Rode wijn uit Vayots Dzor" }, "price": 750, "tags": [] },
+        { "id": "brandy", "name": { "en": "Armenian brandy", "nl": "Armeense brandy" }, "description": { "en": "Aged five years", "nl": "Vijf jaar gerijpt" }, "price": 900, "tags": [] }
+      ]
+    }
+  ]
+}

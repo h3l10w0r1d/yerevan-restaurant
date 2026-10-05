@@ -1,0 +1,20 @@
+# One-click backend deploy on Render: https://render.com/deploy
+services:
+  - type: web
+    name: yerevan-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://h3l10w0r1d.github.io
+      - key: ORDERING_ENABLED
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
