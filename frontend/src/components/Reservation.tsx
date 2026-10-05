@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { api, ApiError, type Slot } from '../api'
 import { fill, useI18n } from '../i18n'
 import { RESTAURANT } from '../restaurant'
+import { Select } from './Select'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 const isoDate = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
@@ -112,14 +113,17 @@ export function Reservation() {
                   onChange={(e) => setDate(e.target.value)}
                 />
               </label>
-              <label className="field">
-                <span>{t.reserve.guests}</span>
-                <select value={guests} onChange={(e) => setGuests(+e.target.value)}>
-                  {Array.from({ length: RESTAURANT.maxParty }, (_, i) => i + 1).map((n) => (
-                    <option key={n} value={n}>{n}</option>
-                  ))}
-                </select>
-              </label>
+              <div className="field">
+                <Select
+                  label={t.reserve.guests}
+                  value={guests}
+                  onChange={setGuests}
+                  options={Array.from({ length: RESTAURANT.maxParty }, (_, i) => ({
+                    value: i + 1,
+                    label: fill(i === 0 ? t.reserve.guestOne : t.reserve.guestMany, { n: i + 1 }),
+                  }))}
+                />
+              </div>
             </div>
 
             <fieldset className="field">
