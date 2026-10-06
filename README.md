@@ -6,6 +6,16 @@ Mobile-first and bilingual (English / Nederlands), built from the brandbook: bur
 - `frontend/`: React + Vite + TypeScript, with the menu, table reservations, takeaway ordering (behind a feature flag) and a staff admin view at `#admin`
 - `backend/`: FastAPI + SQLModel (SQLite by default, Postgres via `DATABASE_URL`)
 
+## Two styles
+
+The site ships with two looks over the same content and features, switchable from the header:
+
+- **Classic**: burgundy hero, product-card menu, pinned horizontal gallery
+- **Magazine**: editorial masthead, numbered menu with a sticky plate preview, asymmetric figure spread
+
+The choice is remembered per visitor; link to a specific one with `?style=classic` or `?style=editorial`.
+Editorial-only components live in `frontend/src/components/editorial/` and their styles in `frontend/src/editorial.css` (scoped to `[data-style='editorial']`).
+
 ## Run locally
 
 ```bash

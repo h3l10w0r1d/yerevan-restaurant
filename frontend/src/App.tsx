@@ -11,6 +11,11 @@ import { MenuSection } from './components/MenuSection'
 import { Order } from './components/Order'
 import { Reservation } from './components/Reservation'
 import { Visit } from './components/Visit'
+import { EdGallery } from './components/editorial/EdGallery'
+import { EdHero } from './components/editorial/EdHero'
+import { EdIntro } from './components/editorial/EdIntro'
+import { EdMenu } from './components/editorial/EdMenu'
+import { useSiteStyle } from './style'
 
 const useHash = () => {
   const [hash, setHash] = useState(window.location.hash)
@@ -28,7 +33,8 @@ export default function App() {
   const [ordering, setOrdering] = useState(false)
   const [cart, setCart] = useState<Record<string, number>>({})
   const mainRef = useRef<HTMLElement>(null)
-  useScrollAnimations(mainRef)
+  const { style } = useSiteStyle()
+  useScrollAnimations(mainRef, style)
 
   useEffect(() => {
     api.menu().then(setMenu).catch(() => {})
@@ -55,16 +61,28 @@ export default function App() {
       if (!next[id]) delete next[id]
       return next
     })
+  const addOne = (id: string) => setQty(id, (cart[id] || 0) + 1)
   const cartCount = Object.values(cart).reduce((a, b) => a + b, 0)
 
   return (
     <>
       <Header cartCount={cartCount} />
-      <main ref={mainRef}>
-        <Hero />
-        <Intro />
-        <MenuSection menu={menu} ordering={ordering} cart={cart} onAdd={(id) => setQty(id, (cart[id] || 0) + 1)} />
-        <Gallery />
+      <main ref={mainRef} key={style}>
+        {style === 'editorial' ? (
+          <>
+            <EdHero />
+            <EdIntro />
+            <EdMenu menu={menu} ordering={ordering} cart={cart} onAdd={addOne} />
+            <EdGallery />
+          </>
+        ) : (
+          <>
+            <Hero />
+            <Intro />
+            <MenuSection menu={menu} ordering={ordering} cart={cart} onAdd={addOne} />
+            <Gallery />
+          </>
+        )}
         <Reservation />
         <Order enabled={ordering} cart={cart} items={items} setQty={setQty} clear={() => setCart({})} />
         <Visit />
