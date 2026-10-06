@@ -1,8 +1,9 @@
 import { useI18n } from '../i18n'
-import { RESTAURANT } from '../restaurant'
+import { useRestaurant } from '../restaurant'
 
 export function Visit() {
   const { t } = useI18n()
+  const R = useRestaurant()
   const todayIdx = (new Date().getDay() + 6) % 7
   return (
     <section className="section visit" id="visit">
@@ -11,14 +12,14 @@ export function Visit() {
         <div className="visit__grid">
           <div>
             <h3>{t.visit.address}</h3>
-            <p>{RESTAURANT.address}<br />{RESTAURANT.city}</p>
-            <a className="link" href={RESTAURANT.mapsUrl} target="_blank" rel="noreferrer">{t.visit.route} →</a>
+            <p>{R.address}<br />{R.city}</p>
+            <a className="link" href={R.mapsUrl} target="_blank" rel="noreferrer">{t.visit.route} →</a>
           </div>
           <div>
             <h3>{t.visit.hours}</h3>
             <dl className="hours">
               {t.days.map((day, i) => {
-                const h = RESTAURANT.hours[i]
+                const h = R.hours[i]
                 return (
                   <div key={day} className={i === todayIdx ? 'hours__today' : ''}>
                     <dt>{day}</dt>
@@ -30,7 +31,8 @@ export function Visit() {
           </div>
           <div>
             <h3>{t.visit.contact}</h3>
-            <p><a className="link" href={`mailto:${RESTAURANT.email}`}>{RESTAURANT.email}</a></p>
+            <p><a className="link" href={`mailto:${R.email}`}>{R.email}</a></p>
+            {R.phone && <p><a className="link" href={`tel:${R.phone.replace(/\s/g, '')}`}>{R.phone}</a></p>}
           </div>
         </div>
       </div>

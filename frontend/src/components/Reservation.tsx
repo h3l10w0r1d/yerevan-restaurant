@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { api, ApiError, type Slot } from '../api'
 import { fill, useI18n } from '../i18n'
-import { RESTAURANT } from '../restaurant'
+import { useRestaurant, type Hours } from '../restaurant'
 import { DatePicker } from './DatePicker'
 import { Select } from './Select'
 
@@ -10,8 +10,8 @@ const isoDate = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
 const weekday = (iso: string) => (new Date(`${iso}T12:00:00`).getDay() + 6) % 7 // Monday = 0
 
 // Same rule as the backend: every 30 min, last seating 90 min before closing.
-function localSlots(iso: string): Slot[] {
-  const hours = RESTAURANT.hours[weekday(iso)]
+function localSlots(iso: string, allHours: Hours): Slot[] {
+  const hours = allHours[weekday(iso)]
   if (!hours) return []
   const toMin = (s: string) => +s.slice(0, 2) * 60 + +s.slice(3)
   const now = new Date()
@@ -27,8 +27,9 @@ type Status = 'idle' | 'sending' | 'done' | 'error'
 
 export function Reservation() {
   const { t, lang } = useI18n()
+  const R = useRestaurant()
   const today = useMemo(() => new Date(), [])
-  const maxDate = useMemo(() => new Date(Date.now() + 90 * 864e5), [])
+  const maxDate = useMemo(() => new Date(Date.now() + R.bookingWindowDays * 864e5), [R.bookingWindowDays])
 
   const [date, setDate] = useState('')
   const [guests, setGuests] = useState(2)
@@ -46,7 +47,7 @@ export function Reservation() {
     api
       .availability(date, guests)
       .then((r) => { if (!cancelled) { setSlots(r.slots); setOffline(false) } })
-      .catch(() => { if (!cancelled) { setSlots(localSlots(date)); setOffline(true) } })
+      .catch(() => { if (!cancelled) { setSlots(localSlots(date, R.hours)); setOffline(true) } })
     return () => { cancelled = true }
   }, [date, guests])
 
@@ -65,7 +66,7 @@ export function Reservation() {
       `${t.reserve.date}: ${prettyDate}`, `${t.reserve.time}: ${time}`, `${t.reserve.guests}: ${guests}`,
       `${t.reserve.name}: ${form.name}`, `${t.reserve.phone}: ${form.phone}`, form.notes,
     ].join('\n')
-    return `mailto:${RESTAURANT.email}?subject=${encodeURIComponent(t.reserve.title)}&body=${encodeURIComponent(body)}`
+    return `mailto:${R.email}?subject=${encodeURIComponent(t.reserve.title)}&body=${encodeURIComponent(body)}`
   }
 
   async function submit(e: FormEvent) {
@@ -113,7 +114,7 @@ export function Reservation() {
                   onChange={setDate}
                   min={isoDate(today)}
                   max={isoDate(maxDate)}
-                  isDisabled={(iso) => !RESTAURANT.hours[weekday(iso)]}
+                  isDisabled={(iso) => !R.hours[weekday(iso)]}
                   locale={lang === 'nl' ? 'nl-NL' : 'en-GB'}
                   placeholder={t.reserve.datePh}
                   labels={t.reserve.calendar}
@@ -124,7 +125,7 @@ export function Reservation() {
                   label={t.reserve.guests}
                   value={guests}
                   onChange={setGuests}
-                  options={Array.from({ length: RESTAURANT.maxParty }, (_, i) => ({
+                  options={Array.from({ length: R.maxParty }, (_, i) => ({
                     value: i + 1,
                     label: fill(i === 0 ? t.reserve.guestOne : t.reserve.guestMany, { n: i + 1 }),
                   }))}

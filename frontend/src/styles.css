@@ -416,28 +416,6 @@ p { margin: 0 0 1em; }
 .credits ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
 .credits a { color: inherit; }
 
-/* Admin */
-.admin { max-width: 860px; margin: 0 auto; padding: 24px var(--gutter) 64px; }
-.admin--login { min-height: 100svh; display: grid; place-content: center; gap: 32px; max-width: 360px; }
-.admin--login form { display: grid; gap: 16px; }
-.admin__logo { width: 220px; margin: 0 auto; color: var(--burgundy); }
-.admin__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; color: var(--burgundy); }
-.admin__wordmark { height: 20px; width: auto; }
-.admin h2 { color: var(--burgundy); font-size: 1.8rem; }
-.admin section { margin-bottom: 48px; }
-.admin__bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 16px; }
-.admin__bar h2 { margin-right: auto; }
-.admin__bar input { min-height: 36px; border: 1px solid var(--line); background: var(--white); padding: 0 10px; }
-.admin__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-.admin__item { background: var(--white); border: 1px solid var(--line); border-left: 3px solid var(--rose); padding: 14px 16px; display: grid; gap: 4px; font-size: 0.95rem; }
-.admin__item.status--confirmed, .admin__item.status--ready { border-left-color: var(--amber); }
-.admin__item.status--completed { border-left-color: var(--navy); }
-.admin__item.status--cancelled { opacity: 0.55; }
-.admin__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; align-items: center; }
-.admin__actions button { background: none; border: 1px solid var(--line); padding: 4px 12px; min-height: 32px; cursor: pointer; border-radius: var(--radius); }
-.admin__actions button:hover { border-color: var(--burgundy); }
-.pill { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: auto; }
-
 /* Style switcher (both styles) */
 .style-toggle {
   display: inline-flex; align-items: center; gap: 8px; min-height: 36px; min-width: 40px; padding: 0 10px;

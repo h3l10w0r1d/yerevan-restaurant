@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useScrollAnimations } from './animations'
 import { api, FALLBACK_MENU, type Menu, type MenuItem } from './api'
-import { Admin } from './components/Admin'
 import { Footer } from './components/Footer'
 import { Gallery } from './components/Gallery'
 import { Header } from './components/Header'
@@ -15,6 +14,7 @@ import { EdGallery } from './components/editorial/EdGallery'
 import { EdHero } from './components/editorial/EdHero'
 import { EdIntro } from './components/editorial/EdIntro'
 import { EdMenu } from './components/editorial/EdMenu'
+import { useRestaurant } from './restaurant'
 import { useSiteStyle } from './style'
 
 const useHash = () => {
@@ -30,7 +30,7 @@ const useHash = () => {
 export default function App() {
   const hash = useHash()
   const [menu, setMenu] = useState<Menu>(FALLBACK_MENU)
-  const [ordering, setOrdering] = useState(false)
+  const { orderingEnabled: ordering } = useRestaurant()
   const [cart, setCart] = useState<Record<string, number>>({})
   const mainRef = useRef<HTMLElement>(null)
   const { style } = useSiteStyle()
@@ -38,7 +38,6 @@ export default function App() {
 
   useEffect(() => {
     api.menu().then(setMenu).catch(() => {})
-    api.info().then((i) => setOrdering(i.ordering_enabled)).catch(() => {})
   }, [])
 
   // In-page links glide to their section. Done in JS rather than CSS scroll-behavior,
@@ -71,7 +70,11 @@ export default function App() {
     return index
   }, [menu])
 
-  if (hash === '#admin') return <Admin />
+  // The old in-page admin moved to its own app.
+  if (hash === '#admin') {
+    window.location.replace(`${import.meta.env.BASE_URL}admin/`)
+    return null
+  }
 
   const setQty = (id: string, qty: number) =>
     setCart((c) => {

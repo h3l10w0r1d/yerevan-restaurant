@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: 'Bodoni Moda', 'Didot', Georgia, serif;
+    --font-sans: 'Jost', ui-sans-serif, system-ui, sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* Yerevan brand: burgundy #531C21, night navy #1B2A49, city light #E8963A, tuff rose #D4B0AB, lavash ivory #F8EFEA */
+    --background: #fbf7f5;
+    --foreground: #2a1215;
+    --card: #ffffff;
+    --card-foreground: #2a1215;
+    --popover: #ffffff;
+    --popover-foreground: #2a1215;
+    --primary: #531c21;
+    --primary-foreground: #f8efea;
+    --secondary: #f3e6e1;
+    --secondary-foreground: #531c21;
+    --muted: #f4ece8;
+    --muted-foreground: #7d5a5d;
+    --accent: #f1e1dc;
+    --accent-foreground: #531c21;
+    --destructive: #b42318;
+    --border: #eadbd6;
+    --input: #e3d2cc;
+    --ring: #e8963a;
+    --chart-1: #531c21;
+    --chart-2: #e8963a;
+    --chart-3: #1b2a49;
+    --chart-4: #d4b0ab;
+    --chart-5: #8a4b50;
+    --radius: 0.6rem;
+    --sidebar: #531c21;
+    --sidebar-foreground: #f8efea;
+    --sidebar-primary: #e8963a;
+    --sidebar-primary-foreground: #1b2a49;
+    --sidebar-accent: #66282e;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #6b2f35;
+    --sidebar-ring: #e8963a;
+}
+
+/* Evening mode: night navy with amber, from the brandbook's second colourway. */
+.dark {
+    --background: #121b30;
+    --foreground: #f8efea;
+    --card: #1b2a49;
+    --card-foreground: #f8efea;
+    --popover: #1b2a49;
+    --popover-foreground: #f8efea;
+    --primary: #e8963a;
+    --primary-foreground: #1b2a49;
+    --secondary: #24365c;
+    --secondary-foreground: #f8efea;
+    --muted: #22324f;
+    --muted-foreground: #b6a7a6;
+    --accent: #2a3d66;
+    --accent-foreground: #f8efea;
+    --destructive: #f97066;
+    --border: rgb(248 239 234 / 12%);
+    --input: rgb(248 239 234 / 16%);
+    --ring: #e8963a;
+    --chart-1: #e8963a;
+    --chart-2: #d4b0ab;
+    --chart-3: #f8efea;
+    --chart-4: #8a4b50;
+    --chart-5: #6c7da3;
+    --sidebar: #0e1526;
+    --sidebar-foreground: #f8efea;
+    --sidebar-primary: #e8963a;
+    --sidebar-primary-foreground: #1b2a49;
+    --sidebar-accent: #1b2a49;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgb(248 239 234 / 10%);
+    --sidebar-ring: #e8963a;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+@layer base {
+  h1, h2, h3, .font-heading { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.01em; }
+}

@@ -4,7 +4,23 @@ Website for **Yerevan**, an Armenian restaurant at Kampstraat 22, Hilversum.
 Mobile-first and bilingual (English / Nederlands), built from the brandbook: burgundy, night navy, city-light amber, tuff rose, lavash ivory, set in Bodoni Moda and Jost.
 
 - `frontend/`: React + Vite + TypeScript, with the menu, table reservations, takeaway ordering (behind a feature flag) and a staff admin view at `#admin`
+- `admin/`: the staff admin panel at `/admin`, built with React, Tailwind and shadcn/ui (Base UI)
 - `backend/`: FastAPI + SQLModel (SQLite by default, Postgres via `DATABASE_URL`)
+
+## Admin panel
+
+`/admin` (locally http://localhost:5174/admin) has a left sidebar with:
+
+- **Dashboard**: tonight's bookings, next 7 days, requests to confirm, a 14-day guests chart
+- **Reservations**: month calendar (closed days shaded, status colours) with a day agenda, list view, search and status filter; create, edit, confirm, cancel and delete bookings
+- **Orders**: takeaway orders through New → Confirmed → Ready → Collected
+- **Menu**: categories and dishes in EN/NL, prices, dietary tags, sold-out toggle, ordering, photo upload (resized to WebP in the browser, stored in the database)
+- **Team** (owners): add people with a one-time password, change roles, reset passwords, disable or remove access
+- **Settings** (owners and managers): restaurant details, opening hours, booking rules, takeaway ordering on/off
+- **My account**: profile, password, evening (dark) mode
+
+Roles: **Owner** (everything), **Manager** (everything except Team), **Staff** (dashboard, reservations, orders).
+The first owner is created from `ADMIN_EMAIL` / `ADMIN_PASSWORD` when the database has no users (local default: `admin@yerevanrestaurant.nl` / `change-me`).
 
 ## Two styles
 
@@ -27,6 +43,10 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 # Site → http://localhost:5173 (proxies /api to :8000)
 cd frontend
 npm install && npm run dev
+
+# Admin → http://localhost:5174/admin
+cd admin
+npm install && npm run dev
 ```
 
 Tests: `cd backend && .venv/bin/python -m pytest`
@@ -35,8 +55,7 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 
 | What | Where |
 | --- | --- |
-| Menu (EN/NL, prices in cents) | `backend/app/data/menu.json`. The site also bundles it as an offline fallback |
-| Opening hours, slot capacity | `backend/app/config.py` and `frontend/src/restaurant.ts` |
+| Menu, photos, hours, booking rules | Edited in the admin panel and stored in the database. `backend/app/data/menu.json` seeds an empty database and is the site's offline fallback |
 | All interface copy | `frontend/src/i18n.tsx` |
 | Photos (WebP) | `frontend/public/images/`; dish photos are linked via `image` in `menu.json` |
 | Photo credits (shown in the footer) | `frontend/src/credits.json`. Keep this in sync when replacing photos |
@@ -45,11 +64,12 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 
 | Env var | Default | Meaning |
 | --- | --- | --- |
-| `ADMIN_TOKEN` | `change-me` | Token for the `#admin` page (`X-Admin-Token` header) |
+| `ADMIN_EMAIL` | `admin@yerevanrestaurant.nl` | First owner's login, created when there are no users |
+| `ADMIN_PASSWORD` | `change-me` (falls back to `ADMIN_TOKEN`) | First owner's password |
 | `DATABASE_URL` | `sqlite:///./yerevan.db` | Use Postgres in production |
 | `CORS_ORIGINS` | `*` | Comma-separated allowed origins |
-| `ORDERING_ENABLED` | `false` | Turns on takeaway ordering (cart + `POST /api/orders`) |
-| `SLOT_CAPACITY` | `40` | Guests per 30-minute slot |
+| `ORDERING_ENABLED` | `false` | Default for the takeaway switch (then managed in Settings) |
+| `SLOT_CAPACITY` | `40` | Default guests per slot (then managed in Settings) |
 
 ## Deploy
 

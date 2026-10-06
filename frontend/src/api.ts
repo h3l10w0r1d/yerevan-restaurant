@@ -32,19 +32,23 @@ export const FALLBACK_MENU = fallbackMenu as Menu
 
 export const api = {
   menu: () => request<Menu>('/api/menu'),
-  info: () => request<{ ordering_enabled: boolean }>('/api/info'),
+  info: () => request<{
+    name: string; address: string; city: string; email: string; phone: string
+    hours: ([string, string] | null)[]; ordering_enabled: boolean; max_party_size: number; booking_window_days: number
+  }>('/api/info'),
   availability: (date: string, guests: number) =>
     request<{ slots: Slot[] }>(`/api/availability?date=${date}&guests=${guests}`),
   reserve: (data: Record<string, unknown>) =>
     request('/api/reservations', { method: 'POST', body: JSON.stringify(data) }),
   order: (data: Record<string, unknown>) =>
     request('/api/orders', { method: 'POST', body: JSON.stringify(data) }),
-  admin: <T,>(path: string, token: string, init?: RequestInit) =>
-    request<T>(`/api/admin${path}`, { ...init, headers: { 'X-Admin-Token': token } }),
 }
 
 export const formatPrice = (cents: number) =>
   new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 2 }).format(cents / 100)
 
 /** Resolve a file in public/images/ against the deploy base path. */
-export const img = (path: string) => `${import.meta.env.BASE_URL}images/${path}`
+export const img = (path: string) =>
+  /^https?:/.test(path) ? path
+  : path.startsWith('/') ? `${API_URL}${path}` // uploaded via the admin panel, served by the API
+  : `${import.meta.env.BASE_URL}images/${path}`

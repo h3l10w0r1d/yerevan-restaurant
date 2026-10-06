@@ -4,3 +4,4 @@ backend/.venv
 backend/tests
 **/__pycache__
 *.db
+admin/node_modules

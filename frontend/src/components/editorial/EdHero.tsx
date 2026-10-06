@@ -1,12 +1,13 @@
 import { img } from '../../api'
 import { useI18n } from '../../i18n'
-import { RESTAURANT } from '../../restaurant'
+import { useRestaurant } from '../../restaurant'
 import { Logo } from '../Logo'
 
 export function EdHero() {
   const { t, lang } = useI18n()
+  const R = useRestaurant()
   const now = new Date()
-  const hours = RESTAURANT.hours[(now.getDay() + 6) % 7]
+  const hours = R.hours[(now.getDay() + 6) % 7]
   const date = now.toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
 
   return (
@@ -40,7 +41,7 @@ export function EdHero() {
         <dl className="ed-hero__facts">
           <div>
             <dt>{t.ed.find}</dt>
-            <dd>{RESTAURANT.address}, {RESTAURANT.city}</dd>
+            <dd>{R.address}, {R.city}</dd>
           </div>
           <div>
             <dt>{t.ed.tonight}</dt>
