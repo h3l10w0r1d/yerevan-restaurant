@@ -53,6 +53,12 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 
 ## Deploy
 
+**Vercel (primary):** https://yerevan-restaurant.vercel.app serves the site and the API from one project.
+`vercel.json` builds `frontend/` as static files and runs the FastAPI app as a Python function (`api/index.py`) under `/api`.
+The GitHub repo is connected, so every push to `main` deploys. Environment variables: `ADMIN_TOKEN`, `ORDERING_ENABLED`, and `DATABASE_URL`.
+Without `DATABASE_URL` the API falls back to SQLite in `/tmp`, which does **not** persist between serverless instances. Attach Postgres (e.g. Neon from the Vercel Marketplace) before taking real bookings.
+
+
 - **Site:** GitHub Pages, deployed by `.github/workflows/pages.yml` on every push to `main`.
 - **API:** Render, via the `render.yaml` blueprint (or any Docker host using `backend/Dockerfile`). After it is live, set the repository variable `API_URL` to its URL (Settings → Secrets and variables → Actions → Variables) and re-run the Pages workflow.
 
