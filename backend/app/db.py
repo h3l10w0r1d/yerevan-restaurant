@@ -7,7 +7,11 @@ DATABASE_URL = RAW_URL.replace("postgres://", "postgresql+psycopg://", 1).replac
     "postgresql://", "postgresql+psycopg://", 1
 )
 
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+if DATABASE_URL.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+else:
+    # Neon's pooled URL goes through PgBouncer; skip server-side prepared statements.
+    connect_args = {"prepare_threshold": None}
 engine = create_engine(DATABASE_URL, connect_args=connect_args, pool_pre_ping=True)
 
 
