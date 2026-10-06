@@ -20,7 +20,8 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); -webkit-text-size-adjust: 100%; }
+/* No CSS smooth scrolling: it fights ScrollTrigger's refresh and stalls touch momentum. Anchor links glide via JS instead. */
+html { scroll-padding-top: var(--header-h); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--ivory);
@@ -45,7 +46,6 @@ p { margin: 0 0 1em; }
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   * { transition: none !important; animation: none !important; }
 }
 

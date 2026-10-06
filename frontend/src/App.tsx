@@ -41,6 +41,24 @@ export default function App() {
     api.info().then((i) => setOrdering(i.ordering_enabled)).catch(() => {})
   }, [])
 
+  // In-page links glide to their section. Done in JS rather than CSS scroll-behavior,
+  // which conflicts with ScrollTrigger on touch devices.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element).closest?.('a[href^="#"]')
+      const id = link?.getAttribute('href')?.slice(1)
+      if (!id || id === 'admin') return
+      const target = document.getElementById(id)
+      if (!target) return
+      e.preventDefault()
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
+      history.replaceState(null, '', `#${id}`)
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  }, [])
+
   // Sections render after the browser tried to jump to the URL's #anchor; do it now.
   useEffect(() => {
     const id = window.location.hash.slice(1)
