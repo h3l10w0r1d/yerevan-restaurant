@@ -12,18 +12,20 @@ const en = {
   intro: {
     title: 'An evening in Yerevan',
     body: 'Lavash from the oven, meat over open fire, tolma the way grandmothers fold it. We cook the food of Armenia for long tables and slow evenings, a short walk from Hilversum station.',
-    photo: 'Yerevan at first light, with Ararat behind the city',
+    photo: 'Yerevan at dusk, as Ararat turns pink and then blue',
   },
   gallery: {
     title: 'From Yerevan',
-    lead: 'The city we cook from: pink tuff stone, bread from the tonir, tables that never quite empty.',
+    lead: 'The city we cook from, from the square at night to the mountain at dusk.',
     photos: {
       'republic-square': 'Republic Square, after dark',
-      tonir: 'Lavash, fresh from the tonir',
-      'ararat-city': 'Ararat over the rooftops',
-      feast: 'An Armenian table',
-      tuff: 'Pink tuff, the stone of the city',
+      'evening-street': 'Summer evenings on the café streets',
+      'ararat-dusk': 'Ararat over the city at dusk',
+      'khor-virap': 'Khor Virap, at the foot of Ararat',
+      cascade: 'The Cascade, from below',
+      'city-lights': 'The hour the city lights come on',
     },
+
   },
   menu: {
     title: 'Menu',
@@ -31,7 +33,8 @@ const en = {
     veg: 'vegetarian',
     vegan: 'vegan',
     allergens: 'Allergies or dietary needs? Tell us when you book, or ask your host.',
-    add: 'Add',
+    add: 'Add to order',
+    inOrder: 'In your order',
   },
   reserve: {
     title: 'Reserve a table',
@@ -91,7 +94,7 @@ const en = {
   footer: {
     rights: 'Armenian restaurant in Hilversum',
     credits: 'Photo credits',
-    creditsNote: 'Photos via Wikimedia Commons, cropped and resized.',
+    creditsNote: 'Photos via Unsplash and Wikimedia Commons, cropped and resized.',
   },
 }
 
@@ -107,18 +110,20 @@ const nl: Dict = {
   intro: {
     title: 'Een avond in Jerevan',
     body: 'Lavash uit de oven, vlees boven open vuur, tolma zoals grootmoeders hem vouwen. Wij koken de keuken van Armenië voor lange tafels en rustige avonden, op loopafstand van station Hilversum.',
-    photo: 'Jerevan bij het eerste licht, met de Ararat achter de stad',
+    photo: 'Jerevan bij schemering, als de Ararat roze en dan blauw kleurt',
   },
   gallery: {
     title: 'Uit Jerevan',
-    lead: 'De stad waar onze keuken vandaan komt: roze tufsteen, brood uit de tonir, tafels die nooit helemaal leeg raken.',
+    lead: 'De stad waar onze keuken vandaan komt, van het plein bij nacht tot de berg bij schemering.',
     photos: {
       'republic-square': 'Republiekplein, na zonsondergang',
-      tonir: 'Lavash, vers uit de tonir',
-      'ararat-city': 'De Ararat boven de daken',
-      feast: 'Een Armeense tafel',
-      tuff: 'Roze tufsteen, de steen van de stad',
+      'evening-street': 'Zomeravonden in de caféstraten',
+      'ararat-dusk': 'De Ararat boven de stad bij schemering',
+      'khor-virap': 'Khor Virap, aan de voet van de Ararat',
+      cascade: 'De Cascade, van onderaf',
+      'city-lights': 'Het uur waarop de stad oplicht',
     },
+
   },
   menu: {
     title: 'Menu',
@@ -126,7 +131,8 @@ const nl: Dict = {
     veg: 'vegetarisch',
     vegan: 'veganistisch',
     allergens: 'Allergieën of dieetwensen? Laat het weten bij het reserveren, of vraag het je gastheer.',
-    add: 'Voeg toe',
+    add: 'Toevoegen',
+    inOrder: 'In je bestelling',
   },
   reserve: {
     title: 'Reserveer een tafel',
@@ -186,7 +192,7 @@ const nl: Dict = {
   footer: {
     rights: 'Armeens restaurant in Hilversum',
     credits: 'Fotoverantwoording',
-    creditsNote: 'Foto’s via Wikimedia Commons, bijgesneden en verkleind.',
+    creditsNote: 'Foto’s via Unsplash en Wikimedia Commons, bijgesneden en verkleind.',
   },
 }
 

@@ -7,17 +7,19 @@ export function Intro() {
   return (
     <>
       <section className="section intro">
-        <div className="container container--narrow">
+        <div className="container container--narrow" data-reveal>
           <Logo variant="mountain" className="intro__mark" title="" />
           <h2>{t.intro.title}</h2>
           <p className="lead">{t.intro.body}</p>
         </div>
       </section>
       <figure className="band">
-        <picture>
-          <source media="(min-width: 700px)" srcSet={img('yerevan/ararat-dawn-2000.webp')} />
-          <img src={img('yerevan/ararat-dawn-900.webp')} alt={t.intro.photo} width={900} height={700} loading="lazy" decoding="async" />
-        </picture>
+        <div className="band__frame">
+          <picture>
+            <source media="(min-width: 700px)" srcSet={img('yerevan/ararat-pink-2000.webp')} />
+            <img data-parallax src={img('yerevan/ararat-pink-900.webp')} alt={t.intro.photo} width={900} height={760} loading="lazy" decoding="async" />
+          </picture>
+        </div>
         <figcaption>{t.intro.photo}</figcaption>
       </figure>
     </>

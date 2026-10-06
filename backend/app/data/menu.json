@@ -69,7 +69,8 @@
           "price": 950,
           "tags": [
             "v"
-          ]
+          ],
+          "image": "dishes/eggplant-rolls.webp"
         },
         {
           "id": "spas",
@@ -241,7 +242,8 @@
           "tags": [
             "v",
             "vg"
-          ]
+          ],
+          "image": "dishes/khorovats-veg.webp"
         }
       ]
     },
@@ -266,7 +268,8 @@
           "tags": [
             "v",
             "vg"
-          ]
+          ],
+          "image": "dishes/armenian-salad.webp"
         },
         {
           "id": "eetch",
@@ -282,7 +285,8 @@
           "tags": [
             "v",
             "vg"
-          ]
+          ],
+          "image": "dishes/eetch.webp"
         }
       ]
     },
@@ -345,7 +349,8 @@
             "nl": "Gezet in een jazve, op verzoek met kardemom"
           },
           "price": 400,
-          "tags": []
+          "tags": [],
+          "image": "dishes/soorj.webp"
         },
         {
           "id": "tan",
@@ -358,7 +363,8 @@
             "nl": "Gezouten yoghurtdrank"
           },
           "price": 450,
-          "tags": []
+          "tags": [],
+          "image": "dishes/tan.webp"
         },
         {
           "id": "areni",
@@ -371,7 +377,8 @@
             "nl": "Rode wijn uit Vayots Dzor"
           },
           "price": 750,
-          "tags": []
+          "tags": [],
+          "image": "dishes/areni.webp"
         },
         {
           "id": "brandy",
@@ -384,7 +391,8 @@
             "nl": "Vijf jaar gerijpt"
           },
           "price": 900,
-          "tags": []
+          "tags": [],
+          "image": "dishes/brandy.webp"
         }
       ]
     }

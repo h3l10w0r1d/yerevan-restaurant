@@ -7,7 +7,7 @@ export function Logo({ variant = 'primary', className, title = 'Yerevan restaura
   if (variant === 'mountain') {
     return (
       <svg className={className} viewBox="-2 -2 207 55" role="img" aria-label={title}>
-        <polyline points={MOUNTAIN} fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
+        <polyline className="logo__mountain" points={MOUNTAIN} pathLength={1} strokeDasharray="1" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
       </svg>
     )
   }
@@ -16,6 +16,9 @@ export function Logo({ variant = 'primary', className, title = 'Yerevan restaura
     <svg className={className} viewBox={primary ? '0 -2 546 224' : '0 70 546 96'} role="img" aria-label={title}>
       {primary && (
         <polyline
+          className="logo__mountain"
+          pathLength={1}
+          strokeDasharray="1"
           points={MOUNTAIN}
           transform="translate(171 0)"
           fill="none"
@@ -25,6 +28,7 @@ export function Logo({ variant = 'primary', className, title = 'Yerevan restaura
         />
       )}
       <text
+        className="logo__word"
         x="273" y="161" textAnchor="middle" textLength="540" lengthAdjust="spacingAndGlyphs"
         fill="currentColor" fontFamily="'Bodoni Moda', 'Didot', serif" fontSize="124" fontWeight="400"
         style={{ fontVariationSettings: "'opsz' 96" }}
@@ -33,6 +37,7 @@ export function Logo({ variant = 'primary', className, title = 'Yerevan restaura
       </text>
       {primary && (
         <text
+          className="logo__sub"
           x="273" y="209" textAnchor="middle" fill="currentColor"
           fontFamily="'Bodoni Moda', 'Didot', serif" fontSize="46" fontWeight="600" letterSpacing="2"
         >
