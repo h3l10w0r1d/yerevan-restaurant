@@ -83,7 +83,9 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>) {
       mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
         const track = document.querySelector<HTMLElement>('.gallery__track')
         if (!track) return
-        const distance = () => track.scrollWidth - window.innerWidth
+        const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
+        // With few photos on a very wide screen there's nothing to scroll sideways.
+        if (distance() < 40) return
         gsap.to(track, {
           x: () => -distance(),
           ease: 'none',

@@ -12,18 +12,16 @@ const en = {
   intro: {
     title: 'An evening in Yerevan',
     body: 'Lavash from the oven, meat over open fire, tolma the way grandmothers fold it. We cook the food of Armenia for long tables and slow evenings, a short walk from Hilversum station.',
-    photo: 'Yerevan, at the hour the city lights come on',
+    photo: 'Carved tuff stone, Yerevan',
   },
   gallery: {
     title: 'From Yerevan',
-    lead: 'The city we cook from: pink tuff stone, café streets and the square after dark.',
+    lead: 'The city we cook from: pink tuff stone, the Opera, the Cascade and the square in the late sun.',
     photos: {
-      'republic-square': 'Republic Square, after dark',
-      'evening-street': 'Summer evenings on the café streets',
-      'square-day': 'Republic Square in pink tuff',
-      fountains: 'The singing fountains at night',
-      cascade: 'The Cascade, from below',
-      'tuff-night': 'Tuff stone and the first snow',
+      opera: 'The Opera, from above',
+      cascade: 'The Cascade on a summer day',
+      government: 'Republic Square in the late sun',
+      station: 'Yerevan station at golden hour',
     },
 
   },
@@ -110,18 +108,16 @@ const nl: Dict = {
   intro: {
     title: 'Een avond in Jerevan',
     body: 'Lavash uit de oven, vlees boven open vuur, tolma zoals grootmoeders hem vouwen. Wij koken de keuken van Armenië voor lange tafels en rustige avonden, op loopafstand van station Hilversum.',
-    photo: 'Jerevan, op het uur dat de stad oplicht',
+    photo: 'Gehouwen tufsteen, Jerevan',
   },
   gallery: {
     title: 'Uit Jerevan',
-    lead: 'De stad waar onze keuken vandaan komt: roze tufsteen, caféstraten en het plein na zonsondergang.',
+    lead: 'De stad waar onze keuken vandaan komt: roze tufsteen, de Opera, de Cascade en het plein in de late zon.',
     photos: {
-      'republic-square': 'Republiekplein, na zonsondergang',
-      'evening-street': 'Zomeravonden in de caféstraten',
-      'square-day': 'Republiekplein in roze tufsteen',
-      fountains: 'De zingende fonteinen bij avond',
-      cascade: 'De Cascade, van onderaf',
-      'tuff-night': 'Tufsteen en de eerste sneeuw',
+      opera: 'De Opera, van bovenaf',
+      cascade: 'De Cascade op een zomerdag',
+      government: 'Het Republiekplein in de late zon',
+      station: 'Station Jerevan bij gouden uur',
     },
 
   },
