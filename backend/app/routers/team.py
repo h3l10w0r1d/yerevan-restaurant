@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import EmailStr
 from sqlmodel import Field, Session, SQLModel, func, select
 
+from .. import accounts
 from ..db import get_session
 from ..deps import owner
 from ..models import ROLES, AuthSession, User, UserRead
@@ -50,8 +51,11 @@ def invite(body: Invite, session: Session = Depends(get_session), _: User = Depe
     session.add(user)
     session.commit()
     session.refresh(user)
-    # The temporary password is returned once and never stored in plain text.
-    return {"user": UserRead.model_validate(user), "temporary_password": password}
+    # With email set up the invite goes by email; otherwise the temporary password is
+    # returned once (never stored in plain text) for the owner to pass on.
+    emailed = accounts.send_link(session, user, "invite")
+    return {"user": UserRead.model_validate(user), "emailed": emailed,
+            "temporary_password": None if emailed else password}
 
 
 @router.patch("/{uid}", response_model=UserRead)
@@ -87,12 +91,14 @@ def reset_password(uid: int, session: Session = Depends(get_session), _: User = 
     user = session.get(User, uid)
     if not user:
         raise HTTPException(404, "not_found")
+    if accounts.send_link(session, user, "reset"):
+        return {"emailed": True, "temporary_password": None}
     password = temp_password()
     user.password_hash = hash_password(password)
     _end_sessions(session, user.id)
     session.add(user)
     session.commit()
-    return {"temporary_password": password}
+    return {"emailed": False, "temporary_password": password}
 
 
 @router.delete("/{uid}", status_code=204)

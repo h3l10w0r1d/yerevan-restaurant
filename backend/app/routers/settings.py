@@ -22,6 +22,12 @@ class Restaurant(SQLModel):
     phone: str = Field(default="", max_length=40)
 
 
+class Notifications(SQLModel):
+    guest_emails: bool = True
+    staff_emails: bool = True
+    staff_email: str = Field(default="", max_length=200)
+
+
 class SettingsBody(SQLModel):
     restaurant: Restaurant
     hours: List[Optional[List[str]]]
@@ -31,6 +37,7 @@ class SettingsBody(SQLModel):
     max_party_size: int = Field(ge=1, le=100)
     booking_window_days: int = Field(ge=1, le=365)
     ordering_enabled: bool
+    notifications: Notifications = Notifications()
 
     @field_validator("hours")
     @classmethod

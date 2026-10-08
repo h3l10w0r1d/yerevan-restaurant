@@ -12,8 +12,8 @@ export default defineConfig({
   server: {
     port: 5174,
     proxy: {
-      '/api': 'http://localhost:8000',
-      '/images': 'http://localhost:5173', // seeded dish photos live in the public site
+      '/api': process.env.API_PROXY || 'http://localhost:8000',
+      '/images': process.env.SITE_PROXY || 'http://localhost:5173', // seeded dish photos live in the public site
     },
   },
 })

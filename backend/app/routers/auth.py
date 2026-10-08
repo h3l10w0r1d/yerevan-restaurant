@@ -5,10 +5,10 @@ from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import EmailStr
 from sqlmodel import Field, Session, SQLModel, select
 
-from .. import config
+from .. import accounts, config
 from ..db import get_session
 from ..deps import current_user
-from ..models import AuthSession, User, UserRead
+from ..models import AuthSession, PasswordToken, User, UserRead
 from ..security import hash_password, hash_token, new_token, verify_password
 
 router = APIRouter(prefix="/api/auth")
@@ -22,6 +22,15 @@ class Login(SQLModel):
 class ProfileUpdate(SQLModel):
     name: str = Field(min_length=1, max_length=80)
     email: EmailStr
+
+
+class Forgot(SQLModel):
+    email: str
+
+
+class ResetPassword(SQLModel):
+    token: str
+    password: str = Field(min_length=8, max_length=200)
 
 
 class PasswordChange(SQLModel):
@@ -93,3 +102,40 @@ def change_password(
         if s.token_hash != current:
             session.delete(s)
     session.commit()
+
+
+@router.post("/forgot", status_code=204)
+def forgot_password(body: Forgot, session: Session = Depends(get_session)):
+    """Always answers 204 so the form can't be used to discover which emails have accounts."""
+    user = session.exec(select(User).where(User.email == body.email.strip().lower())).first()
+    if not user or not user.active:
+        return
+    recent = session.exec(select(PasswordToken).where(
+        PasswordToken.user_id == user.id,
+        PasswordToken.purpose == "reset",
+        PasswordToken.expires_at > datetime.utcnow() + timedelta(hours=config.PASSWORD_LINK_HOURS) - timedelta(minutes=2),
+    )).first()
+    if recent:  # one link per two minutes is plenty
+        return
+    accounts.send_link(session, user, "reset")
+
+
+@router.get("/token")
+def token_info(token: str, session: Session = Depends(get_session)):
+    row, user = accounts.valid_token(session, token)
+    if not row:
+        raise HTTPException(410, "link_expired")
+    return {"name": user.name, "email": user.email, "purpose": row.purpose}
+
+
+@router.post("/reset")
+def reset_password(body: ResetPassword, session: Session = Depends(get_session)):
+    row, user = accounts.valid_token(session, body.token)
+    if not row:
+        raise HTTPException(410, "link_expired")
+    user.password_hash = hash_password(body.password)
+    row.used_at = datetime.utcnow()
+    accounts.end_sessions(session, user.id)
+    session.add_all([user, row])
+    session.commit()
+    return {"email": user.email}

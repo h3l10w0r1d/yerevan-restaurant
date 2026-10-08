@@ -10,12 +10,7 @@ import { MenuSection } from './components/MenuSection'
 import { Order } from './components/Order'
 import { Reservation } from './components/Reservation'
 import { Visit } from './components/Visit'
-import { EdGallery } from './components/editorial/EdGallery'
-import { EdHero } from './components/editorial/EdHero'
-import { EdIntro } from './components/editorial/EdIntro'
-import { EdMenu } from './components/editorial/EdMenu'
 import { useRestaurant } from './restaurant'
-import { useSiteStyle } from './style'
 
 const useHash = () => {
   const [hash, setHash] = useState(window.location.hash)
@@ -33,8 +28,7 @@ export default function App() {
   const { orderingEnabled: ordering } = useRestaurant()
   const [cart, setCart] = useState<Record<string, number>>({})
   const mainRef = useRef<HTMLElement>(null)
-  const { style } = useSiteStyle()
-  useScrollAnimations(mainRef, style)
+  useScrollAnimations(mainRef)
 
   useEffect(() => {
     api.menu().then(setMenu).catch(() => {})
@@ -88,22 +82,11 @@ export default function App() {
   return (
     <>
       <Header cartCount={cartCount} />
-      <main ref={mainRef} key={style}>
-        {style === 'editorial' ? (
-          <>
-            <EdHero />
-            <EdIntro />
-            <EdMenu menu={menu} ordering={ordering} cart={cart} onAdd={addOne} />
-            <EdGallery />
-          </>
-        ) : (
-          <>
-            <Hero />
-            <Intro />
-            <MenuSection menu={menu} ordering={ordering} cart={cart} onAdd={addOne} />
-            <Gallery />
-          </>
-        )}
+      <main ref={mainRef}>
+        <Hero />
+        <Intro />
+        <MenuSection menu={menu} ordering={ordering} cart={cart} onAdd={addOne} />
+        <Gallery />
         <Reservation />
         <Order enabled={ordering} cart={cart} items={items} setQty={setQty} clear={() => setCart({})} />
         <Visit />

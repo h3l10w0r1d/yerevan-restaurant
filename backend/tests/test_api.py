@@ -36,7 +36,7 @@ def next_open_day() -> date:
 
 
 def booking(**kw):
-    base = {"name": "Ani", "email": "ani@example.com", "phone": "+31612345678",
+    base = {"name": "Ani Petrosyan", "email": "ani@example.com", "phone": "+31612345678",
             "date": next_open_day().isoformat(), "time": "18:00", "guests": 4}
     base.update(kw)
     return base

@@ -29,6 +29,7 @@ const MESSAGES: Record<string, string> = {
   category_not_empty: 'Move or delete the dishes in this category first.',
   unsupported_type: 'Use a JPG, PNG, WebP or AVIF image.',
   too_large: 'That image is too large.',
+  link_expired: 'This link has expired or was already used. Ask for a new one.',
 }
 
 export const describe = (e: unknown) =>

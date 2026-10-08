@@ -4,7 +4,9 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from '@/components/layout'
 import { useAuth } from '@/lib/auth'
 import type { Role } from '@/lib/types'
+import { Forgot } from '@/pages/Forgot'
 import { Login } from '@/pages/Login'
+import { SetPassword } from '@/pages/SetPassword'
 
 // Pages load on demand; the dashboard's chart library stays out of the first download.
 const page = <K extends string>(name: K, load: () => Promise<Record<K, () => ReactNode>>) =>
@@ -34,6 +36,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot" element={<Forgot />} />
+      <Route path="/set-password" element={<SetPassword />} />
       <Route element={<Guard><Layout /></Guard>}>
         <Route index element={<Dashboard />} />
         <Route path="reservations" element={<Reservations />} />

@@ -18,19 +18,15 @@ Mobile-first and bilingual (English / Nederlands), built from the brandbook: bur
 - **Team** (owners): add people with a one-time password, change roles, reset passwords, disable or remove access
 - **Settings** (owners and managers): restaurant details, opening hours, booking rules, takeaway ordering on/off
 - **My account**: profile, password, evening (dark) mode
+- **Sign-in**: "Forgot password?" emails a reset link; invites email a link to choose a password
+
+### Email
+
+Booking, order and account emails go through Resend, in the guest's language, with a calendar invite on confirmation.
+Without `RESEND_API_KEY` they are only logged (Admin → Settings → Recent emails). Setup steps: [docs/EMAIL-SETUP.md](docs/EMAIL-SETUP.md).
 
 Roles: **Owner** (everything), **Manager** (everything except Team), **Staff** (dashboard, reservations, orders).
 The first owner is created from `ADMIN_EMAIL` / `ADMIN_PASSWORD` when the database has no users (local default: `admin@yerevanrestaurant.nl` / `change-me`).
-
-## Two styles
-
-The site ships with two looks over the same content and features, switchable from the header:
-
-- **Classic**: burgundy hero, product-card menu, pinned horizontal gallery
-- **Magazine**: editorial masthead, numbered menu with a sticky plate preview, asymmetric figure spread
-
-The choice is remembered per visitor; link to a specific one with `?style=classic` or `?style=editorial`.
-Editorial-only components live in `frontend/src/components/editorial/` and their styles in `frontend/src/editorial.css` (scoped to `[data-style='editorial']`).
 
 ## Run locally
 
@@ -66,6 +62,10 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 | --- | --- | --- |
 | `ADMIN_EMAIL` | `admin@yerevanrestaurant.nl` | First owner's login, created when there are no users |
 | `ADMIN_PASSWORD` | `change-me` (falls back to `ADMIN_TOKEN`) | First owner's password |
+| `RESEND_API_KEY` | (empty: emails are logged, not sent) | Resend API key |
+| `EMAIL_FROM` | `Yerevan Restaurant <reserveringen@yerevanrestaurant.nl>` | Sender, on a domain verified in Resend |
+| `EMAIL_REPLY_TO` | restaurant email from Settings | Where guest replies go |
+| `SITE_URL` | `https://yerevan-restaurant.vercel.app` | Used for links in emails |
 | `DATABASE_URL` | `sqlite:///./yerevan.db` | Use Postgres in production |
 | `CORS_ORIGINS` | `*` | Comma-separated allowed origins |
 | `ORDERING_ENABLED` | `false` | Default for the takeaway switch (then managed in Settings) |

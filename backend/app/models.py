@@ -83,6 +83,8 @@ class ReservationAdminWrite(SQLModel):
     internal_note: Optional[str] = Field(default=None, max_length=1000)
     source: str = "phone"
     status: str = "confirmed"
+    language: str = Field(default="en", max_length=5)
+    notify_guest: bool = True  # email the guest about this change (if they have an address)
 
     @field_validator("status")
     @classmethod
@@ -94,6 +96,7 @@ class ReservationAdminWrite(SQLModel):
 
 class StatusUpdate(SQLModel):
     status: str
+    notify: bool = True  # email the guest about the change, where relevant
 
 
 # --- Orders ---------------------------------------------------------------
@@ -184,3 +187,26 @@ class Image(SQLModel, table=True):
 class Setting(SQLModel, table=True):
     key: str = Field(primary_key=True)
     value: dict = Field(sa_column=Column(JSON))
+
+
+# --- Email ----------------------------------------------------------------
+
+class EmailLog(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    to: str
+    subject: str
+    template: str = Field(index=True)
+    related: Optional[str] = None  # e.g. "reservation:12"
+    status: str  # sent | failed | skipped
+    provider_id: Optional[str] = None
+    error: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)
+
+
+class PasswordToken(SQLModel, table=True):
+    """One-time link for invites and password resets. Only the hash is stored."""
+    token_hash: str = Field(primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+    purpose: str  # invite | reset
+    expires_at: datetime
+    used_at: Optional[datetime] = None

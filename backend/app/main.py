@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import config
 from .db import init_db
-from .routers import admin, auth, menu_admin, public, settings, team
+from .routers import admin, auth, email_admin, menu_admin, public, settings, team
 
 
 @asynccontextmanager
@@ -22,5 +22,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-for router in (public.router, auth.router, admin.router, menu_admin.router, team.router, settings.router):
+for router in (public.router, auth.router, admin.router, menu_admin.router, team.router, settings.router, email_admin.router):
     app.include_router(router)

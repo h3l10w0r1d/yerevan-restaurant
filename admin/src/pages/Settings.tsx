@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Switch } from '@/components/ui/switch'
+import { EmailSettings } from '@/components/email-settings'
 import { api, describe } from '@/lib/api'
 import { WEEKDAYS } from '@/lib/format'
 import type { Settings as SettingsT } from '@/lib/types'
@@ -119,6 +120,8 @@ export function Settings() {
           </label>
         </CardContent>
       </Card>
+
+      <EmailSettings form={form} setForm={setForm} />
 
       <div className={`fixed inset-x-0 bottom-0 z-30 border-t bg-background/95 backdrop-blur transition-transform md:left-(--sidebar-width) ${dirty ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="mx-auto flex max-w-3xl items-center justify-end gap-2 p-3">

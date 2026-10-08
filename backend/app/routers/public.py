@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlmodel import Session
 
+from .. import emails
 from ..db import get_session
 from ..models import Image, MenuItem, Order, OrderCreate, Reservation, ReservationCreate
 from ..store import booked_guests, get_settings, now_local, public_menu, slots_for
@@ -77,6 +78,8 @@ def create_reservation(data: ReservationCreate, session: Session = Depends(get_s
     session.add(reservation)
     session.commit()
     session.refresh(reservation)
+    emails.reservation_received(session, reservation)
+    emails.staff_new_reservation(session, reservation)
     return reservation
 
 
@@ -100,4 +103,6 @@ def create_order(data: OrderCreate, session: Session = Depends(get_session)):
     session.add(order)
     session.commit()
     session.refresh(order)
+    emails.order_mail(session, order, "received")
+    emails.staff_new_order(session, order)
     return order

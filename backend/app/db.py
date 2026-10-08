@@ -24,5 +24,7 @@ def init_db() -> None:
 
 
 def get_session():
-    with Session(engine) as session:
+    # Objects stay readable after commit: emails are logged (and committed) after a
+    # booking or order is saved, and the route still returns that booking or order.
+    with Session(engine, expire_on_commit=False) as session:
         yield session

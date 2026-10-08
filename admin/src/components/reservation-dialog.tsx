@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -25,6 +26,7 @@ const SOURCES = [
   { value: 'web', label: 'Website' },
   { value: 'admin', label: 'Other' },
 ]
+const LANGUAGES = [{ value: 'en', label: 'English' }, { value: 'nl', label: 'Nederlands' }]
 const STATUS_ITEMS = Object.entries(RESERVATION_STATUS).map(([value, s]) => ({ value, label: s.label }))
 
 const WARNINGS: Record<string, string> = {
@@ -42,7 +44,7 @@ type Props = {
 
 const empty = (date: string): ReservationInput => ({
   name: '', email: '', phone: '', date, time: '19:00', guests: 2, notes: '', internal_note: '',
-  source: 'phone', status: 'confirmed',
+  source: 'phone', status: 'confirmed', language: 'nl', notify_guest: true,
 })
 
 export function ReservationDialog({ open, onOpenChange, reservation, defaultDate, onSaved }: Props) {
@@ -56,6 +58,7 @@ export function ReservationDialog({ open, onOpenChange, reservation, defaultDate
       name: reservation.name, email: reservation.email ?? '', phone: reservation.phone, date: reservation.date,
       time: reservation.time, guests: reservation.guests, notes: reservation.notes ?? '',
       internal_note: reservation.internal_note ?? '', source: reservation.source, status: reservation.status,
+      language: reservation.language, notify_guest: true,
     } : empty(defaultDate ?? iso(new Date())))
   }, [open, reservation, defaultDate])
 
@@ -171,6 +174,14 @@ export function ReservationDialog({ open, onOpenChange, reservation, defaultDate
           </div>
 
           <div className="grid gap-2">
+            <Label>Guest’s language</Label>
+            <Select items={LANGUAGES} value={form.language} onValueChange={(v) => set('language', String(v))}>
+              <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+              <SelectContent>{LANGUAGES.map((l) => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}</SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="r-notes">Guest notes</Label>
             <Textarea id="r-notes" rows={2} placeholder="Allergies, occasion, high chair…" value={form.notes ?? ''} onChange={(e) => set('notes', e.target.value)} />
           </div>
@@ -178,6 +189,18 @@ export function ReservationDialog({ open, onOpenChange, reservation, defaultDate
             <Label htmlFor="r-internal">Internal note <span className="font-normal text-muted-foreground">(staff only)</span></Label>
             <Textarea id="r-internal" rows={2} placeholder="Table 4, regulars, VIP…" value={form.internal_note ?? ''} onChange={(e) => set('internal_note', e.target.value)} />
           </div>
+
+          {!!form.email && (
+            <label className="flex items-start gap-2 rounded-lg border bg-muted/30 p-3 text-sm">
+              <Checkbox className="mt-0.5" checked={form.notify_guest} onCheckedChange={(c) => set('notify_guest', !!c)} />
+              <span>
+                <span className="font-medium">Email the guest</span>
+                <span className="block text-xs text-muted-foreground">
+                  Sends a confirmation (with calendar invite) or cancellation when that’s what changes, in the guest’s language.
+                </span>
+              </span>
+            </label>
+          )}
 
           <DialogFooter className="gap-2 sm:justify-between">
             {reservation ? (

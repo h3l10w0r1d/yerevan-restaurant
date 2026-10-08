@@ -5,6 +5,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session, func, select
 
+from .. import emails
 from ..db import get_session
 from ..deps import staff
 from ..models import (
@@ -50,10 +51,12 @@ def list_reservations(
 
 @router.post("/reservations", status_code=201)
 def create_reservation(body: ReservationAdminWrite, session: Session = Depends(get_session)):
-    reservation = Reservation(**body.model_dump())
+    reservation = Reservation(**body.model_dump(exclude={"notify_guest"}))
     session.add(reservation)
     session.commit()
     session.refresh(reservation)
+    if body.notify_guest:
+        emails.reservation_status_changed(session, reservation, previous=None)
     return {"reservation": reservation, "warnings": _warnings(session, reservation)}
 
 
@@ -62,11 +65,17 @@ def update_reservation(rid: int, body: ReservationAdminWrite, session: Session =
     reservation = session.get(Reservation, rid)
     if not reservation:
         raise HTTPException(404, "not_found")
-    for key, value in body.model_dump().items():
+    before = (reservation.status, reservation.date, reservation.time, reservation.guests)
+    for key, value in body.model_dump(exclude={"notify_guest"}).items():
         setattr(reservation, key, value)
     session.add(reservation)
     session.commit()
     session.refresh(reservation)
+    if body.notify_guest:
+        moved = before[1:] != (reservation.date, reservation.time, reservation.guests)
+        # A confirmed booking that moved gets a fresh confirmation with the new details.
+        previous = None if (moved and reservation.status == "confirmed") else before[0]
+        emails.reservation_status_changed(session, reservation, previous=previous)
     return {"reservation": reservation, "warnings": _warnings(session, reservation)}
 
 
@@ -77,10 +86,13 @@ def set_reservation_status(rid: int, body: StatusUpdate, session: Session = Depe
     reservation = session.get(Reservation, rid)
     if not reservation:
         raise HTTPException(404, "not_found")
+    previous = reservation.status
     reservation.status = body.status
     session.add(reservation)
     session.commit()
     session.refresh(reservation)
+    if body.notify:
+        emails.reservation_status_changed(session, reservation, previous=previous)
     return reservation
 
 
@@ -122,10 +134,13 @@ def set_order_status(oid: int, body: StatusUpdate, session: Session = Depends(ge
     order = session.get(Order, oid)
     if not order:
         raise HTTPException(404, "not_found")
+    previous = order.status
     order.status = body.status
     session.add(order)
     session.commit()
     session.refresh(order)
+    if body.notify and order.status == "ready" and previous != "ready":
+        emails.order_mail(session, order, "ready")
     return order
 
 

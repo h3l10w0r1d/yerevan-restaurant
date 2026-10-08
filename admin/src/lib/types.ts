@@ -28,7 +28,7 @@ export type Reservation = {
   created_at: string
 }
 
-export type ReservationInput = Omit<Reservation, 'id' | 'created_at' | 'language'>
+export type ReservationInput = Omit<Reservation, 'id' | 'created_at'> & { notify_guest: boolean }
 
 export type OrderStatus = 'pending' | 'confirmed' | 'ready' | 'completed' | 'cancelled'
 
@@ -79,6 +79,7 @@ export type Settings = {
   max_party_size: number
   booking_window_days: number
   ordering_enabled: boolean
+  notifications: { guest_emails: boolean; staff_emails: boolean; staff_email: string }
 }
 
 export type Stats = {
@@ -88,4 +89,24 @@ export type Stats = {
   open_orders: number
   series: { date: string; reservations: number; covers: number }[]
   upcoming_today: Reservation[]
+}
+
+export type EmailLogEntry = {
+  id: number
+  to: string
+  subject: string
+  template: string
+  related: string | null
+  status: 'sent' | 'failed' | 'skipped'
+  provider_id: string | null
+  error: string | null
+  created_at: string
+}
+
+export type EmailStatus = {
+  enabled: boolean
+  from: string
+  reply_to: string
+  site_url: string
+  log: EmailLogEntry[]
 }

@@ -52,8 +52,9 @@ export function Team() {
 
   async function reset(u: User) {
     try {
-      const { temporary_password } = await api.post<{ temporary_password: string }>(`/admin/team/${u.id}/reset-password`)
-      setSecret({ value: temporary_password, name: u.name, email: u.email })
+      const res = await api.post<{ emailed: boolean; temporary_password: string | null }>(`/admin/team/${u.id}/reset-password`)
+      if (res.emailed) toast.success(`Reset link emailed to ${u.email}`)
+      else setSecret({ value: res.temporary_password!, name: u.name, email: u.email })
     } catch (e) {
       toast.error(describe(e))
     }
@@ -149,7 +150,11 @@ export function Team() {
         </CardContent>
       </Card>
 
-      <InviteDialog open={invite} onOpenChange={setInvite} onCreated={(u, pw) => { reload(); setSecret({ value: pw, name: u.name, email: u.email }) }} />
+      <InviteDialog open={invite} onOpenChange={setInvite} onCreated={(u, pw) => {
+        reload()
+        if (pw) setSecret({ value: pw, name: u.name, email: u.email })
+        else toast.success(`Invitation emailed to ${u.email}`)
+      }} />
       <TempPasswordDialog value={secret?.value ?? null} name={secret?.name ?? ''} email={secret?.email ?? ''} onClose={() => setSecret(null)} />
 
       <AlertDialog open={!!removing} onOpenChange={(o) => !o && setRemoving(null)}>
@@ -172,7 +177,7 @@ export function Team() {
 }
 
 function InviteDialog({ open, onOpenChange, onCreated }: {
-  open: boolean; onOpenChange: (o: boolean) => void; onCreated: (u: User, password: string) => void
+  open: boolean; onOpenChange: (o: boolean) => void; onCreated: (u: User, password: string | null) => void
 }) {
   const [form, setForm] = useState({ name: '', email: '', role: 'staff' as Role })
   const [busy, setBusy] = useState(false)
@@ -181,7 +186,7 @@ function InviteDialog({ open, onOpenChange, onCreated }: {
     e.preventDefault()
     setBusy(true)
     try {
-      const res = await api.post<{ user: User; temporary_password: string }>('/admin/team', form)
+      const res = await api.post<{ user: User; temporary_password: string | null }>('/admin/team', form)
       onOpenChange(false)
       setForm({ name: '', email: '', role: 'staff' })
       onCreated(res.user, res.temporary_password)
@@ -198,7 +203,7 @@ function InviteDialog({ open, onOpenChange, onCreated }: {
         <form onSubmit={submit} className="grid gap-4">
           <DialogHeader>
             <DialogTitle className="font-heading text-xl">Add team member</DialogTitle>
-            <DialogDescription>They get a temporary password to sign in with.</DialogDescription>
+            <DialogDescription>They’ll get an email to choose a password. If email isn’t set up yet, you’ll get a temporary password to pass on.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-2">
             <Label htmlFor="t-name">Name</Label>
@@ -217,7 +222,7 @@ function InviteDialog({ open, onOpenChange, onCreated }: {
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button type="submit" disabled={busy}>{busy ? 'Adding…' : 'Add and create password'}</Button>
+            <Button type="submit" disabled={busy}>{busy ? 'Adding…' : 'Add team member'}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
