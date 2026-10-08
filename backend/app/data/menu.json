@@ -164,12 +164,12 @@
     {
       "id": "khorovats",
       "name": {
-        "en": "Khorovats",
-        "nl": "Khorovats"
+        "en": "Khorovats · Armenian grill",
+        "nl": "Khorovats · Armeense grill"
       },
       "note": {
-        "en": "Over open fire, with grilled vegetables and lavash",
-        "nl": "Boven open vuur, met gegrilde groenten en lavash"
+        "en": "Armenian barbecue over open fire, with grilled vegetables and lavash",
+        "nl": "Armeense barbecue boven open vuur, met gegrilde groenten en lavash"
       },
       "items": [
         {
@@ -231,8 +231,8 @@
         {
           "id": "khorovats-veg",
           "name": {
-            "en": "Vegetable khorovats",
-            "nl": "Groente-khorovats"
+            "en": "Grilled vegetables (khorovats)",
+            "nl": "Gegrilde groenten (khorovats)"
           },
           "description": {
             "en": "Aubergine, pepper, tomato, onion, herbs",

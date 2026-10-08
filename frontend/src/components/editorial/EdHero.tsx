@@ -31,7 +31,7 @@ export function EdHero() {
           </h1>
           <figure className="ed-fig ed-hero__fig" data-ed-clip>
             <div className="ed-fig__frame">
-              <img src={img('yerevan/ararat-dusk.webp')} alt={t.ed.heroFig} width={900} height={1125} />
+              <img src={img('yerevan/square-day.webp')} alt={t.ed.heroFig} width={900} height={1125} />
             </div>
             <figcaption><span className="ed-fig__no">Fig. 1</span>{t.ed.heroFig}</figcaption>
           </figure>

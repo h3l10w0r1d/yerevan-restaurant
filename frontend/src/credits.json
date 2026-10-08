@@ -176,14 +176,6 @@
     "source": "https://images.unsplash.com/photo-1722307036188-57649793ddcf"
   },
   {
-    "image": "yerevan/ararat-pink",
-    "title": "Ararat pink",
-    "author": "Unsplash",
-    "license": "Unsplash License",
-    "licenseUrl": "https://unsplash.com/license",
-    "source": "https://images.unsplash.com/photo-1600758208050-a22f17dc5bb9"
-  },
-  {
     "image": "yerevan/republic-square",
     "title": "Republic square",
     "author": "Unsplash",
@@ -200,22 +192,6 @@
     "source": "https://images.unsplash.com/photo-1593441516376-175bb702465a"
   },
   {
-    "image": "yerevan/ararat-dusk",
-    "title": "Ararat dusk",
-    "author": "Unsplash",
-    "license": "Unsplash License",
-    "licenseUrl": "https://unsplash.com/license",
-    "source": "https://images.unsplash.com/photo-1688280506107-8fa36172ae4f"
-  },
-  {
-    "image": "yerevan/khor-virap",
-    "title": "Khor virap",
-    "author": "Unsplash",
-    "license": "Unsplash License",
-    "licenseUrl": "https://unsplash.com/license",
-    "source": "https://images.unsplash.com/photo-1698725034621-f773538f5373"
-  },
-  {
     "image": "yerevan/cascade",
     "title": "Cascade",
     "author": "Unsplash",
@@ -230,5 +206,29 @@
     "license": "Unsplash License",
     "licenseUrl": "https://unsplash.com/license",
     "source": "https://images.unsplash.com/photo-1595608216441-abc4557df27d"
+  },
+  {
+    "image": "yerevan/square-day",
+    "title": "Square day",
+    "author": "Unsplash",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "source": "https://images.unsplash.com/photo-1697700257503-1b6e2034eb37"
+  },
+  {
+    "image": "yerevan/fountains",
+    "title": "Fountains",
+    "author": "Unsplash",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "source": "https://images.unsplash.com/photo-1735842389109-8111e8087d4d"
+  },
+  {
+    "image": "yerevan/tuff-night",
+    "title": "Tuff night",
+    "author": "Unsplash",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "source": "https://images.unsplash.com/photo-1641200207254-8fed5226521c"
   }
 ]

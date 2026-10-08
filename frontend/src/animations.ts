@@ -65,7 +65,7 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>, style: 
           })
         })
 
-        // Ararat band: the photo drifts inside its frame (transform only, cheap on phones).
+        // City band: the photo drifts inside its frame (transform only, cheap on phones).
         gsap.fromTo('[data-parallax]', { yPercent: -8, scale: 1.12 }, {
           yPercent: 8,
           scale: 1.12,

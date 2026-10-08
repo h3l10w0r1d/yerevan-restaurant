@@ -18,8 +18,8 @@ export function EdIntro() {
       <figure className="ed-fig ed-plate" data-ed-clip>
         <div className="ed-fig__frame">
           <picture>
-            <source media="(min-width: 700px)" srcSet={img('yerevan/ararat-pink-2000.webp')} />
-            <img src={img('yerevan/ararat-pink-900.webp')} alt={t.intro.photo} width={900} height={760} loading="lazy" decoding="async" />
+            <source media="(min-width: 700px)" srcSet={img('yerevan/city-lights-2000.webp')} />
+            <img src={img('yerevan/city-lights-900.webp')} alt={t.intro.photo} width={900} height={760} loading="lazy" decoding="async" />
           </picture>
         </div>
         <figcaption className="ed-container"><span className="ed-fig__no">Plate I</span>{t.intro.photo}</figcaption>

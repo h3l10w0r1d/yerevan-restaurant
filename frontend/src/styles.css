@@ -7,7 +7,7 @@
   --ivory: #f8efea;
   --white: #fff;
   --ink: #3a1418;
-  --muted: #7d5a5d;
+  --muted: #67474b; /* darkened for readability on ivory (≈7:1) */
   --line: rgba(83, 28, 33, 0.16);
 
   --serif: 'Bodoni Moda', Didot, 'Bodoni 72', Georgia, serif;
@@ -27,7 +27,7 @@ body {
   background: var(--ivory);
   color: var(--ink);
   font-family: var(--sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -40,7 +40,7 @@ h2 { font-size: clamp(2rem, 7vw, 3rem); }
 h3 { font-size: 1.4rem; }
 p { margin: 0 0 1em; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.muted { color: var(--muted); font-size: 0.92rem; }
+.muted { color: var(--muted); font-size: 0.95rem; }
 .lead { font-size: 1.08rem; color: var(--muted); max-width: 36em; }
 .link { color: var(--burgundy); text-decoration: none; border-bottom: 1px solid currentColor; }
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
@@ -135,9 +135,9 @@ p { margin: 0 0 1em; }
 }
 .hero__inner { max-width: 560px; will-change: transform, opacity; }
 .hero__logo { width: min(78vw, 460px); margin: 0 auto 36px; }
-.hero__tagline { font-size: 1.05rem; color: rgba(248, 239, 234, 0.82); max-width: 26em; margin: 0 auto 36px; }
+.hero__tagline { font-size: 1.1rem; color: rgba(248, 239, 234, 0.92); max-width: 26em; margin: 0 auto 36px; }
 .hero__cta { display: flex; flex-direction: column; gap: 12px; }
-.hero__address { margin: 40px 0 0; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+.hero__address { margin: 40px 0 0; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
 @media (min-width: 560px) { .hero__cta { flex-direction: row; justify-content: center; } }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
@@ -239,16 +239,16 @@ p { margin: 0 0 1em; }
 /* Reservation — the evening colourway */
 .reserve { background: var(--navy); color: var(--ivory); }
 .reserve h2 { color: var(--ivory); }
-.reserve .lead { color: rgba(248, 239, 234, 0.72); }
+.reserve .lead { color: rgba(248, 239, 234, 0.85); }
 .form { display: grid; gap: 18px; }
 .form__row { display: grid; gap: 18px; }
 @media (min-width: 560px) { .form__row { grid-template-columns: 1fr 1fr; } }
 .field { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
-.field > span, .field > legend, .field__label { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0; margin-bottom: 6px; }
+.field > span, .field > legend, .field__label { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0; margin-bottom: 6px; }
 .reserve .field > span, .reserve .field > legend, .reserve .field__label { color: var(--amber); }
 .field input, .field textarea {
   width: 100%; min-height: 48px; padding: 10px 14px; border-radius: var(--radius);
-  font-size: 16px; font-weight: 300;
+  font-size: 16px; font-weight: 400;
   background: transparent; border: 1px solid var(--line); color: inherit;
   appearance: none; -webkit-appearance: none;
 }
@@ -285,7 +285,7 @@ p { margin: 0 0 1em; }
 .select__trigger {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   width: 100%; min-height: 48px; padding: 10px 14px; text-align: left; cursor: pointer;
-  font-size: 16px; font-weight: 300; background: transparent;
+  font-size: 16px; font-weight: 400; background: transparent;
   border: 1px solid var(--line); border-radius: var(--radius); transition: border-color 0.2s;
 }
 .select__trigger:focus-visible { outline: none; border-color: var(--amber); }
@@ -316,7 +316,7 @@ p { margin: 0 0 1em; }
 .datepicker__trigger {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   width: 100%; min-height: 48px; padding: 10px 14px; text-align: left; cursor: pointer;
-  font-size: 16px; font-weight: 300; background: transparent;
+  font-size: 16px; font-weight: 400; background: transparent;
   border: 1px solid var(--line); border-radius: var(--radius); transition: border-color 0.2s;
 }
 .datepicker__trigger--empty span { opacity: 0.55; }
@@ -385,7 +385,7 @@ p { margin: 0 0 1em; }
 .visit { background: var(--white); border-top: 1px solid var(--line); }
 .visit h2 { color: var(--burgundy); }
 .visit__grid { display: grid; gap: 36px; }
-.visit h3 { font-size: 0.78rem; font-family: var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; font-weight: 400; }
+.visit h3 { font-size: 0.8rem; font-family: var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; font-weight: 400; }
 .visit p { font-size: 1.1rem; }
 .hours { margin: 0; display: grid; gap: 4px; }
 .hours div { display: flex; justify-content: space-between; gap: 16px; padding: 4px 0; border-bottom: 1px solid var(--line); }
@@ -405,10 +405,10 @@ p { margin: 0 0 1em; }
 }
 .footer__inner { padding-top: 56px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
 .footer__logo { width: 200px; margin: 0 auto 24px; }
-.footer .muted { color: rgba(248, 239, 234, 0.55); font-size: 0.82rem; }
+.footer .muted { color: rgba(248, 239, 234, 0.75); font-size: 0.85rem; }
 
 /* Photo credits */
-.credits { margin-top: 20px; font-size: 0.78rem; color: rgba(248, 239, 234, 0.55); text-align: left; max-width: 680px; margin-inline: auto; }
+.credits { margin-top: 20px; font-size: 0.8rem; color: rgba(248, 239, 234, 0.7); text-align: left; max-width: 680px; margin-inline: auto; }
 .credits summary { cursor: pointer; text-align: center; list-style: none; }
 .credits summary::-webkit-details-marker { display: none; }
 .credits summary:hover { color: var(--ivory); }

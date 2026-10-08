@@ -16,8 +16,8 @@ export function Intro() {
       <figure className="band">
         <div className="band__frame">
           <picture>
-            <source media="(min-width: 700px)" srcSet={img('yerevan/ararat-pink-2000.webp')} />
-            <img data-parallax src={img('yerevan/ararat-pink-900.webp')} alt={t.intro.photo} width={900} height={760} loading="lazy" decoding="async" />
+            <source media="(min-width: 700px)" srcSet={img('yerevan/city-lights-2000.webp')} />
+            <img data-parallax src={img('yerevan/city-lights-900.webp')} alt={t.intro.photo} width={900} height={760} loading="lazy" decoding="async" />
           </picture>
         </div>
         <figcaption>{t.intro.photo}</figcaption>

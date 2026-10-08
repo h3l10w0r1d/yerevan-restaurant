@@ -4,9 +4,9 @@ import { useI18n } from '../../i18n'
 const PHOTOS = [
   { key: 'republic-square', speed: 0.1 },
   { key: 'evening-street', speed: -0.12 },
-  { key: 'khor-virap', speed: 0.06 },
+  { key: 'fountains', speed: 0.06 },
   { key: 'cascade', speed: -0.08 },
-  { key: 'city-lights', speed: 0.12 },
+  { key: 'tuff-night', speed: 0.12 },
 ] as const
 
 export function EdGallery() {
