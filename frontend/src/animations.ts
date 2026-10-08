@@ -67,26 +67,9 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>) {
             scrollTrigger: { trigger: el, start: 'top 85%', once: true },
           })
         })
-
-        // City band: the photo drifts inside its frame (transform only, cheap on phones).
-        gsap.fromTo('[data-parallax]', { yPercent: -8, scale: 1.12 }, {
-          yPercent: 8,
-          scale: 1.12,
-          ease: 'none',
-          scrollTrigger: { trigger: '.band', start: 'top bottom', end: 'bottom top', scrub: true },
-        })
       })
 
       sharedSections(mm)
-
-      // The band's frame opening animates clip-path, which repaints every frame; keep it to desktop.
-      mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo('.band__frame', { clipPath: 'inset(8% 6% 8% 6%)' }, {
-          clipPath: 'inset(0% 0% 0% 0%)',
-          ease: 'none',
-          scrollTrigger: { trigger: '.band', start: 'top 90%', end: 'top 30%', scrub: true },
-        })
-      })
 
       // Gallery: pinned horizontal scroll on wide screens, native swipe on phones.
       mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
