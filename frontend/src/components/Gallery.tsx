@@ -1,7 +1,7 @@
 import { img } from '../api'
 import { useI18n } from '../i18n'
 
-const PHOTOS = ['opera', 'cascade', 'government', 'station'] as const
+const PHOTOS = ['cascade', 'government', 'station'] as const
 
 export function Gallery() {
   const { t } = useI18n()

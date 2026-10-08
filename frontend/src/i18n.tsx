@@ -18,7 +18,6 @@ const en = {
     title: 'From Yerevan',
     lead: 'The city we cook from: pink tuff stone, the Opera, the Cascade and the square in the late sun.',
     photos: {
-      opera: 'The Opera, from above',
       cascade: 'The Cascade on a summer day',
       government: 'Republic Square in the late sun',
       station: 'Yerevan station at golden hour',
@@ -114,7 +113,6 @@ const nl: Dict = {
     title: 'Uit Jerevan',
     lead: 'De stad waar onze keuken vandaan komt: roze tufsteen, de Opera, de Cascade en het plein in de late zon.',
     photos: {
-      opera: 'De Opera, van bovenaf',
       cascade: 'De Cascade op een zomerdag',
       government: 'Het Republiekplein in de late zon',
       station: 'Station Jerevan bij gouden uur',
