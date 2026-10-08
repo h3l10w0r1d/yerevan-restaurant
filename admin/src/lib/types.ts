@@ -66,6 +66,8 @@ export type MenuItem = {
   image: string | null
   available: boolean
   position: number
+  featured: boolean
+  badge: 'popular' | 'signature' | 'new' | 'spicy' | null
 }
 
 export type Hours = ([string, string] | null)[]

@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Eye, EyeOff, ImageOff, MoreHorizontal, Pencil, Plus, Search, Trash2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, Eye, EyeOff, ImageOff, MoreHorizontal, Pencil, Plus, Search, Star, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
 import {
@@ -32,6 +32,14 @@ type MenuData = { categories: Category[]; items: MenuItem[] }
 type ItemForm = Omit<MenuItem, 'id' | 'position'>
 
 const TAGS = [{ id: 'v', label: 'Vegetarian' }, { id: 'vg', label: 'Vegan' }]
+const BADGES = [
+  { value: 'none', label: 'No badge' },
+  { value: 'popular', label: 'Popular' },
+  { value: 'signature', label: 'Signature' },
+  { value: 'new', label: 'New' },
+  { value: 'spicy', label: 'Spicy' },
+]
+const BADGE_LABEL: Record<string, string> = { popular: 'Popular', signature: 'Signature', new: 'New', spicy: 'Spicy' }
 
 export function Menu() {
   const { data, loading, reload, setData } = useFetch(() => api.get<MenuData>('/admin/menu'))
@@ -140,6 +148,8 @@ export function Menu() {
                         <span className="flex size-full items-center justify-center text-muted-foreground"><ImageOff className="size-6" /></span>
                       )}
                       <span className="absolute top-2 left-2 flex gap-1">
+                        {item.featured && <Badge className="bg-[#e8963a] text-[#1b2a49]"><Star className="fill-current" /> Chef’s pick</Badge>}
+                        {item.badge && <Badge className="bg-primary text-primary-foreground">{BADGE_LABEL[item.badge]}</Badge>}
                         {item.tags.map((t) => <Badge key={t} className="bg-background/90 text-foreground">{t === 'vg' ? 'Vegan' : 'Vegetarian'}</Badge>)}
                         {!item.available && <Badge variant="destructive" className="bg-background/90">Hidden</Badge>}
                       </span>
@@ -212,6 +222,7 @@ function ItemSheet({ state, categories, onOpenChange, onSaved, onDelete }: {
 }) {
   const blank = (cid: string): ItemForm => ({
     category_id: cid, name_en: '', name_nl: '', description_en: '', description_nl: '', price: 0, tags: [], image: null, available: true,
+    featured: false, badge: null,
   })
   const [form, setForm] = useState<ItemForm>(blank(''))
   const [price, setPrice] = useState('')
@@ -309,6 +320,22 @@ function ItemSheet({ state, categories, onOpenChange, onSaved, onDelete }: {
                     {t.label}
                   </label>
                 ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-lg border p-3">
+              <span>
+                <span className="flex items-center gap-2 text-sm font-medium"><Star className="size-4" /> Chef’s pick</span>
+                <span className="text-xs text-muted-foreground">Shown first: on the homepage and at the top of the menu page.</span>
+              </span>
+              <Switch checked={form.featured} onCheckedChange={(v) => set('featured', v)} aria-label="Chef’s pick" />
+              <div className="col-span-2 grid gap-2">
+                <Label>Badge</Label>
+                <Select items={BADGES} value={form.badge ?? 'none'} onValueChange={(v) => set('badge', v === 'none' ? null : (v as MenuItem['badge']))}>
+                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                  <SelectContent>{BADGES.map((b) => <SelectItem key={b.value} value={b.value}>{b.label}</SelectItem>)}</SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">Use “Popular” only for dishes that really sell well; guests trust it.</p>
               </div>
             </div>
 

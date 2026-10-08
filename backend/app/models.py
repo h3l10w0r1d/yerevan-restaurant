@@ -8,6 +8,7 @@ from sqlmodel import JSON, Field, SQLModel
 
 ROLES = ("owner", "manager", "staff")
 RESERVATION_STATUSES = ("pending", "confirmed", "seated", "completed", "cancelled", "no_show")
+BADGES = ("popular", "signature", "new", "spicy")
 ORDER_STATUSES = ("pending", "confirmed", "ready", "completed", "cancelled")
 
 
@@ -153,6 +154,8 @@ class MenuItem(SQLModel, table=True):
     image: Optional[str] = None
     available: bool = True
     position: int = 0
+    featured: bool = False  # "Chef's pick": shown first on the homepage and menu page
+    badge: Optional[str] = None  # popular | signature | new | spicy
 
 
 class CategoryWrite(SQLModel):
@@ -172,6 +175,17 @@ class MenuItemWrite(SQLModel):
     tags: List[str] = Field(default_factory=list)
     image: Optional[str] = Field(default=None, max_length=300)
     available: bool = True
+    featured: bool = False
+    badge: Optional[str] = None
+
+    @field_validator("badge")
+    @classmethod
+    def valid_badge(cls, v: Optional[str]) -> Optional[str]:
+        if v in (None, ""):
+            return None
+        if v not in BADGES:
+            raise ValueError(f"badge must be one of {BADGES}")
+        return v
 
 
 class Image(SQLModel, table=True):

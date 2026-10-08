@@ -24,7 +24,8 @@
           },
           "price": 1250,
           "tags": [],
-          "image": "dishes/basturma.webp"
+          "image": "dishes/basturma.webp",
+          "featured": true
         },
         {
           "id": "sujukh",
@@ -113,7 +114,9 @@
           },
           "price": 1850,
           "tags": [],
-          "image": "dishes/tolma.webp"
+          "image": "dishes/tolma.webp",
+          "featured": true,
+          "badge": "signature"
         },
         {
           "id": "manti",
@@ -157,7 +160,9 @@
           "tags": [
             "v"
           ],
-          "image": "dishes/ghapama.webp"
+          "image": "dishes/ghapama.webp",
+          "featured": true,
+          "badge": "signature"
         }
       ]
     },
@@ -184,7 +189,9 @@
           },
           "price": 2350,
           "tags": [],
-          "image": "dishes/khorovats-pork.webp"
+          "image": "dishes/khorovats-pork.webp",
+          "featured": true,
+          "badge": "signature"
         },
         {
           "id": "khorovats-lamb",
@@ -226,7 +233,8 @@
           },
           "price": 2150,
           "tags": [],
-          "image": "dishes/lyulya.webp"
+          "image": "dishes/lyulya.webp",
+          "featured": true
         },
         {
           "id": "khorovats-veg",
@@ -327,7 +335,8 @@
           "tags": [
             "v"
           ],
-          "image": "dishes/pakhlava.webp"
+          "image": "dishes/pakhlava.webp",
+          "featured": true
         }
       ]
     },

@@ -3,7 +3,11 @@ import fallbackMenu from '../../backend/app/data/menu.json'
 export const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') ?? ''
 
 export type Localized = { en: string; nl: string }
-export type MenuItem = { id: string; name: Localized; description: Localized; price: number; tags: string[]; image?: string }
+export type Badge = 'popular' | 'signature' | 'new' | 'spicy'
+export type MenuItem = {
+  id: string; name: Localized; description: Localized; price: number; tags: string[]
+  image?: string; featured?: boolean; badge?: Badge
+}
 export type Category = { id: string; name: Localized; note?: Localized; items: MenuItem[] }
 export type Menu = { currency: string; categories: Category[] }
 export type Slot = { time: string; available: boolean }

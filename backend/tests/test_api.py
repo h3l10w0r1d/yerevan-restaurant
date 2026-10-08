@@ -132,3 +132,33 @@ def test_change_password(client):
     assert client.post("/api/auth/password", headers=h,
                        json={"current_password": "owner-pass-123", "new_password": "something-long"}).status_code == 204
     login(client, password="something-long")
+
+
+def test_featured_and_badges(client):
+    menu = client.get("/api/menu").json()
+    items = {i["id"]: i for c in menu["categories"] for i in c["items"]}
+    assert items["tolma"]["featured"] is True and items["tolma"]["badge"] == "signature"
+    assert items["spas"]["featured"] is False and "badge" not in items["spas"]
+    h = login(client)
+    full = client.get("/api/admin/menu", headers=h).json()
+    spas = next(i for i in full["items"] if i["id"] == "spas")
+    body = {k: v for k, v in spas.items() if k not in ("id", "position")}
+    assert client.put("/api/admin/items/spas", headers=h, json={**body, "badge": "popular", "featured": True}).status_code == 200
+    assert client.put("/api/admin/items/spas", headers=h, json={**body, "badge": "cheapest"}).status_code == 422
+
+
+def test_migration_adds_missing_columns(tmp_path):
+    from sqlalchemy import create_engine, inspect, text
+    from app import db
+    legacy = create_engine(f"sqlite:///{tmp_path}/old.db")
+    with legacy.begin() as c:
+        c.execute(text("CREATE TABLE menuitem (id VARCHAR PRIMARY KEY, name_en VARCHAR)"))
+    original = db.engine
+    db.engine = legacy
+    try:
+        db.migrate()
+        db.migrate()  # idempotent
+    finally:
+        db.engine = original
+    cols = {c["name"] for c in inspect(legacy).get_columns("menuitem")}
+    assert {"featured", "badge"} <= cols

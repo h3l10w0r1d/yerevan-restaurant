@@ -23,6 +23,8 @@ jobs:
           BASE_PATH: /${{ github.event.repository.name }}/
           # Set the repo variable API_URL (e.g. https://yerevan-api.onrender.com) once the backend is live.
           VITE_API_URL: ${{ vars.API_URL }}
+      # Pages has no rewrites: serve the app for deep links like /menu too.
+      - run: cp frontend/dist/index.html frontend/dist/404.html
       - uses: actions/upload-pages-artifact@v3
         with: { path: frontend/dist }
   deploy:

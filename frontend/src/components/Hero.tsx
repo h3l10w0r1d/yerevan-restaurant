@@ -1,5 +1,6 @@
 import { img } from '../api'
 import { useI18n } from '../i18n'
+import { Link } from '../router'
 import { Logo } from './Logo'
 
 export function Hero() {
@@ -19,8 +20,8 @@ export function Hero() {
         <Logo className="hero__logo" />
         <p className="hero__tagline">{t.hero.tagline}</p>
         <div className="hero__cta">
-          <a className="btn btn--light" href="#reserve">{t.hero.reserve}</a>
-          <a className="btn btn--ghost" href="#menu">{t.hero.menu}</a>
+          <Link className="btn btn--light" to="/#reserve">{t.hero.reserve}</Link>
+          <Link className="btn btn--ghost" to="/menu">{t.hero.menu}</Link>
         </div>
         <p className="hero__address">Kampstraat 22 · Hilversum</p>
       </div>

@@ -101,6 +101,8 @@ def public_menu(session: Session, include_unavailable: bool = False) -> dict:
                 "description": {"en": i.description_en, "nl": i.description_nl},
                 "price": i.price,
                 "tags": i.tags or [],
+                "featured": bool(i.featured),
+                **({"badge": i.badge} if i.badge else {}),
                 **({"image": i.image} if i.image else {}),
                 **({"available": i.available} if include_unavailable else {}),
             }
@@ -148,6 +150,8 @@ def seed(session: Session) -> None:
                     price=item["price"],
                     tags=item.get("tags", []),
                     image=item.get("image"),
+                    featured=item.get("featured", False),
+                    badge=item.get("badge"),
                     position=ii,
                 ))
     session.commit()

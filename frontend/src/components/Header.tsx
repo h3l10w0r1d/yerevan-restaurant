@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useI18n, type Lang } from '../i18n'
+import { Link } from '../router'
+import { useStore } from '../store'
 
-export function Header({ cartCount }: { cartCount: number }) {
+export function Header({ page }: { page: 'home' | 'menu' }) {
   const { t, lang, setLang } = useI18n()
+  const { count: cartCount } = useStore()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -14,24 +17,24 @@ export function Header({ cartCount }: { cartCount: number }) {
   }, [])
 
   const links: [string, string][] = [
-    ['#menu', t.nav.menu],
-    ['#reserve', t.nav.reserve],
-    ['#order', t.nav.order],
-    ['#visit', t.nav.visit],
+    ['/menu', t.nav.menu],
+    ['/#reserve', t.nav.reserve],
+    ['/#order', t.nav.order],
+    ['/#visit', t.nav.visit],
   ]
 
   return (
-    <header className={`header ${scrolled || open ? 'header--solid' : ''}`}>
+    <header className={`header ${scrolled || open || page === 'menu' ? 'header--solid' : ''}`}>
       <div className="header__inner">
-        <a href="#top" className="header__brand" aria-label="Yerevan" onClick={() => setOpen(false)}>
+        <Link to="/" className="header__brand" aria-label="Yerevan" onClick={() => setOpen(false)}>
           <span className="wordmark">Yerevan</span>
-        </a>
+        </Link>
         <nav className={`nav ${open ? 'nav--open' : ''}`} aria-label="Main">
           {links.map(([href, label]) => (
-            <a key={href} href={href} onClick={() => setOpen(false)}>
+            <Link key={href} to={href} onClick={() => setOpen(false)} aria-current={href === '/menu' && page === 'menu' ? 'page' : undefined}>
               {label}
-              {href === '#order' && cartCount > 0 && <span className="badge">{cartCount}</span>}
-            </a>
+              {href === '/#order' && cartCount > 0 && <span className="badge">{cartCount}</span>}
+            </Link>
           ))}
         </nav>
         <div className="header__actions">
