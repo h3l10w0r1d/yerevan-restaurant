@@ -35,7 +35,8 @@ export function MenuPage() {
   const filtered = useMemo(() => menu.categories
     .map((c) => ({ ...c, items: c.items.filter((i) => matches(i, q) && fitsDiet(i, diet)) }))
     .filter((c) => c.items.length), [menu, q, diet])
-  const picks = useMemo(() => menu.categories.flatMap((c) => c.items).filter((i) => i.featured && i.image), [menu])
+  const picks = useMemo(() => menu.categories.flatMap((c) => c.items).filter((i) => i.featured && i.image)
+    .sort((x, y) => Number(y.badge === 'signature') - Number(x.badge === 'signature')), [menu])
   const total = menu.categories.reduce((n, c) => n + c.items.length, 0)
   const browsing = !q && diet === 'all'
 
