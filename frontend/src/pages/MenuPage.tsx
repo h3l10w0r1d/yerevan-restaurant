@@ -4,6 +4,7 @@ import { CartBar, CartDrawer } from '../components/menu/Cart'
 import { DishRow, PickCard } from '../components/menu/DishCards'
 import { DishSheet } from '../components/menu/DishSheet'
 import { useOpenStatus } from '../components/menu/bits'
+import { MenuComingSoon, useOpeningLabel } from '../components/ComingSoon'
 import { fill, useI18n } from '../i18n'
 import { useRestaurant } from '../restaurant'
 import { Link } from '../router'
@@ -21,6 +22,7 @@ export function MenuPage() {
   const { t, lang } = useI18n()
   const R = useRestaurant()
   const status = useOpenStatus()
+  const opening = useOpeningLabel()
   const { menu, items, cart, add } = useStore()
   const [query, setQuery] = useState('')
   const [diet, setDiet] = useState<Diet>('all')
@@ -96,12 +98,24 @@ export function MenuPage() {
           <h1 className="store__name">Yerevan</h1>
           <p className="store__meta">{t.mp.kitchen} · {R.address}, {R.city}</p>
           <div className="store__facts">
-            {status.text && <span className={`status ${status.open ? 'status--open' : ''}`}><span className="status__dot" />{status.text}</span>}
-            <span className="fact">{fill(t.mp.dishes, { n: total })}</span>
+            {R.prelaunch ? (
+              <span className="status"><span className="status__dot" />{opening}</span>
+            ) : (
+              <>
+                {status.text && <span className={`status ${status.open ? 'status--open' : ''}`}><span className="status__dot" />{status.text}</span>}
+                <span className="fact">{fill(t.mp.dishes, { n: total })}</span>
+              </>
+            )}
           </div>
         </div>
       </header>
 
+      {R.prelaunch ? (
+        <div className="container mpage__body mpage__soon">
+          <MenuComingSoon />
+          <p><Link to="/" className="btn btn--burgundy">{t.mp.back}</Link></p>
+        </div>
+      ) : (<>
       {/* Search and diet filter, then the sticky category chips */}
       <div className="mtools">
         <div className="container">
@@ -187,6 +201,7 @@ export function MenuPage() {
         onAdded={flash}
       />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      </>)}
     </div>
   )
 }

@@ -82,6 +82,8 @@ export type Settings = {
   booking_window_days: number
   ordering_enabled: boolean
   notifications: { guest_emails: boolean; staff_emails: boolean; staff_email: string }
+  prelaunch: boolean
+  opening_date: string
 }
 
 export type Stats = {

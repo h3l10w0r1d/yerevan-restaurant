@@ -38,6 +38,16 @@ class SettingsBody(SQLModel):
     booking_window_days: int = Field(ge=1, le=365)
     ordering_enabled: bool
     notifications: Notifications = Notifications()
+    prelaunch: bool = False
+    opening_date: str = ""
+
+    @field_validator("opening_date")
+    @classmethod
+    def valid_opening_date(cls, v: str) -> str:
+        v = (v or "").strip()
+        if v and not re.match(r"^\d{4}-\d{2}-\d{2}$", v):
+            raise ValueError("opening_date must be YYYY-MM-DD or empty")
+        return v
 
     @field_validator("hours")
     @classmethod

@@ -46,6 +46,30 @@ export function Settings() {
 
   return (
     <form onSubmit={submit} className="mx-auto max-w-3xl space-y-4 pb-20">
+      <Card className={form.prelaunch ? 'border-[#e8963a] ring-1 ring-[#e8963a]/40' : ''}>
+        <CardHeader>
+          <CardTitle>Opening</CardTitle>
+          <CardDescription>Before opening day the website stays live, but shows “coming soon”.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <label className="flex items-center justify-between gap-4 rounded-lg border p-3">
+            <span>
+              <span className="block text-sm font-medium">Pre-opening mode</span>
+              <span className="text-xs text-muted-foreground">
+                The menu shows “coming soon” (dishes and prices stay private), the reservation form answers that bookings open soon,
+                and takeaway is closed. Staff can still add bookings and edit the menu here.
+              </span>
+            </span>
+            <Switch checked={form.prelaunch} onCheckedChange={(v) => setForm({ ...form, prelaunch: v })} />
+          </label>
+          <div className="grid gap-2 sm:max-w-xs">
+            <Label htmlFor="s-opening">Opening date (optional)</Label>
+            <Input id="s-opening" type="date" value={form.opening_date} onChange={(e) => setForm({ ...form, opening_date: e.target.value })} />
+            <p className="text-xs text-muted-foreground">Shown as “Opening 14 November” on the website.</p>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Restaurant</CardTitle>

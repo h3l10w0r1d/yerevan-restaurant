@@ -17,6 +17,7 @@ export function Visit() {
           </div>
           <div>
             <h3>{t.visit.hours}</h3>
+            {R.prelaunch && <p className="visit__note">{t.soon.hoursNote}</p>}
             <dl className="hours">
               {t.days.map((day, i) => {
                 const h = R.hours[i]

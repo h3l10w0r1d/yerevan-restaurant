@@ -45,6 +45,10 @@ DEFAULT_SETTINGS = {
     "max_party_size": 12,
     "booking_window_days": 90,
     "ordering_enabled": os.getenv("ORDERING_ENABLED", "false").lower() == "true",
+    # Pre-opening: the site is live but the restaurant isn't open yet. The public menu is
+    # hidden ("coming soon") and website reservations / orders are politely refused.
+    "prelaunch": os.getenv("PRELAUNCH", "false").lower() == "true",
+    "opening_date": "",  # optional YYYY-MM-DD, shown as "Opening on …"
     "notifications": {
         "guest_emails": True,  # booking received / confirmed / cancelled, order updates
         "staff_emails": True,  # alert the team about new web bookings and orders

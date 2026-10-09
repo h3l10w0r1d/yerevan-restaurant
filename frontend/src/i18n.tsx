@@ -117,6 +117,16 @@ const en = {
     opensToday: 'Opens today at {time}',
     closedNow: 'Closed · opens {day} at {time}',
   },
+  soon: {
+    badge: 'Opening soon',
+    badgeDate: 'Opening {date}',
+    menuTitle: 'Our menu is coming soon',
+    menuBody: 'We’re putting the finishing touches on the dishes we’ll serve at the long tables of Kampstraat 22: Armenian cooking from the oven, the pot and the open fire.',
+    menuDate: 'You’ll find it here before we open on {date}.',
+    reserve: 'Reservations open soon. We’re not taking bookings yet, but we can’t wait to welcome you.',
+    reserveDate: 'Reservations open soon. We open on {date} and will start taking bookings shortly before.',
+    hoursNote: 'Planned hours from opening day.',
+  },
   days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
   footer: {
     rights: 'Armenian restaurant in Hilversum',
@@ -241,6 +251,16 @@ const nl: Dict = {
     openNow: 'Nu open · tot {time}',
     opensToday: 'Vandaag open vanaf {time}',
     closedNow: 'Gesloten · open {day} om {time}',
+  },
+  soon: {
+    badge: 'Opent binnenkort',
+    badgeDate: 'Opent {date}',
+    menuTitle: 'Ons menu komt binnenkort',
+    menuBody: 'We leggen de laatste hand aan de gerechten voor de lange tafels aan de Kampstraat 22: Armeense keuken uit de oven, de pan en van het open vuur.',
+    menuDate: 'Je vindt het hier voordat we op {date} opengaan.',
+    reserve: 'Reserveren kan binnenkort. We nemen nog geen reserveringen aan, maar we kunnen niet wachten je te ontvangen.',
+    reserveDate: 'Reserveren kan binnenkort. We openen op {date} en nemen kort daarvoor de eerste reserveringen aan.',
+    hoursNote: 'Geplande openingstijden vanaf de opening.',
   },
   days: ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'],
   footer: {

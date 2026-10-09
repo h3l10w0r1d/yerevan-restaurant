@@ -26,11 +26,16 @@ def info(session: Session = Depends(get_session)):
         "ordering_enabled": s["ordering_enabled"],
         "max_party_size": s["max_party_size"],
         "booking_window_days": s["booking_window_days"],
+        "prelaunch": s["prelaunch"],
+        "opening_date": s["opening_date"] or None,
     }
 
 
 @router.get("/menu")
 def menu(session: Session = Depends(get_session)):
+    # Before opening the menu stays private: nothing to show, nothing to scrape.
+    if get_settings(session)["prelaunch"]:
+        return {"currency": "EUR", "categories": [], "prelaunch": True}
     return public_menu(session)
 
 
@@ -63,6 +68,8 @@ def availability(
 @router.post("/reservations", status_code=201)
 def create_reservation(data: ReservationCreate, session: Session = Depends(get_session)):
     s = get_settings(session)
+    if s["prelaunch"]:
+        raise HTTPException(503, "not_yet_open")
     today = now_local().date()
     if data.guests > s["max_party_size"]:
         raise HTTPException(422, "party_too_large")
@@ -85,7 +92,10 @@ def create_reservation(data: ReservationCreate, session: Session = Depends(get_s
 
 @router.post("/orders", status_code=201)
 def create_order(data: OrderCreate, session: Session = Depends(get_session)):
-    if not get_settings(session)["ordering_enabled"]:
+    s = get_settings(session)
+    if s["prelaunch"]:
+        raise HTTPException(503, "not_yet_open")
+    if not s["ordering_enabled"]:
         raise HTTPException(503, "ordering_disabled")
     lines, total = [], 0
     for line in data.items:

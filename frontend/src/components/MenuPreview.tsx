@@ -1,19 +1,32 @@
 import { formatPrice, img } from '../api'
 import { fill, useI18n } from '../i18n'
 import { Link } from '../router'
+import { useRestaurant } from '../restaurant'
 import { useStore } from '../store'
+import { MenuComingSoon } from './ComingSoon'
 import { BadgeChip } from './menu/bits'
 
 /** Homepage taste of the menu: a chef's-picks spread, category shortcuts, one clear way to the full menu. */
 export function MenuPreview() {
   const { t, lang } = useI18n()
   const { menu } = useStore()
+  const { prelaunch } = useRestaurant()
   const all = menu.categories.flatMap((c) => c.items)
   // Lead with a Signature pick: the large tile should be the dish we're proudest of.
   const featured = all.filter((i) => i.featured && i.image)
     .sort((a, b) => Number(b.badge === 'signature') - Number(a.badge === 'signature'))
   // Always show five tiles: chef's picks first, then other dishes with photos.
   const tiles = [...featured, ...all.filter((i) => !i.featured && i.image)].slice(0, 5)
+
+  if (prelaunch) {
+    return (
+      <section className="section mprev" id="menu">
+        <div className="container container--narrow" data-reveal>
+          <MenuComingSoon />
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="section mprev" id="menu">

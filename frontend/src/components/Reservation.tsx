@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { api, ApiError, type Slot } from '../api'
 import { fill, useI18n } from '../i18n'
 import { useRestaurant, type Hours } from '../restaurant'
+import { useOpeningDate } from './ComingSoon'
 import { DatePicker } from './DatePicker'
 import { Select } from './Select'
 
@@ -27,6 +28,7 @@ type Status = 'idle' | 'sending' | 'done' | 'error'
 
 export function Reservation() {
   const { t, lang } = useI18n()
+  const openingDate = useOpeningDate()
   const R = useRestaurant()
   const today = useMemo(() => new Date(), [])
   const maxDate = useMemo(() => new Date(Date.now() + R.bookingWindowDays * 864e5), [R.bookingWindowDays])
@@ -86,7 +88,9 @@ export function Reservation() {
     }
   }
 
-  const errorText = (t.reserve.errors as Record<string, string>)[error] ?? t.reserve.errors.generic
+  const errorText = error === 'not_yet_open'
+    ? (openingDate ? fill(t.soon.reserveDate, { date: openingDate }) : t.soon.reserve)
+    : (t.reserve.errors as Record<string, string>)[error] ?? t.reserve.errors.generic
 
   return (
     <section className="section reserve" id="reserve">

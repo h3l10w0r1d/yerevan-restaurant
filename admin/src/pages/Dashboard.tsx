@@ -1,5 +1,6 @@
 import { CalendarClock, Clock, ShoppingBag, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { Rocket } from 'lucide-react'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import { Button } from '@/components/ui/button'
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,8 +23,9 @@ function greeting() {
 }
 
 export function Dashboard() {
-  const { user } = useAuth()
+  const { user, can } = useAuth()
   const { data, loading } = useFetch(() => api.get<Stats>('/admin/stats'))
+  const { data: info } = useFetch(() => api.get<{ prelaunch: boolean; opening_date: string | null }>('/info'))
 
   const tiles = [
     { label: 'Tonight', value: data?.today.reservations, sub: `${data?.today.covers ?? 0} guests`, icon: CalendarClock },
@@ -38,6 +40,17 @@ export function Dashboard() {
         <h2 className="font-heading text-3xl">{greeting()}, {user?.name.split(' ')[0]}</h2>
         <p className="text-muted-foreground">Here is how service is looking.</p>
       </div>
+
+      {info?.prelaunch && (
+        <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[#e8963a]/50 bg-[#e8963a]/10 px-4 py-3 text-sm">
+          <Rocket className="size-5 text-[#b8701f]" />
+          <span className="flex-1">
+            <strong>Pre-opening mode is on.</strong> The website shows “coming soon” for the menu and doesn’t accept online bookings
+            {info.opening_date ? ` (opening ${info.opening_date})` : ''}.
+          </span>
+          {can('owner', 'manager') && <Button size="sm" variant="outline" render={<Link to="/settings" />}>Opening settings</Button>}
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {tiles.map((t) => {

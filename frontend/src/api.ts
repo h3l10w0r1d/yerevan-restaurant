@@ -39,6 +39,7 @@ export const api = {
   info: () => request<{
     name: string; address: string; city: string; email: string; phone: string
     hours: ([string, string] | null)[]; ordering_enabled: boolean; max_party_size: number; booking_window_days: number
+    prelaunch?: boolean; opening_date?: string | null
   }>('/api/info'),
   availability: (date: string, guests: number) =>
     request<{ slots: Slot[] }>(`/api/availability?date=${date}&guests=${guests}`),

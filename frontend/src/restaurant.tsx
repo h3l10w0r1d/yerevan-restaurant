@@ -22,6 +22,9 @@ const DEFAULTS = {
   maxParty: 12,
   bookingWindowDays: 90,
   orderingEnabled: false,
+  // Assume "not open yet" until the API says otherwise, so dishes never flash on screen.
+  prelaunch: true,
+  openingDate: '' as string, // YYYY-MM-DD or ''
 }
 
 export type Restaurant = typeof DEFAULTS & { mapsUrl: string }
@@ -46,7 +49,9 @@ export function RestaurantProvider({ children }: { children: ReactNode }) {
         hours: i.hours ?? DEFAULTS.hours,
         maxParty: i.max_party_size ?? DEFAULTS.maxParty,
         bookingWindowDays: i.booking_window_days ?? DEFAULTS.bookingWindowDays,
-        orderingEnabled: !!i.ordering_enabled,
+        orderingEnabled: !!i.ordering_enabled && !i.prelaunch,
+        prelaunch: !!i.prelaunch,
+        openingDate: i.opening_date ?? '',
       })))
       .catch(() => {})
   }, [])

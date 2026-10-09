@@ -29,7 +29,7 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>) {
           .from('.hero .logo__word', { y: 24, opacity: 0, duration: 1 }, 0.5)
           .from('.hero .logo__sub', { y: 12, opacity: 0, duration: 0.8 }, 0.8)
           // fromTo with explicit end values: never read the resting state mid-transition.
-          .fromTo('.hero__tagline, .hero__cta > *, .hero__address', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }, 1)
+          .fromTo('.hero__tagline, .hero__cta > *, .hero__opening, .hero__address', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }, 1)
 
         // The Opera photo drifts slower than the page (transform only).
         gsap.to('.hero__bg img', {

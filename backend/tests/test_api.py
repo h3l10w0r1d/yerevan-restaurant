@@ -162,3 +162,30 @@ def test_migration_adds_missing_columns(tmp_path):
         db.engine = original
     cols = {c["name"] for c in inspect(legacy).get_columns("menuitem")}
     assert {"featured", "badge"} <= cols
+
+
+def test_prelaunch_mode(client):
+    h = login(client)
+    s = client.get("/api/admin/settings", headers=h).json()
+    s.update(prelaunch=True, opening_date="2026-11-14", ordering_enabled=True)
+    assert client.put("/api/admin/settings", headers=h, json=s).status_code == 200
+
+    info = client.get("/api/info").json()
+    assert info["prelaunch"] is True and info["opening_date"] == "2026-11-14"
+    assert client.get("/api/menu").json()["categories"] == []  # menu stays private
+    r = client.post("/api/reservations", json=booking())
+    assert r.status_code == 503 and r.json()["detail"] == "not_yet_open"
+    assert client.post("/api/orders", json={"name": "Joost", "email": "j@example.com", "phone": "+31612345678",
+                                            "pickup_at": "2030-01-01T18:00:00",
+                                            "items": [{"item_id": "tolma", "quantity": 1}]}).status_code == 503
+    # Staff can still take bookings and edit the menu.
+    assert client.post("/api/admin/reservations", headers=h, json={
+        "name": "Opening night", "date": next_open_day().isoformat(), "time": "19:00", "guests": 6}).status_code == 201
+    assert len(client.get("/api/admin/menu", headers=h).json()["items"]) == 22
+
+    s.update(opening_date="next week")
+    assert client.put("/api/admin/settings", headers=h, json=s).status_code == 422
+    s.update(prelaunch=False, opening_date="")
+    client.put("/api/admin/settings", headers=h, json=s)
+    assert client.get("/api/menu").json()["categories"]
+    assert client.post("/api/reservations", json=booking()).status_code == 201
