@@ -30,8 +30,9 @@ export function Logo({ variant = 'primary', className, title = 'Yerevan restaura
       <text
         className="logo__word"
         x="273" y="161" textAnchor="middle" textLength="540" lengthAdjust="spacingAndGlyphs"
-        fill="currentColor" fontFamily="'Bodoni Moda', 'Didot', serif" fontSize="124" fontWeight="600"
-        style={{ fontVariationSettings: "'opsz' 96" }}
+        fill="currentColor" fontFamily="'Bodoni Moda', 'Didot', serif" fontSize="124" fontWeight="500"
+        // Low optical size = sturdier hairlines, so the thin strokes of V and A stay visible over photos.
+        style={{ fontVariationSettings: "'opsz' 12" }}
       >
         YEREVAN
       </text>
