@@ -76,7 +76,7 @@
 .store__inner { padding-top: 28px; padding-bottom: 28px; }
 .store__back { display: inline-block; margin-bottom: 28px; color: rgba(248, 239, 234, 0.85); text-decoration: none; font-size: 0.9rem; }
 .store__back:hover { color: var(--ivory); }
-.store__name { font-size: clamp(2.4rem, 8vw, 3.8rem); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1; margin-bottom: 10px; }
+.store__name { font-weight: 600; font-size: clamp(2.4rem, 8vw, 3.8rem); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1; margin-bottom: 10px; }
 .store__meta { color: rgba(248, 239, 234, 0.88); margin-bottom: 16px; }
 .store__facts { display: flex; flex-wrap: wrap; gap: 8px; }
 .status, .fact {

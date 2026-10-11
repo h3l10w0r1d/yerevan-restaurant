@@ -87,7 +87,7 @@ p { margin: 0 0 1em; }
 }
 .header__brand { opacity: 0; transition: opacity 0.3s; }
 .header--solid .header__brand { opacity: 1; }
-.wordmark { font-family: var(--serif); font-size: 1.35rem; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; font-optical-sizing: auto; }
+.wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; font-optical-sizing: auto; }
 .header__brand { text-decoration: none; }
 .header__actions { display: flex; align-items: center; gap: 8px; }
 .lang { display: flex; border: 1px solid rgba(248, 239, 234, 0.35); border-radius: var(--radius); }
