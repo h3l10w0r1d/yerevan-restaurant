@@ -2,17 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Yerevan · Armenian restaurant in Hilversum</title>
+    <meta name="description" content="Yerevan is an Armenian restaurant in Hilversum, in the heart of ’t Gooi: lavash from the oven, khorovats over open fire, tolma and dishes to share. Kampstraat 22." />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="en" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="nl" href="%SITE_URL%/?lang=nl" />
+    <link rel="alternate" hreflang="x-default" href="%SITE_URL%/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#531C21" />
-    <meta name="description" content="Yerevan — Armenian restaurant at Kampstraat 22, Hilversum. Reserve a table, browse the menu." />
+
+    <!-- Share previews (WhatsApp, Facebook, LinkedIn, X) -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:site_name" content="Yerevan" />
+    <meta property="og:title" content="Yerevan · Armenian restaurant in Hilversum" />
+    <meta property="og:description" content="Armenian cooking at the hour the city lights come on. Kampstraat 22, Hilversum." />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Yerevan restaurant logo over the Yerevan Opera, seen from above" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale:alternate" content="nl_NL" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- The opening photo is the largest element on screen: start loading it right away. -->
+    <link rel="preload" as="image" href="/images/yerevan/hero-opera-900.webp" media="(max-width: 699px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/yerevan/hero-opera-1600.webp" media="(min-width: 700px)" fetchpriority="high" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-    <title>Yerevan · Armenian restaurant in Hilversum</title>
+
+    <!-- Structured data: lets search engines show the restaurant with address, cuisine and menu. -->
+    <script type="application/ld+json" id="ld-restaurant">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "@id": "%SITE_URL%/#restaurant",
+        "name": "Yerevan",
+        "alternateName": "Yerevan Restaurant",
+        "description": "Armenian restaurant in Hilversum, in the heart of ’t Gooi: lavash from the oven, khorovats over open fire, tolma and dishes to share.",
+        "url": "%SITE_URL%/",
+        "image": "%SITE_URL%/og-image.jpg",
+        "logo": "%SITE_URL%/icon-512.png",
+        "servesCuisine": ["Armenian"],
+        "priceRange": "€€",
+        "acceptsReservations": true,
+        "hasMenu": "%SITE_URL%/menu",
+        "email": "info@yerevanrestaurant.nl",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Kampstraat 22",
+          "addressLocality": "Hilversum",
+          "addressRegion": "Noord-Holland",
+          "addressCountry": "NL"
+        },
+        "areaServed": "Het Gooi"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>Yerevan · Armenian restaurant in Hilversum</h1>
+      <p>Armenian cooking in the heart of ’t Gooi: lavash from the oven, khorovats over open fire, tolma and dishes to share.</p>
+      <p>Kampstraat 22, Hilversum · info@yerevanrestaurant.nl</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

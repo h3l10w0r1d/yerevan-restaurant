@@ -71,6 +71,13 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 | `ORDERING_ENABLED` | `false` | Default for the takeaway switch (then managed in Settings) |
 | `SLOT_CAPACITY` | `40` | Default guests per slot (then managed in Settings) |
 
+## SEO
+
+- `sitemap.xml` and `robots.txt` are generated at build time (`frontend/vite.config.ts`) for the homepage and `/menu`, in English and Dutch (`?lang=nl`), with hreflang links.
+- Titles, descriptions, canonical URLs and share tags follow the page and language (`frontend/src/seo.ts`).
+- Restaurant structured data (Schema.org) is in `frontend/index.html`; opening hours are added only after pre-opening ends.
+- The public address comes from `SITE_URL` (default `https://yerevan-restaurant.vercel.app`). Set it in Vercel when the site moves to its own domain, and submit `<SITE_URL>/sitemap.xml` in Google Search Console.
+
 ## Deploy
 
 **Vercel (primary):** https://yerevan-restaurant.vercel.app serves the site and the API from one project.

@@ -20,7 +20,7 @@ export function Hero() {
       </div>
       <div className="hero__shade" aria-hidden />
       <div className="hero__inner">
-        <h1 className="sr-only">Yerevan restaurant</h1>
+        <h1 className="sr-only">{t.seo.h1}</h1>
         <Logo className="hero__logo" />
         <p className="hero__tagline">{t.hero.tagline}</p>
         <div className="hero__cta">

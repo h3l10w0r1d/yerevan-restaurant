@@ -3,10 +3,17 @@ import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Home } from './pages/Home'
 import { MenuPage } from './pages/MenuPage'
+import { useI18n } from './i18n'
+import { useRestaurant } from './restaurant'
 import { useRouter } from './router'
+import { useSeo } from './seo'
 
 export default function App() {
   const { path } = useRouter()
+  const { lang } = useI18n()
+  const restaurant = useRestaurant()
+  const page = path === '/menu' ? 'menu' : 'home'
+  useSeo(page, lang, restaurant)
 
   // The old in-page admin moved to its own app.
   const legacyAdmin = window.location.hash === '#admin'
@@ -21,7 +28,6 @@ export default function App() {
   }, [])
 
   if (legacyAdmin) return null
-  const page = path === '/menu' ? 'menu' : 'home'
 
   return (
     <>

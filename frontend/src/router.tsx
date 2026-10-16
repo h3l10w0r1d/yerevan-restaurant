@@ -32,6 +32,8 @@ export function RouterProvider({ children }: { children: ReactNode }) {
 
   const navigate = useCallback((to: string) => {
     const url = new URL(to, window.location.origin + BASE + '/')
+    const lang = new URLSearchParams(window.location.search).get('lang')
+    if (lang && !url.searchParams.has('lang')) url.searchParams.set('lang', lang)
     const target = url.pathname.replace(/\/+$/, '') || '/'
     const samePage = target === path
     // Same-page anchor: just glide there.

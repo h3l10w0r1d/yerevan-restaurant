@@ -117,6 +117,7 @@ const en = {
     opensToday: 'Opens today at {time}',
     closedNow: 'Closed · opens {day} at {time}',
   },
+  seo: { h1: 'Yerevan · Armenian restaurant in Hilversum' },
   soon: {
     badge: 'Opening soon',
     badgeDate: 'Opening {date}',
@@ -252,6 +253,7 @@ const nl: Dict = {
     opensToday: 'Vandaag open vanaf {time}',
     closedNow: 'Gesloten · open {day} om {time}',
   },
+  seo: { h1: 'Yerevan · Armeens restaurant in Hilversum' },
   soon: {
     badge: 'Opent binnenkort',
     badgeDate: 'Opent {date}',
@@ -273,6 +275,9 @@ const nl: Dict = {
 const dicts: Record<Lang, Dict> = { en, nl }
 
 function initialLang(): Lang {
+  // An explicit ?lang= in the link wins (that's what search engines and shared links use).
+  const fromUrl = new URLSearchParams(window.location.search).get('lang')
+  if (fromUrl === 'en' || fromUrl === 'nl') return fromUrl
   try {
     const saved = localStorage.getItem('lang')
     if (saved === 'en' || saved === 'nl') return saved
@@ -289,6 +294,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = lang
     try { localStorage.setItem('lang', lang) } catch { /* ignore */ }
+    // Keep the address in step: Dutch pages live at ?lang=nl, English at the plain URL.
+    const url = new URL(window.location.href)
+    if (lang === 'nl') url.searchParams.set('lang', 'nl')
+    else url.searchParams.delete('lang')
+    if (url.href !== window.location.href) history.replaceState(history.state, '', url)
   }, [lang])
   return <Ctx.Provider value={{ lang, t: dicts[lang], setLang }}>{children}</Ctx.Provider>
 }
