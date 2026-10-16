@@ -11,7 +11,7 @@ const en = {
   },
   intro: {
     title: 'An evening in Yerevan',
-    body: 'Lavash from the oven, meat over open fire, tolma the way grandmothers fold it. We cook the food of Armenia for long tables and slow evenings, a short walk from Hilversum station.',
+    body: 'Lavash from the oven, meat over open fire, tolma the way grandmothers fold it. We cook the food of Armenia for long tables and slow evenings, in the heart of ’t Gooi.',
   },
   gallery: {
     title: 'From Yerevan',
@@ -146,7 +146,7 @@ const nl: Dict = {
   },
   intro: {
     title: 'Een avond in Jerevan',
-    body: 'Lavash uit de oven, vlees boven open vuur, tolma zoals grootmoeders hem vouwen. Wij koken de keuken van Armenië voor lange tafels en rustige avonden, op loopafstand van station Hilversum.',
+    body: 'Lavash uit de oven, vlees boven open vuur, tolma zoals grootmoeders hem vouwen. Wij koken de keuken van Armenië voor lange tafels en rustige avonden, in het hart van ’t Gooi.',
   },
   gallery: {
     title: 'Uit Jerevan',
