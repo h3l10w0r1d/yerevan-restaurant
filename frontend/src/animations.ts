@@ -26,10 +26,10 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>) {
         const hero = gsap.timeline({ defaults: { ease: 'power3.out' } })
         hero
           .from('.hero .logo__mountain', { strokeDashoffset: 1, duration: 1.6, ease: 'power2.inOut' })
-          .from('.hero .logo__word', { y: 24, opacity: 0, duration: 1 }, 0.5)
-          .from('.hero .logo__sub', { y: 12, opacity: 0, duration: 0.8 }, 0.8)
+          .from('.hero .logo__word', { y: 24, opacity: 0, duration: 1, clearProps: 'transform,opacity' }, 0.5)
+          .from('.hero .logo__sub', { y: 12, opacity: 0, duration: 0.8, clearProps: 'transform,opacity' }, 0.8)
           // fromTo with explicit end values: never read the resting state mid-transition.
-          .fromTo('.hero__tagline, .hero__cta > *, .hero__opening, .hero__address', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }, 1)
+          .fromTo('.hero__tagline, .hero__cta > *, .hero__opening, .hero__address', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, clearProps: 'transform,opacity' }, 1)
 
         // The Opera photo drifts slower than the page (transform only).
         gsap.to('.hero__bg img', {
@@ -54,6 +54,7 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>) {
             opacity: 0,
             duration: 1,
             ease: 'power3.out',
+            clearProps: 'transform,opacity',
             scrollTrigger: { trigger: el, start: 'top 85%', once: true },
           })
         })
@@ -106,6 +107,7 @@ export function useScrollAnimations(root: RefObject<HTMLElement | null>) {
           duration: 0.9,
           ease: 'power3.out',
           stagger: 0.1,
+          clearProps: 'transform,opacity',
           scrollTrigger: { trigger: '.gallery__track', start: 'top 85%', once: true },
         })
       })
@@ -128,6 +130,9 @@ function sharedSections(mm: gsap.MatchMedia) {
         duration: 0.7,
         ease: 'power2.out',
         stagger: 0.06,
+        // A leftover transform would give each field its own stacking layer and
+        // put later labels on top of an open dropdown or calendar.
+        clearProps: 'transform,opacity',
         scrollTrigger: { trigger: items[0], start: 'top 88%', once: true },
       })
     })

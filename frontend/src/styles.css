@@ -230,6 +230,10 @@ p { margin: 0 0 1em; }
 .success h3 { font-size: 1.8rem; margin-bottom: 12px; }
 .reserve .success h3 { color: var(--amber); }
 
+/* Open popups always sit above the rest of the form (labels, inputs, the next field). */
+.select--open, .datepicker--open { z-index: 60; }
+.field:has(.select--open), .field:has(.datepicker--open) { position: relative; z-index: 60; }
+
 /* Custom select */
 .select { position: relative; display: grid; gap: 6px; }
 .select__trigger {
