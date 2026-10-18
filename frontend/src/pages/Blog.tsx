@@ -62,7 +62,7 @@ export function BlogIndex({ tag }: { tag?: string }) {
 
   useBlogHead(tag
     ? current && { title: current.meta_title || `${current.name} · Yerevan blog`, description: current.meta_description || current.description || t.blog.intro, path: `/blog/tag/${current.slug}` }
-    : { title: lang === 'nl' ? 'Blog · Yerevan Armeens restaurant Hilversum' : 'Blog · Yerevan Armenian restaurant Hilversum', description: t.blog.intro, path: '/blog' })
+    : { title: lang === 'nl' ? 'Blog · Yerevan, Armeens restaurant in Hilversum' : 'Blog · Yerevan, Armenian restaurant in Hilversum', description: t.blog.intro, path: '/blog' })
 
   const [lead, ...rest] = posts ?? []
   const hero = !tag && lead?.featured ? lead : null
