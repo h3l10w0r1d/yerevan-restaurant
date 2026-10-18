@@ -1,6 +1,7 @@
 import { img } from '../api'
 import { useI18n } from '../i18n'
 import { useRestaurant } from '../restaurant'
+import { useReserveWidget } from '../reserve-widget'
 import { Link } from '../router'
 import { useOpeningLabel } from './ComingSoon'
 import { Logo } from './Logo'
@@ -8,6 +9,7 @@ import { Logo } from './Logo'
 export function Hero() {
   const { t } = useI18n()
   const { prelaunch } = useRestaurant()
+  const reserve = useReserveWidget()
   const opening = useOpeningLabel()
   return (
     <section className="hero" id="top">
@@ -24,7 +26,7 @@ export function Hero() {
         <Logo className="hero__logo" />
         <p className="hero__tagline">{t.hero.tagline}</p>
         <div className="hero__cta">
-          <Link className="btn btn--light" to="/#reserve">{t.hero.reserve}</Link>
+          <button type="button" className="btn btn--light" data-reserve-cta onClick={reserve.show}>{t.hero.reserve}</button>
           <Link className="btn btn--ghost" to="/menu">{t.hero.menu}</Link>
         </div>
         {prelaunch && <p className="hero__opening">{opening}</p>}

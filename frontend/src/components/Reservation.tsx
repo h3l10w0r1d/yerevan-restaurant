@@ -1,28 +1,11 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { api, ApiError, type Slot } from '../api'
 import { fill, useI18n } from '../i18n'
-import { useRestaurant, type Hours } from '../restaurant'
+import { bookingError, isoDate, localSlots, weekday } from '../booking'
+import { useRestaurant } from '../restaurant'
 import { useOpeningDate } from './ComingSoon'
 import { DatePicker } from './DatePicker'
 import { Select } from './Select'
-
-const pad = (n: number) => String(n).padStart(2, '0')
-const isoDate = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-const weekday = (iso: string) => (new Date(`${iso}T12:00:00`).getDay() + 6) % 7 // Monday = 0
-
-// Same rule as the backend: every 30 min, last seating 90 min before closing.
-function localSlots(iso: string, allHours: Hours): Slot[] {
-  const hours = allHours[weekday(iso)]
-  if (!hours) return []
-  const toMin = (s: string) => +s.slice(0, 2) * 60 + +s.slice(3)
-  const now = new Date()
-  const out: Slot[] = []
-  for (let m = toMin(hours[0]); m <= toMin(hours[1]) - 90; m += 30) {
-    const time = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`
-    out.push({ time, available: new Date(`${iso}T${time}:00`) > now })
-  }
-  return out
-}
 
 type Status = 'idle' | 'sending' | 'done' | 'error'
 
@@ -88,9 +71,7 @@ export function Reservation() {
     }
   }
 
-  const errorText = error === 'not_yet_open'
-    ? (openingDate ? fill(t.soon.reserveDate, { date: openingDate }) : t.soon.reserve)
-    : (t.reserve.errors as Record<string, string>)[error] ?? t.reserve.errors.generic
+  const errorText = bookingError(t, error, openingDate, fill)
 
   return (
     <section className="section reserve" id="reserve">

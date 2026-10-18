@@ -7,6 +7,7 @@ import { useOpenStatus } from '../components/menu/bits'
 import { MenuComingSoon, useOpeningLabel } from '../components/ComingSoon'
 import { fill, useI18n } from '../i18n'
 import { useRestaurant } from '../restaurant'
+import { useReserveWidget } from '../reserve-widget'
 import { Link } from '../router'
 import { useStore } from '../store'
 
@@ -22,6 +23,7 @@ export function MenuPage() {
   const { t, lang } = useI18n()
   const R = useRestaurant()
   const status = useOpenStatus()
+  const reserve = useReserveWidget()
   const opening = useOpeningLabel()
   const { menu, items, cart, add } = useStore()
   const [query, setQuery] = useState('')
@@ -149,7 +151,7 @@ export function MenuPage() {
         {!R.orderingEnabled && (
           <div className="mnotice">
             <p>{t.mp.soonNote}</p>
-            <Link to="/#reserve" className="btn btn--burgundy">{t.mp.reserveCta}</Link>
+            <button type="button" className="btn btn--burgundy" data-reserve-cta onClick={reserve.show}>{t.mp.reserveCta}</button>
           </div>
         )}
 

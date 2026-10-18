@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useI18n, type Lang } from '../i18n'
 import { Link } from '../router'
+import { useReserveWidget } from '../reserve-widget'
 import { useStore } from '../store'
 
 export function Header({ page }: { page: 'home' | 'menu' }) {
   const { t, lang, setLang } = useI18n()
   const { count: cartCount } = useStore()
+  const reserve = useReserveWidget()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -18,7 +20,6 @@ export function Header({ page }: { page: 'home' | 'menu' }) {
 
   const links: [string, string][] = [
     ['/menu', t.nav.menu],
-    ['/#reserve', t.nav.reserve],
     ['/#order', t.nav.order],
     ['/#visit', t.nav.visit],
   ]
@@ -38,6 +39,17 @@ export function Header({ page }: { page: 'home' | 'menu' }) {
           ))}
         </nav>
         <div className="header__actions">
+          <button
+            type="button"
+            className={`header__cta ${reserve.open ? 'header__cta--active' : ''}`}
+            data-reserve-cta
+            aria-expanded={reserve.open}
+            aria-haspopup="dialog"
+            onClick={() => { setOpen(false); if (reserve.open) reserve.hide(); else reserve.show() }}
+          >
+            <span className="header__cta-long">{t.widget.cta}</span>
+            <span className="header__cta-short">{t.widget.ctaShort}</span>
+          </button>
           <div className="lang" role="group" aria-label="Language">
             {(['en', 'nl'] as Lang[]).map((l) => (
               <button key={l} aria-pressed={lang === l} onClick={() => setLang(l)}>

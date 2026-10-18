@@ -288,3 +288,101 @@
 }
 .hero__opening + .hero__address { margin-top: 16px; }
 .visit__note { font-size: 0.9rem; color: var(--muted); margin: -4px 0 10px; }
+
+/* ==========================================================================
+   Header "Reserve a table" button + booking popup (top right)
+   ========================================================================== */
+.header__cta {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 0 14px;
+  border: 0; border-radius: var(--radius); cursor: pointer; white-space: nowrap;
+  background: var(--amber); color: var(--navy); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+  box-shadow: 0 2px 10px rgba(232, 150, 58, 0.25); transition: background 0.2s, transform 0.15s;
+}
+.header__cta:hover { background: #f0a650; }
+.header__cta:active { transform: scale(0.97); }
+.header__cta--active { background: var(--ivory); color: var(--burgundy); }
+.header__cta-long { display: none; }
+@media (min-width: 560px) {
+  .header__cta-long { display: inline; }
+  .header__cta-short { display: none; }
+  .header__cta { padding: 0 18px; }
+}
+
+.rwidget {
+  position: fixed; z-index: 90; top: calc(var(--header-h) + 10px); left: 12px; right: 12px;
+  padding: 4px 16px 16px; border-radius: 14px; color: var(--ivory); background: var(--burgundy);
+  box-shadow: 0 24px 60px rgba(20, 8, 10, 0.45), 0 0 0 1px rgba(248, 239, 234, 0.08);
+  transform-origin: top right; animation: rw-in 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.rwidget--closing { animation: rw-out 0.18s ease-in forwards; }
+@keyframes rw-in { from { opacity: 0; transform: translateY(-10px) scale(0.94); } }
+@keyframes rw-out { to { opacity: 0; transform: translateY(-8px) scale(0.96); } }
+@media (min-width: 560px) {
+  .rwidget { left: auto; width: 384px; right: max(16px, calc((100vw - 1080px) / 2 + var(--gutter))); }
+}
+
+.rwidget__head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 52px; }
+.rwidget__title { font-family: var(--sans); font-size: 1rem; font-weight: 500; letter-spacing: 0.02em; text-align: center; }
+.rwidget__close {
+  justify-self: end; width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 50%;
+  background: none; color: var(--ivory); cursor: pointer;
+}
+.rwidget__close svg { width: 14px; height: 14px; }
+.rwidget__close:hover { background: rgba(248, 239, 234, 0.1); }
+.rwidget__back { justify-self: start; border: 0; background: none; color: rgba(248, 239, 234, 0.85); cursor: pointer; font-size: 0.9rem; padding: 6px 0; }
+
+.rwidget__rows { border-radius: 10px; background: rgba(248, 239, 234, 0.07); }
+.rwidget__row { position: relative; border-bottom: 1px solid rgba(20, 8, 10, 0.25); }
+.rwidget__row:first-child { background: rgba(20, 8, 10, 0.22); border-radius: 10px 10px 0 0; }
+.rwidget__row:last-child { border-bottom: 0; }
+.rwidget__icon {
+  position: absolute; left: 14px; top: 28px; transform: translateY(-50%); width: 20px; height: 20px;
+  color: rgba(248, 239, 234, 0.75); pointer-events: none; z-index: 1;
+}
+.rwidget__icon svg { width: 20px; height: 20px; }
+/* Labels stay for screen readers; the icons carry the meaning visually. */
+.rwidget .field__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rwidget .select, .rwidget .datepicker { gap: 0; }
+.rwidget .select__trigger, .rwidget .datepicker__trigger {
+  min-height: 56px; padding: 0 16px 0 46px; border: 0; border-radius: 0; background: transparent;
+  color: var(--ivory); font-size: 1.05rem; font-weight: 500; transition: background 0.15s;
+}
+.rwidget .select__trigger:hover, .rwidget .datepicker__trigger:hover { background: rgba(248, 239, 234, 0.05); }
+.rwidget .select__trigger:focus-visible, .rwidget .datepicker__trigger:focus-visible,
+.rwidget .select--open .select__trigger, .rwidget .datepicker--open .datepicker__trigger { background: rgba(248, 239, 234, 0.08); box-shadow: inset 0 0 0 2px var(--amber); }
+.rwidget .select__chevron { opacity: 0.85; }
+.rwidget .datepicker__icon { display: none; }
+.rwidget .datepicker__trigger::after {
+  content: ''; width: 7px; height: 7px; margin-right: 3px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px); opacity: 0.85;
+}
+.rwidget .datepicker__trigger--empty span { opacity: 1; }
+.rwidget .select__list, .rwidget .calendar { margin-top: 6px; }
+.rwidget__note { display: block; padding: 18px 16px 18px 46px; font-size: 0.95rem; color: rgba(248, 239, 234, 0.85); }
+
+.rwidget__error { margin: 12px 0 0; padding: 10px 12px; border-left: 2px solid var(--amber); background: rgba(232, 150, 58, 0.15); font-size: 0.92rem; line-height: 1.5; }
+.rwidget__cta {
+  width: 100%; min-height: 52px; margin-top: 16px; border: 0; border-radius: 10px; cursor: pointer;
+  background: var(--ivory); color: var(--ink); font-size: 1.05rem; font-weight: 600; transition: background 0.2s, transform 0.15s;
+}
+.rwidget__cta:hover:not(:disabled) { background: #fff; }
+.rwidget__cta:active:not(:disabled) { transform: scale(0.99); }
+.rwidget__cta:disabled { opacity: 0.5; cursor: default; }
+
+.rwidget__summary { margin: 0 0 14px; font-size: 0.95rem; color: rgba(248, 239, 234, 0.88); }
+.rwidget__field { display: grid; gap: 4px; margin-bottom: 10px; }
+.rwidget__field span { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(248, 239, 234, 0.72); }
+.rwidget__field input {
+  min-height: 44px; padding: 0 12px; border-radius: 8px; font-size: 16px; color: var(--ivory);
+  border: 1px solid rgba(248, 239, 234, 0.22); background: rgba(248, 239, 234, 0.06);
+}
+.rwidget__field input::placeholder { color: rgba(248, 239, 234, 0.45); }
+.rwidget__field input:focus { outline: none; border-color: var(--amber); }
+
+.rwidget__done { text-align: center; padding: 8px 4px 0; }
+.rwidget__check { display: inline-block; width: 44px; height: 44px; color: var(--amber); margin-bottom: 10px; }
+.rwidget__check svg { width: 44px; height: 44px; }
+.rwidget__done h3 { font-size: 1.6rem; margin-bottom: 8px; }
+.rwidget__done p { font-size: 0.95rem; color: rgba(248, 239, 234, 0.88); }
+
+@media (prefers-reduced-motion: reduce) { .rwidget, .rwidget--closing { animation: none; } }

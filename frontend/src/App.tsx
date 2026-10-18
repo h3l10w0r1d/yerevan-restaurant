@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
+import { ReserveWidget } from './components/ReserveWidget'
 import { Home } from './pages/Home'
 import { MenuPage } from './pages/MenuPage'
 import { useI18n } from './i18n'
@@ -32,6 +33,7 @@ export default function App() {
   return (
     <>
       <Header page={page} />
+      <ReserveWidget />
       {page === 'menu' ? <main><MenuPage /></main> : <Home />}
       <Footer />
     </>
