@@ -5,7 +5,7 @@ import re
 from datetime import date as Date
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
 from sqlmodel import Session, func, select
@@ -64,15 +64,31 @@ def slots_for(day: Date, settings: dict) -> List[str]:
     return [_fmt(m) for m in range(start, end + 1, settings["slot_minutes"])]
 
 
-def booked_guests(session: Session, day: Date, time: str, exclude_id: Optional[int] = None) -> int:
-    q = select(func.coalesce(func.sum(Reservation.guests), 0)).where(
-        Reservation.date == day,
-        Reservation.time == time,
-        Reservation.status.not_in(["cancelled", "no_show"]),
+def day_bookings(session: Session, day: Date, exclude_id: Optional[int] = None) -> List[Tuple[int, int]]:
+    """(start minute, guests) for every active booking on a day, in a single query."""
+    q = select(Reservation.time, Reservation.guests).where(
+        Reservation.date == day, Reservation.status.not_in(["cancelled", "no_show"])
     )
     if exclude_id:
         q = q.where(Reservation.id != exclude_id)
-    return int(session.exec(q).one())
+    return [(_to_min(t), g) for t, g in session.exec(q).all()]
+
+
+def peak_seated(bookings: List[Tuple[int, int]], start: int, dining: int) -> int:
+    """Most people seated at any moment during [start, start + dining).
+
+    A booking occupies its seats from its start time for `dining` minutes. Seating only
+    rises when a booking starts, so it's enough to check the window's start and every
+    booking start inside the window.
+    """
+    moments = [start] + [b for b, _ in bookings if start < b < start + dining]
+    return max(sum(g for b, g in bookings if b <= m < b + dining) for m in moments)
+
+
+def free_seats(bookings: List[Tuple[int, int]], time: str, settings: dict) -> int:
+    return settings["seats"] - peak_seated(bookings, _to_min(time), settings["dining_minutes"])
+
+
 
 
 # --- Menu -----------------------------------------------------------------

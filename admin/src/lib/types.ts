@@ -75,7 +75,8 @@ export type Hours = ([string, string] | null)[]
 export type Settings = {
   restaurant: { name: string; address: string; city: string; email: string; phone: string }
   hours: Hours
-  slot_capacity: number
+  seats: number
+  dining_minutes: number
   slot_minutes: number
   last_seating_minutes: number
   max_party_size: number

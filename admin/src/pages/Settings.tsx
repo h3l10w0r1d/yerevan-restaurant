@@ -22,7 +22,7 @@ export function Settings() {
 
   const dirty = JSON.stringify(form) !== JSON.stringify(data)
   const setR = (k: keyof SettingsT['restaurant'], v: string) => setForm({ ...form, restaurant: { ...form.restaurant, [k]: v } })
-  const setNum = (k: 'slot_capacity' | 'slot_minutes' | 'last_seating_minutes' | 'max_party_size' | 'booking_window_days', v: string) =>
+  const setNum = (k: 'seats' | 'dining_minutes' | 'slot_minutes' | 'last_seating_minutes' | 'max_party_size' | 'booking_window_days', v: string) =>
     setForm({ ...form, [k]: Math.max(0, parseInt(v, 10) || 0) })
   const setDay = (i: number, value: [string, string] | null) => {
     const hours = [...form.hours]
@@ -117,7 +117,8 @@ export function Settings() {
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2">
           {([
-            ['slot_capacity', 'Guests per time slot', 'How many people can arrive in the same slot'],
+            ['seats', 'Seats in the restaurant', 'Online bookings never seat more people than this at the same moment'],
+            ['dining_minutes', 'Average table time (minutes)', 'How long a booking keeps its seats, e.g. 120 = 2 hours'],
             ['slot_minutes', 'Slot length (minutes)', 'Time between bookable times'],
             ['last_seating_minutes', 'Last booking before closing (minutes)', 'E.g. 90 → last table 1½ hours before close'],
             ['max_party_size', 'Largest party online', 'Bigger groups are asked to call or email'],

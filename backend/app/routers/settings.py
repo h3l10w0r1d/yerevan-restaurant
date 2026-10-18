@@ -31,7 +31,8 @@ class Notifications(SQLModel):
 class SettingsBody(SQLModel):
     restaurant: Restaurant
     hours: List[Optional[List[str]]]
-    slot_capacity: int = Field(ge=1, le=1000)
+    seats: int = Field(ge=1, le=1000)
+    dining_minutes: int = Field(ge=30, le=360)
     slot_minutes: int = Field(ge=10, le=120)
     last_seating_minutes: int = Field(ge=0, le=300)
     max_party_size: int = Field(ge=1, le=100)

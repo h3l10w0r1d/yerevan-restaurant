@@ -4,7 +4,7 @@ from datetime import date, timedelta
 os.environ["DATABASE_URL"] = "sqlite:///./test.db"
 os.environ["ADMIN_EMAIL"] = "owner@example.com"
 os.environ["ADMIN_PASSWORD"] = "owner-pass-123"
-os.environ["SLOT_CAPACITY"] = "6"
+os.environ["SEATS"] = "6"  # small restaurant for capacity tests (2-hour stays)
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
@@ -188,4 +188,25 @@ def test_prelaunch_mode(client):
     s.update(prelaunch=False, opening_date="")
     client.put("/api/admin/settings", headers=h, json=s)
     assert client.get("/api/menu").json()["categories"]
-    assert client.post("/api/reservations", json=booking()).status_code == 201
+    # 17:00-19:00 ends as the staff's 19:00 opening-night table arrives.
+    assert client.post("/api/reservations", json=booking(time="17:00")).status_code == 201
+
+
+def test_seats_are_held_for_two_hours(client):
+    day = next_open_day().isoformat()
+    # 4 of the 6 seats taken from 18:00 to 20:00.
+    assert client.post("/api/reservations", json=booking(date=day, time="18:00", guests=4)).status_code == 201
+    assert client.post("/api/reservations", json=booking(date=day, time="19:00", guests=3)).status_code == 409  # overlaps
+    assert client.post("/api/reservations", json=booking(date=day, time="17:30", guests=3)).status_code == 409  # still seated at 18:00
+    assert client.post("/api/reservations", json=booking(date=day, time="19:30", guests=2)).status_code == 201  # exactly 6 seated
+    assert client.post("/api/reservations", json=booking(date=day, time="20:00", guests=4)).status_code == 201  # 18:00 table has left
+
+    slots = {s["time"]: s["available"] for s in
+             client.get("/api/availability", params={"date": day, "guests": 1}).json()["slots"]}
+    assert slots["19:00"] is False and slots["20:30"] is False   # full: 18:00+19:30 / 19:30+20:00 groups
+    assert slots["17:00"] is True                                 # 17:00-19:00 overlaps only the 4 from 18:00
+    # Cancelled bookings free their seats.
+    h = login(client)
+    first = client.get("/api/admin/reservations", headers=h, params={"start": day, "end": day}).json()[0]
+    client.patch(f"/api/admin/reservations/{first['id']}", headers=h, json={"status": "cancelled", "notify": False})
+    assert client.post("/api/reservations", json=booking(date=day, time="18:00", guests=4)).status_code == 201

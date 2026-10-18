@@ -7,7 +7,7 @@ from sqlmodel import Session
 from .. import emails
 from ..db import get_session
 from ..models import Image, MenuItem, Order, OrderCreate, Reservation, ReservationCreate
-from ..store import booked_guests, get_settings, now_local, public_menu, slots_for
+from ..store import day_bookings, free_seats, get_settings, now_local, public_menu, slots_for
 
 router = APIRouter(prefix="/api")
 
@@ -57,10 +57,11 @@ def availability(
 ):
     s = get_settings(session)
     now = now_local()
+    bookings = day_bookings(session, day)
     slots = []
     for slot in slots_for(day, s):
         slot_dt = datetime.combine(day, datetime.strptime(slot, "%H:%M").time())
-        free = s["slot_capacity"] - booked_guests(session, day, slot)
+        free = free_seats(bookings, slot, s)
         slots.append({"time": slot, "available": slot_dt > now and free >= guests})
     return {"date": day.isoformat(), "slots": slots}
 
@@ -79,7 +80,7 @@ def create_reservation(data: ReservationCreate, session: Session = Depends(get_s
         raise HTTPException(422, "closed")
     if datetime.combine(data.date, datetime.strptime(data.time, "%H:%M").time()) <= now_local():
         raise HTTPException(422, "in_past")
-    if booked_guests(session, data.date, data.time) + data.guests > s["slot_capacity"]:
+    if free_seats(day_bookings(session, data.date), data.time, s) < data.guests:
         raise HTTPException(409, "fully_booked")
     reservation = Reservation(**data.model_dump(), source="web")
     session.add(reservation)

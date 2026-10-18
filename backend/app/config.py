@@ -39,7 +39,10 @@ DEFAULT_SETTINGS = {
         ["16:00", "23:00"],
         ["16:00", "22:00"],
     ],
-    "slot_capacity": int(os.getenv("SLOT_CAPACITY", "40")),
+    # Capacity: total seats, and how long a booking keeps its seats (average table time).
+    # A booking is accepted only if the people seated never exceed `seats` during its stay.
+    "seats": int(os.getenv("SEATS", "50")),
+    "dining_minutes": int(os.getenv("DINING_MINUTES", "120")),
     "slot_minutes": 30,
     "last_seating_minutes": 90,
     "max_party_size": 12,

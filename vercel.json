@@ -27,5 +27,8 @@
       "source": "/menu",
       "destination": "/index.html"
     }
+  ],
+  "regions": [
+    "fra1"
   ]
 }

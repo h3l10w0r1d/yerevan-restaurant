@@ -16,7 +16,7 @@ from ..models import (
     ReservationAdminWrite,
     StatusUpdate,
 )
-from ..store import booked_guests, get_settings, now_local, slots_for
+from ..store import day_bookings, get_settings, now_local, peak_seated, slots_for
 
 router = APIRouter(prefix="/api/admin", dependencies=[Depends(staff)])
 
@@ -112,7 +112,8 @@ def _warnings(session: Session, r: Reservation) -> list:
     if r.time not in slots_for(r.date, s):
         out.append("outside_hours")
     if r.status not in ("cancelled", "no_show"):
-        if booked_guests(session, r.date, r.time) > s["slot_capacity"]:
+        h, m = r.time.split(":")
+        if peak_seated(day_bookings(session, r.date), int(h) * 60 + int(m), s["dining_minutes"]) > s["seats"]:
             out.append("over_capacity")
     return out
 

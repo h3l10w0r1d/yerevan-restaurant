@@ -17,6 +17,8 @@ Mobile-first and bilingual (English / Nederlands), built from the brandbook: bur
 - **Menu**: categories and dishes in EN/NL, prices, dietary tags, sold-out toggle, ordering, photo upload (resized to WebP in the browser, stored in the database)
 - **Team** (owners): add people with a one-time password, change roles, reset passwords, disable or remove access
 - **Settings** (owners and managers): restaurant details, opening hours, booking rules, takeaway ordering on/off
+
+**Capacity:** each booking holds its seats for the average table time (default 2 hours). An online booking is accepted only if the number of people seated never exceeds the seats (default 50) at any moment during its stay; staff bookings that go over get a warning.
 - **My account**: profile, password, evening (dark) mode
 - **Sign-in**: "Forgot password?" emails a reset link; invites email a link to choose a password
 
@@ -69,7 +71,8 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 | `DATABASE_URL` | `sqlite:///./yerevan.db` | Use Postgres in production |
 | `CORS_ORIGINS` | `*` | Comma-separated allowed origins |
 | `ORDERING_ENABLED` | `false` | Default for the takeaway switch (then managed in Settings) |
-| `SLOT_CAPACITY` | `40` | Default guests per slot (then managed in Settings) |
+| `SEATS` | `50` | Default number of seats (then managed in Settings) |
+| `DINING_MINUTES` | `120` | Default time a booking keeps its seats (then managed in Settings) |
 
 ## SEO
 
