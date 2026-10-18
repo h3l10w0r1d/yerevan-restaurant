@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 export type Lang = 'en' | 'nl'
 
 const en = {
-  nav: { menu: 'Menu', reserve: 'Reserve', order: 'Order', visit: 'Visit' },
+  nav: { menu: 'Menu', reserve: 'Reserve', order: 'Order', visit: 'Visit', blog: 'Blog' },
   hero: {
     tagline: 'Armenian cooking at the hour the city lights come on and Ararat turns blue.',
     reserve: 'Reserve a table',
@@ -147,6 +147,29 @@ const en = {
     done: 'Done',
   },
   days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+  blog: {
+    eyebrow: 'Blog',
+    title: 'Stories from the Yerevan kitchen',
+    intro: 'Recipes, Armenian traditions and news from our restaurant in Hilversum.',
+    all: 'All',
+    featured: 'Featured',
+    readingTime: '{n} min read',
+    more: 'Load more stories',
+    loading: 'Loading…',
+    empty: 'The first stories are on their way.',
+    notFound: 'This story could not be found.',
+    back: 'All stories',
+    by: 'By',
+    share: 'Share',
+    copy: 'Copy link',
+    copied: 'Link copied',
+    related: 'Read next',
+    ctaTitle: 'Taste it for yourself',
+    ctaText: 'Kampstraat 22, Hilversum. Book a table and we’ll light the grill.',
+    ctaButton: 'Reserve a table',
+    preview: 'Preview: this is how the post will look. It is not public yet.',
+    tagCount: '{n} stories',
+  },
   footer: {
     rights: 'Armenian restaurant in Hilversum',
     credits: 'Photo credits',
@@ -157,7 +180,7 @@ const en = {
 type Dict = typeof en
 
 const nl: Dict = {
-  nav: { menu: 'Menu', reserve: 'Reserveren', order: 'Bestellen', visit: 'Bezoek' },
+  nav: { menu: 'Menu', reserve: 'Reserveren', order: 'Bestellen', visit: 'Bezoek', blog: 'Blog' },
   hero: {
     tagline: 'Armeens koken op het uur dat de stad oplicht en de Ararat blauw kleurt.',
     reserve: 'Reserveer een tafel',
@@ -301,6 +324,29 @@ const nl: Dict = {
     done: 'Klaar',
   },
   days: ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag', 'Zondag'],
+  blog: {
+    eyebrow: 'Blog',
+    title: 'Verhalen uit de keuken van Yerevan',
+    intro: 'Recepten, Armeense tradities en nieuws uit ons restaurant in Hilversum.',
+    all: 'Alles',
+    featured: 'Uitgelicht',
+    readingTime: '{n} min lezen',
+    more: 'Meer verhalen',
+    loading: 'Laden…',
+    empty: 'De eerste verhalen komen eraan.',
+    notFound: 'Dit verhaal bestaat niet (meer).',
+    back: 'Alle verhalen',
+    by: 'Door',
+    share: 'Delen',
+    copy: 'Link kopiëren',
+    copied: 'Link gekopieerd',
+    related: 'Lees verder',
+    ctaTitle: 'Proef het zelf',
+    ctaText: 'Kampstraat 22, Hilversum. Reserveer een tafel en wij steken de grill aan.',
+    ctaButton: 'Reserveer een tafel',
+    preview: 'Voorbeeld: zo ziet het bericht eruit. Het is nog niet openbaar.',
+    tagCount: '{n} verhalen',
+  },
   footer: {
     rights: 'Armeens restaurant in Hilversum',
     credits: 'Fotoverantwoording',

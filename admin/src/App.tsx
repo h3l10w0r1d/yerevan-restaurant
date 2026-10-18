@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react'
-import { lazy, type ReactNode } from 'react'
+import { lazy, Suspense, type ReactNode } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from '@/components/layout'
 import { useAuth } from '@/lib/auth'
@@ -18,6 +18,10 @@ const Menu = page('Menu', () => import('@/pages/Menu'))
 const Team = page('Team', () => import('@/pages/Team'))
 const Settings = page('Settings', () => import('@/pages/Settings'))
 const Account = page('Account', () => import('@/pages/Account'))
+const Posts = page('Posts', () => import('@/pages/blog/Posts'))
+const Tags = page('Tags', () => import('@/pages/blog/Tags'))
+const TagEditor = page('TagEditor', () => import('@/pages/blog/Tags'))
+const PostEditor = page('PostEditor', () => import('@/pages/blog/Editor'))
 
 const Spinner = () => <div className="flex min-h-[50vh] items-center justify-center"><Loader2 className="size-6 animate-spin text-primary" /></div>
 
@@ -38,11 +42,15 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot" element={<Forgot />} />
       <Route path="/set-password" element={<SetPassword />} />
+      <Route path="/posts/:id" element={<Guard roles={['owner', 'manager']}><Suspense fallback={<Spinner />}><PostEditor /></Suspense></Guard>} />
       <Route element={<Guard><Layout /></Guard>}>
         <Route index element={<Dashboard />} />
         <Route path="reservations" element={<Reservations />} />
         <Route path="orders" element={<Orders />} />
         <Route path="menu" element={<Guard roles={['owner', 'manager']}><Menu /></Guard>} />
+        <Route path="posts" element={<Guard roles={['owner', 'manager']}><Posts /></Guard>} />
+        <Route path="tags" element={<Guard roles={['owner', 'manager']}><Tags /></Guard>} />
+        <Route path="tags/:id" element={<Guard roles={['owner', 'manager']}><TagEditor /></Guard>} />
         <Route path="team" element={<Guard roles={['owner']}><Team /></Guard>} />
         <Route path="settings" element={<Guard roles={['owner', 'manager']}><Settings /></Guard>} />
         <Route path="account" element={<Account />} />

@@ -67,7 +67,7 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 | `RESEND_API_KEY` | (empty: emails are logged, not sent) | Resend API key |
 | `EMAIL_FROM` | `Yerevan Restaurant <reserveringen@yerevanrestaurant.nl>` | Sender, on a domain verified in Resend |
 | `EMAIL_REPLY_TO` | restaurant email from Settings | Where guest replies go |
-| `SITE_URL` | `https://yerevan-restaurant.vercel.app` | Used for links in emails |
+| `SITE_URL` | `https://www.yerevanrestaurant.nl` | Canonical URLs, sitemap, share previews and links in emails |
 | `DATABASE_URL` | `sqlite:///./yerevan.db` | Use Postgres in production |
 | `CORS_ORIGINS` | `*` | Comma-separated allowed origins |
 | `ORDERING_ENABLED` | `false` | Default for the takeaway switch (then managed in Settings) |
@@ -76,14 +76,16 @@ Tests: `cd backend && .venv/bin/python -m pytest`
 
 ## SEO
 
-- `sitemap.xml` and `robots.txt` are generated at build time (`frontend/vite.config.ts`) for the homepage and `/menu`, in English and Dutch (`?lang=nl`), with hreflang links.
+- `robots.txt` is generated at build time (`frontend/vite.config.ts`). `sitemap.xml` is served by the API (`backend/app/routers/seo.py`): the homepage, `/menu` and `/blog` in English and Dutch (`?lang=nl`) with hreflang links, plus every published post and tag.
+- Blog pages (`/blog`, `/blog/<slug>`, `/blog/tag/<slug>`) are rendered by the API with their full head (title, description, canonical, Open Graph, X card, `BlogPosting` and breadcrumb structured data) and the article text, so crawlers and link previews never depend on JavaScript. RSS lives at `/blog/rss.xml`.
+- Posts are written in the admin under **Blog → Posts**: a Ghost-style editor with cards (image, callout, button, toggle, YouTube…), scheduling, previews, meta data, social cards and an SEO checklist with a focus keyword.
 - Titles, descriptions, canonical URLs and share tags follow the page and language (`frontend/src/seo.ts`).
 - Restaurant structured data (Schema.org) is in `frontend/index.html`; opening hours are added only after pre-opening ends.
-- The public address comes from `SITE_URL` (default `https://yerevan-restaurant.vercel.app`). Set it in Vercel when the site moves to its own domain, and submit `<SITE_URL>/sitemap.xml` in Google Search Console.
+- The public address comes from `SITE_URL` (default `https://www.yerevanrestaurant.nl`). Submit `<SITE_URL>/sitemap.xml` in Google Search Console.
 
 ## Deploy
 
-**Vercel (primary):** https://yerevan-restaurant.vercel.app serves the site and the API from one project.
+**Vercel (primary):** https://www.yerevanrestaurant.nl serves the site and the API from one project.
 `vercel.json` builds `frontend/` as static files and runs the FastAPI app as a Python function (`api/index.py`) under `/api`.
 The GitHub repo is connected, so every push to `main` deploys. Environment variables: `ADMIN_TOKEN`, `ORDERING_ENABLED`, and `DATABASE_URL`.
 Production data lives in **Neon Postgres** (Frankfurt), attached through the Vercel Marketplace, which sets `DATABASE_URL`.

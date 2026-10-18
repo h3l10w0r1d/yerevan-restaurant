@@ -8,7 +8,7 @@ import { api, describe, imageUrl } from '@/lib/api'
 const MAX_SIDE = 1600
 
 /** Downscale in the browser and re-encode as WebP (JPEG where WebP encoding isn't available). */
-async function prepare(file: File): Promise<Blob> {
+export async function prepare(file: File): Promise<Blob> {
   const bitmap = await createImageBitmap(file)
   const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height))
   const canvas = document.createElement('canvas')

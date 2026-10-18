@@ -52,7 +52,7 @@ vercel --prod
 
 Optional:
 - `EMAIL_REPLY_TO`: where guest replies go, if not the restaurant email in Settings.
-- `SITE_URL`: the public address used in links (default `https://yerevan-restaurant.vercel.app`).
+- `SITE_URL`: the public address used in links (default `https://www.yerevanrestaurant.nl`).
   Change it when the site moves to its own domain.
 
 ## 4. Test

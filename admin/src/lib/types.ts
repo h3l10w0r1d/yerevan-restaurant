@@ -115,3 +115,67 @@ export type EmailStatus = {
   site_url: string
   log: EmailLogEntry[]
 }
+
+// --- Blog -------------------------------------------------------------------
+
+export type TagRef = { id: number; name: string; slug: string; color: string | null }
+
+export type BlogTag = TagRef & {
+  description: string | null
+  meta_title: string | null
+  meta_description: string | null
+  count: number
+}
+
+export type PostListItem = {
+  id: number
+  title: string
+  slug: string
+  status: 'draft' | 'published'
+  scheduled: boolean
+  featured: boolean
+  published_at: string | null
+  updated_at: string
+  created_at: string
+  feature_image: string | null
+  tags: TagRef[]
+  author: { id: number; name: string } | null
+}
+
+export type PostFields = {
+  title: string
+  slug: string
+  html: string
+  content_json: object | null
+  custom_excerpt: string | null
+  feature_image: string | null
+  feature_image_alt: string | null
+  feature_image_caption: string | null
+  featured: boolean
+  status: 'draft' | 'published'
+  published_at: string | null
+  language: 'en' | 'nl'
+  author_id: number | null
+  tag_ids: number[]
+  meta_title: string | null
+  meta_description: string | null
+  canonical_url: string | null
+  og_title: string | null
+  og_description: string | null
+  og_image: string | null
+  twitter_title: string | null
+  twitter_description: string | null
+  twitter_image: string | null
+  focus_keyword: string | null
+}
+
+export type Post = PostFields & {
+  id: number
+  uuid: string
+  tags: TagRef[]
+  excerpt: string
+  reading_time: number
+  word_count: number
+  created_at: string
+  updated_at: string
+}

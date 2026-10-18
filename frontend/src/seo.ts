@@ -34,8 +34,9 @@ function setMeta(selector: string, attr: string, value: string) {
 }
 
 /** Keeps title, description, canonical, hreflang, share tags and structured data in step with the page. */
-export function useSeo(page: 'home' | 'menu', lang: Lang, r: Restaurant) {
+export function useSeo(page: 'home' | 'menu' | 'blog', lang: Lang, r: Restaurant) {
   useEffect(() => {
+    if (page === 'blog') return // blog pages set their own head
     const path = page === 'menu' ? '/menu' : '/'
     const url = (l: Lang) => `${SITE}${path}${l === 'nl' ? '?lang=nl' : ''}`
     const { title, description } = COPY[page][lang]

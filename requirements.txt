@@ -3,3 +3,4 @@ fastapi==0.115.6
 sqlmodel==0.0.22
 pydantic[email]==2.10.4
 psycopg[binary]==3.2.3
+nh3==0.2.21

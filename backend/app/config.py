@@ -16,7 +16,7 @@ SESSION_DAYS = int(os.getenv("SESSION_DAYS", "14"))
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "").strip()
 EMAIL_FROM = os.getenv("EMAIL_FROM", "Yerevan Restaurant <reserveringen@yerevanrestaurant.nl>")
 EMAIL_REPLY_TO = os.getenv("EMAIL_REPLY_TO", "")  # defaults to the restaurant email in Settings
-SITE_URL = os.getenv("SITE_URL", "https://yerevan-restaurant.vercel.app").rstrip("/")
+SITE_URL = os.getenv("SITE_URL", "https://www.yerevanrestaurant.nl").rstrip("/")
 PASSWORD_LINK_HOURS = 72
 MAX_IMAGE_BYTES = 3 * 1024 * 1024
 

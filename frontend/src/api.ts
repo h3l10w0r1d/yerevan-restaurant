@@ -49,6 +49,29 @@ export const api = {
     request('/api/orders', { method: 'POST', body: JSON.stringify(data) }),
 }
 
+export type TagRef = { id: number; name: string; slug: string; color: string | null }
+export type PostCard = {
+  id: number; slug: string; title: string; excerpt: string; feature_image: string | null; feature_image_alt: string | null
+  featured: boolean; published_at: string; updated_at: string; reading_time: number; language: 'en' | 'nl'
+  tags: TagRef[]; primary_tag: TagRef | null; author: { id: number; name: string } | null
+}
+export type PostFull = PostCard & {
+  html: string; feature_image_caption: string | null; custom_excerpt: string | null
+  meta_title: string | null; meta_description: string | null; canonical_url: string | null
+  og_title: string | null; og_description: string | null; og_image: string | null
+  related: PostCard[]; preview?: boolean
+}
+export type BlogTag = TagRef & { description: string | null; meta_title: string | null; meta_description: string | null; count?: number }
+export type PostPage = { posts: PostCard[]; pagination: { page: number; limit: number; total: number; pages: number } }
+
+export const blogApi = {
+  posts: (page = 1, tag?: string) => request<PostPage>(`/api/blog/posts?page=${page}&limit=12${tag ? `&tag=${encodeURIComponent(tag)}` : ''}`),
+  post: (slug: string) => request<PostFull>(`/api/blog/posts/${encodeURIComponent(slug)}`),
+  preview: (uuid: string) => request<PostFull>(`/api/blog/preview/${encodeURIComponent(uuid)}`),
+  tags: () => request<BlogTag[]>('/api/blog/tags'),
+  tag: (slug: string) => request<BlogTag>(`/api/blog/tags/${encodeURIComponent(slug)}`),
+}
+
 export const formatPrice = (cents: number) =>
   new Intl.NumberFormat('nl-NL', { minimumFractionDigits: 2 }).format(cents / 100)
 

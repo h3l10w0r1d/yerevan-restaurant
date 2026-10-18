@@ -224,3 +224,57 @@ class PasswordToken(SQLModel, table=True):
     purpose: str  # invite | reset
     expires_at: datetime
     used_at: Optional[datetime] = None
+
+
+# --- Blog -----------------------------------------------------------------
+
+POST_STATUSES = ("draft", "published")  # "scheduled" = published with a future date
+
+
+class Post(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    uuid: str = Field(index=True, unique=True)  # private preview links: /blog/p/<uuid>
+    title: str = ""
+    slug: str = Field(index=True, unique=True)
+    html: str = ""  # sanitized
+    content_json: Optional[str] = None  # editor document, for re-editing
+    plaintext: str = ""
+    custom_excerpt: Optional[str] = None
+    feature_image: Optional[str] = None
+    feature_image_alt: Optional[str] = None
+    feature_image_caption: Optional[str] = None
+    featured: bool = False
+    status: str = Field(default="draft", index=True)
+    published_at: Optional[datetime] = Field(default=None, index=True)  # UTC
+    language: str = "nl"
+    author_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    # SEO
+    meta_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    canonical_url: Optional[str] = None
+    og_title: Optional[str] = None
+    og_description: Optional[str] = None
+    og_image: Optional[str] = None
+    twitter_title: Optional[str] = None
+    twitter_description: Optional[str] = None
+    twitter_image: Optional[str] = None
+    focus_keyword: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class Tag(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    slug: str = Field(index=True, unique=True)
+    description: Optional[str] = None
+    color: Optional[str] = None
+    meta_title: Optional[str] = None
+    meta_description: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class PostTag(SQLModel, table=True):
+    post_id: int = Field(foreign_key="post.id", primary_key=True)
+    tag_id: int = Field(foreign_key="tag.id", primary_key=True)
+    position: int = 0  # 0 = primary tag

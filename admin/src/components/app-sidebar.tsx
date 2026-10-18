@@ -1,5 +1,5 @@
 import {
-  CalendarDays, ChevronsUpDown, ExternalLink, LayoutDashboard, LogOut, Moon, Settings,
+  CalendarDays, ChevronsUpDown, FileText, Tag, ExternalLink, LayoutDashboard, LogOut, Moon, Settings,
   ShoppingBag, Sun, UserRound, Users, UtensilsCrossed,
 } from 'lucide-react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
@@ -37,6 +37,11 @@ export function AppSidebar({ pending }: { pending: number }) {
     { to: '/menu', label: 'Menu', icon: UtensilsCrossed, roles: ['owner', 'manager'] },
     { to: '/team', label: 'Team', icon: Users, roles: ['owner'] },
     { to: '/settings', label: 'Settings', icon: Settings, roles: ['owner', 'manager'] },
+  ]
+
+  const blog: NavItem[] = [
+    { to: '/posts', label: 'Posts', icon: FileText, roles: ['owner', 'manager'] },
+    { to: '/tags', label: 'Tags', icon: Tag, roles: ['owner', 'manager'] },
   ]
 
   const isActive = (to: string) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
@@ -89,6 +94,7 @@ export function AppSidebar({ pending }: { pending: number }) {
 
       <SidebarContent>
         {group('Service', service)}
+        {group('Blog', blog)}
         {group('Manage', manage)}
       </SidebarContent>
 

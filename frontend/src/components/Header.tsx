@@ -4,7 +4,7 @@ import { Link } from '../router'
 import { useReserveWidget } from '../reserve-widget'
 import { useStore } from '../store'
 
-export function Header({ page }: { page: 'home' | 'menu' }) {
+export function Header({ page }: { page: 'home' | 'menu' | 'blog' }) {
   const { t, lang, setLang } = useI18n()
   const { count: cartCount } = useStore()
   const reserve = useReserveWidget()
@@ -21,18 +21,19 @@ export function Header({ page }: { page: 'home' | 'menu' }) {
   const links: [string, string][] = [
     ['/menu', t.nav.menu],
     ['/#order', t.nav.order],
+    ['/blog', t.nav.blog],
     ['/#visit', t.nav.visit],
   ]
 
   return (
-    <header className={`header ${scrolled || open || page === 'menu' ? 'header--solid' : ''}`}>
+    <header className={`header ${scrolled || open || page !== 'home' ? 'header--solid' : ''}`}>
       <div className="header__inner">
         <Link to="/" className="header__brand" aria-label="Yerevan" onClick={() => setOpen(false)}>
           <span className="wordmark">Yerevan</span>
         </Link>
         <nav className={`nav ${open ? 'nav--open' : ''}`} aria-label="Main">
           {links.map(([href, label]) => (
-            <Link key={href} to={href} onClick={() => setOpen(false)} aria-current={href === '/menu' && page === 'menu' ? 'page' : undefined}>
+            <Link key={href} to={href} onClick={() => setOpen(false)} aria-current={href.slice(1) === page ? 'page' : undefined}>
               {label}
               {href === '/#order' && cartCount > 0 && <span className="badge">{cartCount}</span>}
             </Link>
