@@ -16,7 +16,7 @@ export function Hero() {
       {/* The Cascade's fountains from above (turned on its side for wide screens); a burgundy tint keeps the logo on a calm field, per the brandbook. */}
       <div className="hero__bg" aria-hidden>
         <picture>
-          <source media="(min-width: 700px)" srcSet={img('yerevan/hero-cascade-1600.webp')} />
+          <source media="(min-width: 700px)" srcSet={img('yerevan/hero-cascade-wide.webp')} />
           <img src={img('yerevan/hero-cascade-900.webp')} alt="" width={878} height={1560} fetchPriority="high" decoding="async" />
         </picture>
       </div>
