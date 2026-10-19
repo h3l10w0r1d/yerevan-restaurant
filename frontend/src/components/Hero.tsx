@@ -13,11 +13,11 @@ export function Hero() {
   const opening = useOpeningLabel()
   return (
     <section className="hero" id="top">
-      {/* The Opera from above; a burgundy tint keeps the logo on a calm field, per the brandbook. */}
+      {/* The Cascade's fountains from above (turned on its side for wide screens); a burgundy tint keeps the logo on a calm field, per the brandbook. */}
       <div className="hero__bg" aria-hidden>
         <picture>
-          <source media="(min-width: 700px)" srcSet={img('yerevan/hero-opera-1600.webp')} />
-          <img src={img('yerevan/hero-opera-900.webp')} alt="" width={900} height={1600} fetchPriority="high" decoding="async" />
+          <source media="(min-width: 700px)" srcSet={img('yerevan/hero-cascade-1600.webp')} />
+          <img src={img('yerevan/hero-cascade-900.webp')} alt="" width={878} height={1560} fetchPriority="high" decoding="async" />
         </picture>
       </div>
       <div className="hero__shade" aria-hidden />
