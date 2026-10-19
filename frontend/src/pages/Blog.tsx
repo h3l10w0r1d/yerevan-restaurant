@@ -64,6 +64,8 @@ export function BlogIndex({ tag }: { tag?: string }) {
     ? current && { title: current.meta_title || `${current.name} · Yerevan blog`, description: current.meta_description || current.description || t.blog.intro, path: `/blog/tag/${current.slug}` }
     : { title: lang === 'nl' ? 'Blog · Yerevan, Armeens restaurant in Hilversum' : 'Blog · Yerevan, Armenian restaurant in Hilversum', description: t.blog.intro, path: '/blog' })
 
+  // Only the main topics: the most-used tags, plus the one being viewed.
+  const chips = tags.filter((x) => (x.count ?? 0) >= 3 || x.slug === tag).sort((a, b) => (b.count ?? 0) - (a.count ?? 0)).slice(0, 10)
   const [lead, ...rest] = posts ?? []
   const hero = !tag && lead?.featured ? lead : null
   const grid = hero ? rest : posts ?? []
@@ -74,10 +76,10 @@ export function BlogIndex({ tag }: { tag?: string }) {
         <p className="eyebrow">{tag ? <Link to="/blog">{t.blog.eyebrow}</Link> : t.blog.eyebrow}</p>
         <h1>{tag ? current?.name ?? (missing ? t.blog.notFound : '…') : t.blog.title}</h1>
         <p className="lead">{tag ? current?.description ?? '' : t.blog.intro}</p>
-        {tags.length > 0 && (
+        {chips.length > 0 && (
           <nav className="blog-tags" aria-label="Tags">
             <Link to="/blog" aria-current={!tag ? 'page' : undefined}>{t.blog.all}</Link>
-            {tags.map((x) => <Link key={x.id} to={`/blog/tag/${x.slug}`} aria-current={x.slug === tag ? 'page' : undefined}>{x.name}</Link>)}
+            {chips.map((x) => <Link key={x.id} to={`/blog/tag/${x.slug}`} aria-current={x.slug === tag ? 'page' : undefined}>{x.name}</Link>)}
           </nav>
         )}
       </header>

@@ -1,4 +1,4 @@
-import { formatDistanceToNow, parseISO } from 'date-fns'
+import { format, formatDistanceToNow, parseISO } from 'date-fns'
 import { ExternalLink, FileText, Plus, Star } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -92,7 +92,7 @@ export function Posts() {
                   <span className="min-w-0">
                     <strong>{p.featured && <Star className="gh-list__star" />}{p.title || '(Untitled)'}</strong>
                     <span className="gh-list__meta">
-                      By {p.author?.name ?? 'Unknown'}{p.tags[0] && <> in <b>{p.tags[0].name}</b></>} · {state === 'draft' ? `edited ${ago(p.updated_at)}` : state === 'scheduled' ? `goes live ${ago(p.published_at!)}` : `published ${ago(p.published_at!)}`}
+                      By {p.author?.name ?? 'Unknown'}{p.tags[0] && <> in <b>{p.tags[0].name}</b></>} · {state === 'draft' ? `edited ${ago(p.updated_at)}` : state === 'scheduled' ? `scheduled for ${format(utc(p.published_at!), 'd MMM yyyy, HH:mm')}` : `published ${ago(p.published_at!)}`}
                     </span>
                   </span>
                 </Link>

@@ -8,6 +8,7 @@ import json
 import re
 import time
 import urllib.request
+from collections import Counter
 from datetime import datetime
 from email.utils import format_datetime
 from html import escape
@@ -19,11 +20,16 @@ from sqlmodel import Session, select
 
 from .. import blog, config
 from ..db import get_session
-from ..models import Post, Tag
+from ..models import Post, PostTag, Tag
 from ..store import get_settings
 
 router = APIRouter()
 SITE = config.SITE_URL
+MIN_TAG_POSTS = 3  # fewer posts than this and a tag page stays out of the index
+
+
+def live_posts():
+    return select(Post).where(Post.status == "published", Post.published_at <= datetime.utcnow())
 
 COPY = {
     "en": {"blog_title": "Blog · Yerevan, Armenian restaurant in Hilversum",
@@ -95,7 +101,7 @@ def meta_tags(*, title: str, description: str, url: str, image: Optional[str], o
         f"<title>{e(title)}</title>",
         f'<meta name="description" content="{e(description)}" />',
         f'<link rel="canonical" href="{e(url)}" />',
-        f'<meta name="robots" content="{"noindex, nofollow" if noindex else "index, follow, max-image-preview:large"}" />',
+        f'<meta name="robots" content="{"noindex, follow" if noindex else "index, follow, max-image-preview:large"}" />',
         f'<meta property="og:type" content="{og_type}" />',
         '<meta property="og:site_name" content="Yerevan" />',
         f'<meta property="og:title" content="{e(og_title or title)}" />',
@@ -180,9 +186,14 @@ def tag_page(slug: str, request: Request, session: Session = Depends(get_session
         return render(shell, meta_tags(title="Not found · Yerevan", description="", url=f"{SITE}/blog", image=None, noindex=True),
                       "<main><h1>Not found</h1></main>", "en", status=404)
     title = tag.meta_title or f"{tag.name} · Blog · Yerevan"
-    desc = tag.meta_description or tag.description or f"Posts about {tag.name} from Yerevan, Armenian restaurant in Hilversum."
-    head = meta_tags(title=title, description=desc, url=f"{SITE}/blog/tag/{tag.slug}", image=f"{SITE}/og-image.jpg")
-    return render(shell, head, f"<main><h1>{escape(tag.name)}</h1><p>{escape(desc)}</p></main>", "en")
+    desc = tag.meta_description or tag.description or f"Verhalen over {tag.name} van Yerevan, Armeens restaurant in Hilversum."
+    posts = session.exec(live_posts().where(Post.id.in_(select(PostTag.post_id).where(PostTag.tag_id == tag.id)))
+                         .order_by(Post.published_at.desc())).all()
+    # Tags with only a post or two make thin pages: keep them out of the index, but let links be followed.
+    head = meta_tags(title=title, description=desc, url=f"{SITE}/blog/tag/{tag.slug}", image=f"{SITE}/og-image.jpg",
+                     noindex=len(posts) < MIN_TAG_POSTS)
+    items = "".join(f'<li><a href="/blog/{escape(p.slug)}">{escape(p.title)}</a><p>{escape(blog.excerpt(p))}</p></li>' for p in posts)
+    return render(shell, head, f"<main><h1>{escape(tag.name)}</h1><p>{escape(desc)}</p><ul>{items}</ul></main>", "nl")
 
 
 @router.get("/blog/p/{uuid}")
@@ -262,10 +273,10 @@ def sitemap(session: Session = Depends(get_session)):
     for p in posts:
         if p.canonical_url and not p.canonical_url.startswith(SITE):
             continue  # canonical lives elsewhere; don't list it as ours
-        urls.append(entry(f"{SITE}/blog/{p.slug}", p.updated_at.strftime("%Y-%m-%d"), "monthly", "0.7"))
+        urls.append(entry(f"{SITE}/blog/{p.slug}", max(p.updated_at, p.published_at).strftime("%Y-%m-%d"), "monthly", "0.7"))
     used = blog.post_tags(session, [p.id for p in posts])
-    tag_slugs = {t["slug"] for ts in used.values() for t in ts}
-    for slug in sorted(tag_slugs):
+    tag_counts = Counter(t["slug"] for ts in used.values() for t in ts)
+    for slug in sorted(s for s, n in tag_counts.items() if n >= MIN_TAG_POSTS):
         urls.append(entry(f"{SITE}/blog/tag/{slug}", today, "weekly", "0.5"))
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'

@@ -84,7 +84,10 @@ def test_sitemap_rss_and_server_rendered_page(client, monkeypatch):  # noqa: F81
     assert sm.headers["content-type"].startswith("application/xml")
     doc = xml.dom.minidom.parseString(sm.text)
     locs = [n.firstChild.data for n in doc.getElementsByTagName("loc")]
-    assert any(l.endswith(f"/blog/{p['slug']}") for l in locs) and any(l.endswith("/blog/tag/recipes") for l in locs)
+    assert any(l.endswith(f"/blog/{p['slug']}") for l in locs)
+    # A tag with a single post is too thin to list, and its page asks not to be indexed.
+    assert not any(l.endswith("/blog/tag/recipes") for l in locs)
+    assert 'content="noindex, follow"' in client.get("/blog/tag/recipes").text
 
     rss = client.get("/blog/rss.xml")
     xml.dom.minidom.parseString(rss.text)  # well-formed

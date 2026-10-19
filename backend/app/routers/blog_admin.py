@@ -107,7 +107,9 @@ def list_posts(status: Optional[str] = None, tag: Optional[str] = None, author: 
     if tag:
         t = session.exec(select(Tag).where(Tag.slug == tag)).first()
         q = q.where(Post.id.in_(select(PostTag.post_id).where(PostTag.tag_id == (t.id if t else -1))))
-    order = {"oldest": Post.created_at.asc(), "updated": Post.updated_at.desc()}.get(sort, Post.created_at.desc())
+    # Drafts sort by when they were last edited, published and scheduled posts by their publish date.
+    when = func.coalesce(Post.published_at, Post.updated_at)
+    order = {"oldest": when.asc(), "updated": Post.updated_at.desc()}.get(sort, when.desc())
     posts = session.exec(q.order_by(order)).all()
     tags = blog.post_tags(session, [p.id for p in posts])
     authors = blog.author_names(session, [p.author_id for p in posts])
