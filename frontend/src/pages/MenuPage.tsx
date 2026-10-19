@@ -93,7 +93,7 @@ export function MenuPage() {
       {/* Store header, the way delivery apps open a restaurant */}
       <header className="store">
         <div className="store__cover" aria-hidden>
-          <img src={img('yerevan/hero-opera-1600.webp')} alt="" width={1600} height={1000} />
+          <img src={img('yerevan/hero-cascade-wide.webp')} alt="" width={1560} height={878} />
         </div>
         <div className="container store__inner">
           <Link to="/" className="store__back">← {t.mp.back}</Link>
