@@ -58,3 +58,6 @@ DEFAULT_SETTINGS = {
         "staff_email": "",  # where staff alerts go; empty = restaurant email
     },
 }
+
+# When set (e.g. in the Docker image), the API also serves the built site and admin from this folder.
+STATIC_DIR = os.getenv("STATIC_DIR", "")

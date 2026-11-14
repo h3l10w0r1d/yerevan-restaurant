@@ -1,20 +1,20 @@
-# One-click backend deploy on Render: https://render.com/deploy
+# Render blueprint: the whole site (public site, admin and API) as one Docker service.
 services:
   - type: web
-    name: yerevan-api
-    runtime: python
-    rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    name: yerevan
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: frankfurt
+    plan: starter
     healthCheckPath: /api/health
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.12.7
-      - key: ADMIN_TOKEN
-        generateValue: true
-      - key: CORS_ORIGINS
-        value: https://h3l10w0r1d.github.io
-      - key: ORDERING_ENABLED
-        value: "false"
       - key: DATABASE_URL
         sync: false
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: ADMIN_EMAIL
+        value: info@yerevanrestaurant.nl
+      - key: SITE_URL
+        value: https://www.yerevanrestaurant.nl
+      - key: ORDERING_ENABLED
+        value: "false"

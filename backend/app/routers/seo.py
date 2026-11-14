@@ -12,6 +12,7 @@ from collections import Counter
 from datetime import datetime
 from email.utils import format_datetime
 from html import escape
+from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Request
@@ -56,7 +57,12 @@ def _iso(dt: Optional[datetime]) -> Optional[str]:
 
 
 def get_shell(request: Request) -> Optional[str]:
-    """The built index.html, fetched from the static site and cached for five minutes."""
+    """The built index.html: read from disk when we serve the site ourselves, else fetched and cached for five minutes."""
+    if config.STATIC_DIR:
+        try:
+            return (Path(config.STATIC_DIR) / "index.html").read_text()
+        except OSError:
+            pass
     host = request.headers.get("x-forwarded-host") or request.headers.get("host") or ""
     if _shell["html"] and _shell["host"] == host and time.time() - _shell["at"] < 300:
         return _shell["html"]
