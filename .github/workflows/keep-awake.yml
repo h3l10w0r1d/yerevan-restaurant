@@ -1,0 +1,11 @@
+# Render's free plan sleeps after 15 idle minutes; a light ping keeps the site instant for guests and Google.
+name: Keep site awake
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS -m 60 --retry 3 "${{ vars.PING_URL || 'https://www.yerevanrestaurant.nl/api/health' }}" > /dev/null
