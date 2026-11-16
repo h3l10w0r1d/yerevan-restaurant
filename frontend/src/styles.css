@@ -359,6 +359,14 @@ p { margin: 0 0 1em; }
 }
 .footer__inner { padding-top: 56px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
 .footer__logo { width: 200px; margin: 0 auto 24px; }
+.footer__social { display: flex; justify-content: center; gap: 12px; list-style: none; margin: 0 0 18px; padding: 0; }
+.footer__social a {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+  border: 1px solid rgba(248, 239, 234, 0.35); border-radius: 50%; color: var(--ivory);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.footer__social a:hover, .footer__social a:focus-visible { background: rgba(248, 239, 234, 0.12); border-color: var(--ivory); }
+.footer__social svg { width: 20px; height: 20px; }
 .footer .muted { color: rgba(248, 239, 234, 0.75); font-size: 0.85rem; }
 
 /* Photo credits */
