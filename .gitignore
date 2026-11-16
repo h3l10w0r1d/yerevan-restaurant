@@ -8,3 +8,5 @@ __pycache__/
 .DS_Store
 .claude/
 .vercel
+.wrangler/
+supabase/.temp/
