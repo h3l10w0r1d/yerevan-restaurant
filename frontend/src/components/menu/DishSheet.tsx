@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatPrice, img, type MenuItem } from '../../api'
 import { fill, useI18n } from '../../i18n'
-import { useRestaurant } from '../../restaurant'
+import { THUISBEZORGD_URL, useRestaurant } from '../../restaurant'
 import { useReserveWidget } from '../../reserve-widget'
 import { useStore } from '../../store'
 import { BadgeChip, CloseButton, DietTags, Overlay } from './bits'
@@ -86,8 +86,9 @@ export function DishSheet({ item, onClose, onSelect, onAdded }: {
             </>
           ) : (
             <>
-              <p className="dsheet__soon">{t.mp.soonNote}</p>
-              <button type="button" className="btn btn--burgundy dsheet__cta" data-reserve-cta onClick={() => { onClose(); reserve.show() }}>{t.mp.reserveCta}</button>
+              <p className="dsheet__soon">{t.mp.extNote}</p>
+              <a className="btn btn--burgundy dsheet__cta" href={THUISBEZORGD_URL} target="_blank" rel="noopener">{t.order.extCta}</a>
+              <button type="button" className="btn btn--small dsheet__cta" data-reserve-cta onClick={() => { onClose(); reserve.show() }}>{t.mp.reserveCta}</button>
             </>
           )}
         </div>

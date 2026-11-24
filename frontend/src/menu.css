@@ -123,7 +123,9 @@
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
   padding: 16px 20px; border-radius: 10px; background: rgba(212, 176, 171, 0.25); margin-bottom: 32px;
 }
-.mnotice p { margin: 0; color: var(--burgundy); }
+.mnotice p { margin: 0; color: var(--burgundy); flex: 1 1 280px; }
+.mnotice__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.mnotice__actions .btn--small { min-height: 48px; color: var(--burgundy); }
 
 .mpicks { margin-bottom: 44px; }
 .mpicks__head { margin-bottom: 14px; }
@@ -254,6 +256,7 @@
 }
 .dsheet__soon { flex-basis: 100%; margin: 0; font-size: 0.9rem; color: var(--muted); }
 .dsheet__cta { flex: 1; min-height: 52px; border-radius: 99px; font-size: 1rem; }
+.dsheet__cta.btn--small { flex: 0 1 auto; color: var(--burgundy); }
 .stepper { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 99px; height: 52px; padding: 0 6px; }
 .stepper button { width: 40px; height: 40px; border: 0; border-radius: 50%; background: none; cursor: pointer; font-size: 1.3rem; color: var(--burgundy); }
 .stepper button:disabled { opacity: 0.3; cursor: default; }

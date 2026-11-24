@@ -321,6 +321,7 @@ p { margin: 0 0 1em; }
 .order h2 { color: var(--burgundy); }
 .soon { text-align: center; background: var(--rose); color: var(--burgundy); padding: 48px 24px; }
 .soon__mark { width: 56px; margin: 0 auto 20px; }
+.soon__cta { margin-top: 20px; }
 .soon h3 { font-size: 1.8rem; margin-bottom: 10px; }
 .soon p { margin: 0 auto; max-width: 28em; font-weight: 400; }
 .order__title { color: var(--burgundy); margin-bottom: 12px; }

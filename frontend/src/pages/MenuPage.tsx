@@ -6,7 +6,7 @@ import { DishSheet } from '../components/menu/DishSheet'
 import { useOpenStatus } from '../components/menu/bits'
 import { MenuComingSoon, useOpeningLabel } from '../components/ComingSoon'
 import { fill, useI18n } from '../i18n'
-import { useRestaurant } from '../restaurant'
+import { THUISBEZORGD_URL, useRestaurant } from '../restaurant'
 import { useReserveWidget } from '../reserve-widget'
 import { Link } from '../router'
 import { useStore } from '../store'
@@ -150,8 +150,11 @@ export function MenuPage() {
       <div className="container mpage__body">
         {!R.orderingEnabled && (
           <div className="mnotice">
-            <p>{t.mp.soonNote}</p>
-            <button type="button" className="btn btn--burgundy" data-reserve-cta onClick={reserve.show}>{t.mp.reserveCta}</button>
+            <p>{t.mp.extNote}</p>
+            <div className="mnotice__actions">
+              <a className="btn btn--burgundy" href={THUISBEZORGD_URL} target="_blank" rel="noopener">{t.order.extCta}</a>
+              <button type="button" className="btn btn--small" data-reserve-cta onClick={reserve.show}>{t.mp.reserveCta}</button>
+            </div>
           </div>
         )}
 

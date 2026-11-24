@@ -59,3 +59,6 @@ export function RestaurantProvider({ children }: { children: ReactNode }) {
 }
 
 export const useRestaurant = () => useContext(Ctx)
+
+/** Delivery and pickup orders go through Thuisbezorgd while the site's own ordering is off. */
+export const THUISBEZORGD_URL = 'https://www.thuisbezorgd.nl/menu/yerevan-rest'

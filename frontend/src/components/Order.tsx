@@ -1,5 +1,5 @@
 import { useI18n } from '../i18n'
-import { useRestaurant } from '../restaurant'
+import { THUISBEZORGD_URL, useRestaurant } from '../restaurant'
 import { Logo } from './Logo'
 import { OrderPanel } from './OrderPanel'
 
@@ -16,8 +16,9 @@ export function Order() {
         {!orderingEnabled ? (
           <div className="soon">
             <Logo variant="mountain" className="soon__mark" title="" />
-            <h3>{t.order.soonTitle}</h3>
-            <p>{t.order.soon}</p>
+            <h3>{t.order.extTitle}</h3>
+            <p>{t.order.extText}</p>
+            <a className="btn btn--burgundy soon__cta" href={THUISBEZORGD_URL} target="_blank" rel="noopener">{t.order.extCta}</a>
           </div>
         ) : (
           <>
